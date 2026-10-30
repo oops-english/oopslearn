@@ -81,11 +81,19 @@ button:focus,a:focus{outline:3px solid orange;outline-offset:3px}
   <p class="subtitle">Track your learning journey, review your achievements and discover what to improve next.</p>
 
   <section class="grid" aria-label="Learning statistics">
-    <div class="card">
-      <h3>Estimated English Level</h3>
-      <div class="number" id="level">Not tested</div>
-      <p class="info">Based on your placement test.</p>
-    </div>
+   <div class="card">
+  <h3>🔥 Current Learning Streak</h3>
+  <div class="number" id="currentStreak">0 days</div>
+  <p class="info" id="streakMessage">
+    Start learning today to build your streak!
+  </p>
+
+  <h3>🏆 Longest Streak</h3>
+  <div class="number" id="longestStreak">0 days</div>
+
+  <h3>📅 Total Study Days</h3>
+  <div class="number" id="totalStudyDays">0 days</div>
+</div>
 <div class="card">
   <h3>Total Experience Points</h3>
   <div class="number" id="totalXP">0 XP</div>
