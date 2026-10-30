@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Error Fix | Oops!</title>
+<style>
+:root{--primary:#6957e8;--bg:#f7f7fc;--text:#26243a;--card:#fff;--muted:#77778d}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+header{padding:17px 7%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;background:var(--card);border-bottom:1px solid #eee}
+.logo{font-size:26px;font-weight:800;color:var(--primary);text-decoration:none}
+header a:not(.logo){color:var(--text);text-decoration:none}
+button,textarea{font:inherit}
+button{border:0;border-radius:10px;padding:12px 18px;cursor:pointer;font-weight:bold}
+.primary{background:var(--primary);color:white}
+.secondary{background:#eeeaff;color:var(--primary)}
+main{max-width:950px;margin:auto;padding:40px 22px}
+.hero{padding:32px;background:linear-gradient(120deg,#eeeaff,#fff0f6);border-radius:22px;margin-bottom:25px}
+.hero h1{margin:0;font-size:36px}
+.hero p{color:var(--muted)}
+.panel{background:var(--card);padding:25px;border-radius:18px;margin:20px 0;border:1px solid #eee}
+textarea{width:100%;min-height:135px;padding:15px;border:1px solid #ddd;border-radius:12px;resize:vertical}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.result{display:none}
+.corrected{padding:17px;background:#edfff4;border-radius:12px;border-left:4px solid #20a66a;font-size:18px}
+.error{color:#bd4141}
+.explanation{background:#f3f1ff;padding:15px;border-radius:12px;margin-top:12px}
+.history-item{padding:14px 0;border-bottom:1px solid #eee}
+.small{color:var(--muted);font-size:14px}
+body.accessible{--bg:#000;--text:#fff;--card:#111;--muted:#eee;--primary:#ffeb3b}
+body.accessible .hero{background:#171717}
+body.accessible textarea{background:#111;color:white;border:2px solid white}
+body.accessible .corrected{background:#12351f;color:white}
+body.accessible .explanation{background:#333}
+body.large-text{font-size:120%}
+:focus-visible{outline:3px solid #ff9800;outline-offset:4px}
+footer{text-align:center;padding:30px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+<a class="logo" href="index.html">Oops!</a>
+<a href="index.html">← Back to Home</a>
+<button class="secondary" id="modeBtn" aria-pressed="false">Accessible Mode</button>
+</header>
+
+<main>
+<section class="hero">
+<h1>Error Fix 🔍</h1>
+<p>Every mistake tells a story. Find it, understand it and improve your English.</p>
+<strong>Don't just correct your mistakes. Learn from them.</strong>
+</section>
+
+<section class="panel">
+<h2>English Error Detective</h2>
+<p>Enter an English sentence. Oops! will check it against a collection of common grammar mistakes.</p>
+<label for="sentence"><strong>Your English sentence</strong></label>
+<textarea id="sentence" placeholder="Example: She go to school every day."></textarea>
+<div class="actions">
+<button class="primary" id="checkBtn">Detect errors →</button>
+<button class="secondary" id="clearBtn">Clear</button>
+</div>
+<p class="small">This starter version uses sample grammar rules, not a live AI model.</p>
+</section>
+
+<section class="panel result" id="result" aria-live="polite">
+<h2>Detection Results</h2>
+<p id="status"></p>
+<div class="corrected" id="corrected"></div>
+<div class="explanation">
+<strong>Why?</strong>
+<p id="reason"></p>
+<strong>More examples</strong>
+<p id="example"></p>
+</div>
+</section>
+
+<section class="panel">
+<h2>Your Error History</h2>
+<p class="small">Your recent checks are stored in this browser.</p>
+<div id="history"></div>
+<button class="secondary" id="clearHistory">Clear history</button>
+</section>
+</main>
+
+<footer>Oops! — Make mistakes. Make progress.</footer>
+
+<script>
+const rules=[
+{pattern:/\bshe go\b/gi,replace:"she goes",reason:"In the Present Simple, verbs take -s or -es with he, she and it.",example:"She studies English every day."},
+{pattern:/\bhe go\b/gi,replace:"he goes",reason:"Use the third-person singular form of the verb with he.",example:"He goes to school by bus."},
+{pattern:/\bit go\b/gi,replace:"it goes",reason:"In the Present Simple, it requires the verb form ending in -s or -es.",example:"It goes well."},
+{pattern:/\bi am agree\b/gi,replace:"I agree",reason:"Agree is a main verb, not an adjective. Do not add am before it.",example:"I agree with your opinion."},
+{pattern:/\bmore better\b/gi,replace:"better",reason:"Better is already the comparative form of good. Do not use more with it.",example:"This solution is better."},
+{pattern:/\bdidn't went\b/gi,replace:"didn't go",reason:"After did not, use the base form of the verb.",example:"I didn't go to school yesterday."},
+{pattern:/\bhe don't\b/gi,replace:"he doesn't",reason:"Use doesn't with he, she and it in the Present Simple negative.",example:"He doesn't like coffee."},
+{pattern:/\bshe don't\b/gi,replace:"she doesn't",reason:"Use doesn't with he, she and it in the Present Simple negative.",example:"She doesn't play tennis."},
+{pattern:/\ban university\b/gi,replace:"a university",reason:"University begins with a /juː/ consonant sound, so use a.",example:"She studies at a university."},
+{pattern:/\bdiscuss about\b/gi,replace:"discuss",reason:"Discuss is a transitive verb and does not need about before its object.",example:"We discussed the problem."}
+];
+
+let history=JSON.parse(localStorage.getItem("oopsErrorHistory")||"[]");
+
+function saveHistory(input,output){
+ history.unshift({input,output,date:new Date().toLocaleString()});
+ history=history.slice(0,10);
+ localStorage.setItem("oopsErrorHistory",JSON.stringify(history));
+ renderHistory();
+}
+
+function renderHistory(){
+ const box=document.getElementById("history");
+ box.innerHTML="";
+ if(!history.length){box.textContent="No checks yet. Try your first sentence!";return;}
+ history.forEach(item=>{
+  const div=document.createElement("div");
+  div.className="history-item";
+  const original=document.createElement("p");
+  original.textContent="Original: "+item.input;
+  const corrected=document.createElement("p");
+  corrected.textContent="Result: "+item.output;
+  const date=document.createElement("small");
+  date.className="small";
+  date.textContent=item.date;
+  div.append(original,corrected,date);
+  box.append(div);
+ });
+}
+
+document.getElementById("checkBtn").addEventListener("click",()=>{
+ const input=document.getElementById("sentence").value.trim();
+ if(!input){alert("Please enter an English sentence first.");return;}
+ let output=input;
+ let reasons=[];
+ let examples=[];
+ rules.forEach(rule=>{
+  if(rule.pattern.test(output)){
+   output=output.replace(rule.pattern,rule.replace);
+   reasons.push(rule.reason);
+   examples.push(rule.example);
+  }
+  rule.pattern.lastIndex=0;
+ });
+ const result=document.getElementById("result");
+ result.style.display="block";
+ document.getElementById("corrected").textContent=output;
+ document.getElementById("status").textContent=reasons.length?"Potential error(s) detected.":"No matching errors found in the current sample rules.";
+ document.getElementById("reason").textContent=reasons.length?reasons.join(" "):"This sentence did not match the current sample rules. That does not guarantee it is completely correct.";
+ document.getElementById("example").textContent=examples.length?examples.join(" | "):"Keep practising and expanding your English knowledge.";
+ saveHistory(input,output);
+});
+
+document.getElementById("clearBtn").addEventListener("click",()=>{
+ document.getElementById("sentence").value="";
+ document.getElementById("result").style.display="none";
+});
+
+document.getElementById("clearHistory").addEventListener("click",()=>{
+ if(confirm("Clear all saved error history?")){
+  history=[];
+  localStorage.removeItem("oopsErrorHistory");
+  renderHistory();
+ }
+});
+
+document.getElementById("modeBtn").addEventListener("click",function(){
+ const enabled=document.body.classList.toggle("accessible");
+ this.setAttribute("aria-pressed",String(enabled));
+ this.textContent=enabled?"Normal Mode":"Accessible Mode";
+});
+
+renderHistory();
+</script>
+</body>
+</html>
