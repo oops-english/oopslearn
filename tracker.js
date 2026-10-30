@@ -1,11 +1,11 @@
 
-/* Oops! Shared Learning Tracker */
+/* Oops! Shared Learning Tracker v2 */
 
 (function () {
   "use strict";
 
   const STORAGE_KEY = "oopsTrackerData";
-  const VERSION = 1;
+  const VERSION = 2;
 
   const XP_REWARDS = {
     vocabulary: 5,
@@ -17,20 +17,22 @@
   };
 
   function todayKey() {
-    const now = new Date();
-    const y = now.getFullYear();
-    const m = String(now.getMonth() + 1).padStart(2, "0");
-    const d = String(now.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
+    const d = new Date();
+    return [
+      d.getFullYear(),
+      String(d.getMonth() + 1).padStart(2, "0"),
+      String(d.getDate()).padStart(2, "0")
+    ].join("-");
   }
 
-  function yesterdayKey() {
-    const date = new Date();
-    date.setDate(date.getDate() - 1);
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, "0");
-    const d = String(date.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
+  function shiftDate(date, amount) {
+    const d = new Date(date + "T12:00:00");
+    d.setDate(d.getDate() + amount);
+    return [
+      d.getFullYear(),
+      String(d.getMonth() + 1).padStart(2, "0"),
+      String(d.getDate()).padStart(2, "0")
+    ].join("-");
   }
 
   function emptyData() {
@@ -49,17 +51,17 @@
 
   function load() {
     try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      if (!saved || saved.version !== VERSION) return emptyData();
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (!data || data.version !== VERSION) return emptyData();
 
       return {
         ...emptyData(),
-        ...saved,
-        activities: Array.isArray(saved.activities) ? saved.activities : [],
-        completedQuests: Array.isArray(saved.completedQuests)
-          ? saved.completedQuests : [],
-        unlockedAchievements: Array.isArray(saved.unlockedAchievements)
-          ? saved.unlockedAchievements : []
+        ...data,
+        activities: Array.isArray(data.activities) ? data.activities : [],
+        completedQuests: Array.isArray(data.completedQuests)
+          ? data.completedQuests : [],
+        unlockedAchievements: Array.isArray(data.unlockedAchievements)
+          ? data.unlockedAchievements : []
       };
     } catch {
       return emptyData();
@@ -68,6 +70,10 @@
 
   function save(data) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+
+    window.dispatchEvent(new CustomEvent("oopsTrackerUpdated", {
+      detail: getData()
+    }));
   }
 
   function updateStreak(data) {
@@ -75,7 +81,7 @@
 
     if (data.lastActiveDate === today) return;
 
-    if (data.lastActiveDate === yesterdayKey()) {
+    if (data.lastActiveDate === shiftDate(today, -1)) {
       data.streak += 1;
     } else {
       data.streak = 1;
@@ -99,9 +105,6 @@
     }
 
     const data = load();
-    const today = todayKey();
-
-    // Prevent accidental duplicate submissions of the same activity.
     const activityId = details.activityId
       ? String(details.activityId)
       : null;
@@ -118,20 +121,18 @@
 
     data.xp += reward;
     data.activities.push({
-      id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      id: Date.now() + "-" + Math.random().toString(36).slice(2),
       activityId,
       type,
       xp: reward,
-      date: today,
+      date: todayKey(),
       timestamp: new Date().toISOString(),
       details: {
         label: String(details.label || type).slice(0, 120)
       }
     });
 
-    // Keep a manageable local activity history.
     data.activities = data.activities.slice(-1000);
-
     save(data);
 
     return {
@@ -148,19 +149,16 @@
     const level = levelFromXP(data.xp);
     const nextLevelXP = xpForNextLevel(level);
     const previousLevelXP = xpForNextLevel(level - 1);
-    const progressRange = nextLevelXP - previousLevelXP;
+    const range = nextLevelXP - previousLevelXP;
 
     return {
       ...data,
       level,
       nextLevelXP,
       xpToNextLevel: Math.max(0, nextLevelXP - data.xp),
-      levelProgress: Math.min(
-        100,
-        Math.max(0, Math.round(
-          ((data.xp - previousLevelXP) / progressRange) * 100
-        ))
-      ),
+      levelProgress: Math.min(100, Math.max(0,
+        Math.round((data.xp - previousLevelXP) / range * 100)
+      )),
       today: todayKey(),
       todayActivities: data.activities.filter(
         item => item.date === todayKey()
@@ -170,8 +168,7 @@
 
   function completeQuest(questId, xpReward, diamondReward = 0) {
     const data = load();
-    const today = todayKey();
-    const id = `${today}:${questId}`;
+    const id = todayKey() + ":" + questId;
 
     if (data.completedQuests.includes(id)) {
       return { success: false, message: "Quest already completed." };
@@ -181,6 +178,7 @@
     data.xp += Math.max(0, Number(xpReward) || 0);
     data.diamonds += Math.max(0, Number(diamondReward) || 0);
 
+    updateStreak(data);
     save(data);
 
     return {
@@ -191,14 +189,14 @@
   }
 
   function isQuestCompleted(questId) {
-    const data = load();
-    return data.completedQuests.includes(
-      `${todayKey()}:${questId}`
+    return load().completedQuests.includes(
+      todayKey() + ":" + questId
     );
   }
 
   function resetData() {
-    localStorage.removeItem(STORAGE_KEY);
+    const data = emptyData();
+    save(data);
     return getData();
   }
 
