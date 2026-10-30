@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oops! — Make mistakes. Make progress.</title>
+<style>
+:root {
+  --primary: #6957e8;
+  --bg: #f7f7fc;
+  --text: #24243a;
+  --card: #ffffff;
+  --muted: #77778d;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 7%;
+  background: var(--card);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #eee;
+}
+.logo { font-size: 27px; font-weight: 800; color: var(--primary); }
+nav { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; }
+nav a { text-decoration: none; color: var(--text); font-size: 14px; }
+button, .btn {
+  border: none;
+  border-radius: 12px;
+  padding: 11px 17px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.primary { background: var(--primary); color: white; }
+.secondary { background: #eeeaff; color: var(--primary); }
+.hero {
+  padding: 85px 8%;
+  background: linear-gradient(120deg,#eeeaff,#fff1f6);
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 35px;
+  align-items: center;
+}
+.hero h1 { font-size: clamp(38px,5vw,62px); line-height: 1.12; margin: 15px 0; }
+.hero h1 span { color: var(--primary); }
+.hero p { color: var(--muted); max-width: 530px; margin-bottom: 25px; }
+.hero-art {
+  background: white;
+  border-radius: 28px;
+  padding: 35px;
+  text-align: center;
+  box-shadow: 0 15px 40px #6957e81c;
+}
+.hero-art strong { display: block; font-size: 65px; color: var(--primary); }
+section { padding: 65px 8%; }
+.section-heading { margin-bottom: 28px; }
+.section-heading h2 { font-size: 30px; }
+.section-heading p { color: var(--muted); }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+}
+.card {
+  background: var(--card);
+  padding: 25px;
+  border-radius: 20px;
+  border: 1px solid #eeeeF5;
+  transition: .2s;
+}
+.card:hover { transform: translateY(-4px); }
+.card .symbol { font-size: 30px; margin-bottom: 12px; }
+.card h3 { margin-bottom: 8px; }
+.card p { color: var(--muted); font-size: 14px; margin-bottom: 18px; }
+.card a { color: var(--primary); text-decoration: none; font-weight: 700; }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 15px;
+  margin-top: 25px;
+}
+.stat {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+}
+.stat strong { font-size: 25px; color: var(--primary); display: block; }
+.quests { background: #eeeaff; }
+footer { padding: 30px 8%; text-align: center; color: var(--muted); }
+body.accessible {
+  --bg: #000;
+  --text: #fff;
+  --card: #111;
+  --muted: #eee;
+  --primary: #ffeb3b;
+}
+body.accessible a { color: #ffeb3b; }
+body.accessible .hero { background: #111; }
+body.accessible .hero-art, body.accessible .stat { background: #111; }
+body.accessible .quests { background: #181818; }
+body.accessible button { border: 2px solid #ffeb3b; }
+body.large-text { font-size: 120%; }
+a:focus, button:focus {
+  outline: 3px solid #ff9800;
+  outline-offset: 4px;
+}
+@media(max-width:800px) {
+  header { align-items: flex-start; gap: 15px; flex-direction: column; }
+  .hero { grid-template-columns: 1fr; padding: 55px 7%; }
+  .grid { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="#" aria-label="Oops home">Oops!</a>
+  <nav aria-label="Main navigation">
+    <a href="#home">Home</a>
+    <a href="#learning">Learning Hub</a>
+    <a href="#quests">Daily Quests</a>
+    <a href="#progress">My Progress</a>
+    <button class="secondary" id="modeBtn" aria-pressed="false">Accessible Mode</button>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div>
+    <p><strong>YOUR PERSONAL ENGLISH LEARNING SPACE</strong></p>
+    <h1>Make mistakes.<br><span>Make progress.</span></h1>
+    <p>Discover your weaknesses, improve your English and turn every mistake into an opportunity to grow.</p>
+    <a class="btn primary" href="#learning">Start learning →</a>
+  </div>
+  <div class="hero-art">
+    <strong>Oops!</strong>
+    <h3>Every mistake matters.</h3>
+    <p>Your journey to better English starts here.</p>
+  </div>
+</section>
+
+<section id="learning">
+  <div class="section-heading">
+    <h2>Your Learning Hub</h2>
+    <p>Choose your learning path and start improving today.</p>
+  </div>
+  <div class="grid">
+    <article class="card">
+      <div class="symbol">✍️</div>
+      <h3>Error Fix</h3>
+      <p>Identify English mistakes, understand why they happen and learn how to correct them.</p>
+      <a href="error-fix.html">Explore Error Fix →</a>
+    </article>
+    <article class="card">
+      <div class="symbol">📚</div>
+      <h3>Vocabulary</h3>
+      <p>Build your vocabulary through topics, levels and personalized word lists.</p>
+      <a href="vocabulary.html">Explore Vocabulary →</a>
+    </article>
+    <article class="card">
+      <div class="symbol">🧩</div>
+      <h3>Grammar</h3>
+      <p>Understand grammar rules and practise with exercises from A1 to C2.</p>
+      <a href="grammar.html">Explore Grammar →</a>
+    </article>
+    <article class="card">
+      <div class="symbol">🎯</div>
+      <h3>IELTS Practice</h3>
+      <p>Develop your four English skills with structured practice activities.</p>
+      <a href="ielts.html">Explore IELTS →</a>
+    </article>
+    <article class="card">
+      <div class="symbol">📈</div>
+      <h3>Learning Roadmap</h3>
+      <p>Discover your current level and follow a learning path towards your goals.</p>
+      <a href="roadmap.html">View Roadmap →</a>
+    </article>
+    <article class="card">
+      <div class="symbol">👤</div>
+      <h3>My Progress</h3>
+      <p>Keep track of your learning activities and celebrate your achievements.</p>
+      <a href="progress.html">View Progress →</a>
+    </article>
+  </div>
+</section>
+
+<section class="quests" id="quests">
+  <div class="section-heading">
+    <h2>Daily Quests</h2>
+    <p>Small steps. Consistent progress.</p>
+  </div>
+  <div class="card">
+    <h3>Today's challenge</h3>
+    <p>Complete one English activity and build your daily learning habit.</p>
+    <button class="primary" id="questBtn">Start today's quest</button>
+    <p id="questMessage" aria-live="polite"></p>
+  </div>
+</section>
+
+<section id="progress">
+  <div class="section-heading">
+    <h2>Your Progress Overview</h2>
+    <p>Your learning journey, one step at a time.</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><strong id="xp">0 XP</strong>Experience points</div>
+    <div class="stat"><strong>0</strong>Lessons completed</div>
+    <div class="stat"><strong>0</strong>Words learned</div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <h3>Oops! — Make mistakes. Make progress.</h3>
+  <p>An inclusive English-learning platform for every learner.</p>
+</footer>
+
+<script>
+const modeBtn = document.getElementById("modeBtn");
+modeBtn.addEventListener("click", () => {
+  const enabled = document.body.classList.toggle("accessible");
+  modeBtn.setAttribute("aria-pressed", String(enabled));
+  modeBtn.textContent = enabled ? "Normal Mode" : "Accessible Mode";
+});
+
+document.getElementById("questBtn").addEventListener("click", () => {
+  document.getElementById("questMessage").textContent =
+    "Great start! Your daily quest is ready. Keep learning!";
+});
+</script>
+</body>
+</html>
