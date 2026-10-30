@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar Lab | Oops!</title>
+<style>
+:root{--primary:#6957e8;--bg:#f7f7fc;--text:#26243a;--card:#fff;--muted:#77778d}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+header{background:var(--card);padding:17px 7%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;border-bottom:1px solid #eee}
+.logo{font-size:26px;font-weight:800;color:var(--primary);text-decoration:none}
+header a:not(.logo){color:var(--text);text-decoration:none}
+button,select{font:inherit}
+button{cursor:pointer;border:0;border-radius:10px;padding:11px 16px;font-weight:700}
+.primary{background:var(--primary);color:white}
+.secondary{background:#eeeaff;color:var(--primary)}
+main{max-width:1100px;margin:auto;padding:40px 22px}
+.hero{padding:35px;background:linear-gradient(120deg,#eeeaff,#fff0f6);border-radius:22px;margin-bottom:30px}
+.hero h1{font-size:36px;margin:0}
+.hero p{color:var(--muted)}
+.filters{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
+select{padding:12px;border:1px solid #ddd;border-radius:10px;background:white;min-width:180px}
+.lesson-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.lesson{background:var(--card);padding:24px;border-radius:18px;border:1px solid #eee}
+.level{color:var(--primary);font-size:13px;font-weight:bold}
+.lesson h3{margin:7px 0}
+.formula{background:#f2efff;padding:13px;border-radius:10px;margin:12px 0;font-weight:bold}
+.lesson p{margin:9px 0}
+.muted{color:var(--muted);font-size:14px}
+.quiz{margin-top:45px;background:var(--card);padding:25px;border-radius:18px}
+.option{display:block;width:100%;text-align:left;margin:9px 0;background:#f1efff;color:#29243c}
+#feedback{font-weight:bold;margin-top:15px}
+body.accessible{--bg:#000;--text:#fff;--card:#111;--muted:#eee;--primary:#ffeb3b}
+body.accessible .hero{background:#171717}
+body.accessible .formula,body.accessible .option{background:#333;color:#fff}
+body.accessible select{background:#111;color:white;border:2px solid white}
+body.large-text{font-size:120%}
+:focus-visible{outline:3px solid #ff9800;outline-offset:4px}
+footer{text-align:center;padding:30px;color:var(--muted)}
+@media(max-width:650px){.lesson-grid{grid-template-columns:1fr}.hero h1{font-size:29px}}
+</style>
+</head>
+<body>
+<header>
+<a class="logo" href="index.html">Oops!</a>
+<a href="index.html">← Back to Home</a>
+<button class="secondary" id="modeBtn" aria-pressed="false">Accessible Mode</button>
+</header>
+
+<main>
+<section class="hero">
+<h1>Grammar Lab 🧩</h1>
+<p>Understand grammar, recognize common mistakes and practise using English accurately.</p>
+<strong>Learn the rules. Understand the mistakes. Improve your English.</strong>
+</section>
+
+<h2>Explore Grammar</h2>
+<p>Choose your level and discover grammar lessons.</p>
+
+<div class="filters">
+<select id="level" aria-label="Choose level">
+<option value="all">All levels</option>
+<option>A1</option><option>A2</option><option>B1</option>
+<option>B2</option><option>C1</option><option>C2</option>
+</select>
+<select id="topic" aria-label="Choose grammar topic">
+<option value="all">All topics</option>
+<option value="Tenses">Tenses</option>
+<option value="Nouns">Nouns and pronouns</option>
+<option value="Clauses">Clauses</option>
+<option value="Advanced">Advanced grammar</option>
+</select>
+</div>
+
+<div class="lesson-grid" id="lessons"></div>
+
+<section class="quiz">
+<h2>Grammar Challenge</h2>
+<p>Choose the correct answer.</p>
+<h3 id="question"></h3>
+<div id="options"></div>
+<p id="feedback" aria-live="polite"></p>
+<button class="primary" id="next">Next question →</button>
+</section>
+</main>
+
+<footer>Oops! — Make mistakes. Make progress.</footer>
+
+<script>
+const data=[
+{level:"A1",topic:"Tenses",title:"Present Simple",formula:"S + V(s/es)",ex:"She goes to school every day.",mistake:"She go to school every day.",note:"Use the third-person singular form with he, she and it."},
+{level:"A1",topic:"Tenses",title:"Present Continuous",formula:"S + am/is/are + V-ing",ex:"They are studying English now.",mistake:"They studying English now.",note:"Do not forget the correct form of the verb to be."},
+{level:"A1",topic:"Nouns",title:"Articles: A / An",formula:"a + consonant sound | an + vowel sound",ex:"I have an apple and a book.",mistake:"She is an teacher.",note:"Choose articles according to pronunciation, not simply spelling."},
+{level:"A2",topic:"Tenses",title:"Past Simple",formula:"S + V2/ed",ex:"We visited London last year.",mistake:"We visit London yesterday.",note:"Use the past form for completed actions in the past."},
+{level:"A2",topic:"Nouns",title:"Countable and Uncountable Nouns",formula:"many + countable | much + uncountable",ex:"How much water do you need?",mistake:"How many water do you need?",note:"Water is uncountable in this context."},
+{level:"B1",topic:"Tenses",title:"Present Perfect",formula:"S + have/has + V3",ex:"I have lived here for five years.",mistake:"I live here since five years.",note:"Use for and since correctly with the present perfect."},
+{level:"B1",topic:"Clauses",title:"Relative Clauses",formula:"who / which / that / whose",ex:"The girl who won the prize is my friend.",mistake:"The girl which won the prize...",note:"Use who for people and which for things."},
+{level:"B2",topic:"Clauses",title:"Conditional Sentences",formula:"If + past simple, would + V",ex:"If I had more time, I would travel.",mistake:"If I will have time, I would travel.",note:"Do not normally use will in the if-clause of this conditional."},
+{level:"C1",topic:"Advanced",title:"Inversion",formula:"Negative adverbial + auxiliary + subject + verb",ex:"Rarely have I seen such dedication.",mistake:"Rarely I have seen such dedication.",note:"Inversion is required after certain negative adverbials."},
+{level:"C2",topic:"Advanced",title:"Cleft Sentences",formula:"It is/was + focus + that/who...",ex:"It was her determination that impressed us.",mistake:"It her determination was that impressed us.",note:"Use the cleft structure to emphasize a particular part of a sentence."}
+];
+
+const questions=[
+{q:"She _____ to school every morning.",options:["go","goes","going","gone"],answer:1,explain:"With she, use goes in the Present Simple."},
+{q:"I _____ English for three years.",options:["study","studied","have studied","am study"],answer:2,explain:"Use the Present Perfect with for to describe a period continuing to the present."},
+{q:"If I were rich, I _____ around the world.",options:["travel","will travel","would travel","travelled"],answer:2,explain:"The Second Conditional uses would + infinitive in the main clause."},
+{q:"The student _____ won the competition is my friend.",options:["which","who","where","when"],answer:1,explain:"Use who to refer to people."}
+];
+
+let current=0;
+let answered=false;
+
+function renderLessons(){
+ const selectedLevel=document.getElementById("level").value;
+ const selectedTopic=document.getElementById("topic").value;
+ const results=data.filter(x=>(selectedLevel==="all"||x.level===selectedLevel)&&(selectedTopic==="all"||x.topic===selectedTopic));
+ const container=document.getElementById("lessons");
+ container.innerHTML="";
+ if(!results.length){container.textContent="No lessons found.";return;}
+ results.forEach(item=>{
+  const card=document.createElement("article");
+  card.className="lesson";
+  const level=document.createElement("span");
+  level.className="level";
+  level.textContent=item.level+" · "+item.topic;
+  const title=document.createElement("h3");
+  title.textContent=item.title;
+  const formula=document.createElement("div");
+  formula.className="formula";
+  formula.textContent=item.formula;
+  const example=document.createElement("p");
+  example.textContent="Example: "+item.ex;
+  const mistake=document.createElement("p");
+  mistake.textContent="Common mistake: "+item.mistake;
+  const note=document.createElement("p");
+  note.className="muted";
+  note.textContent="Explanation: "+item.note;
+  card.append(level,title,formula,example,mistake,note);
+  container.append(card);
+ });
+}
+
+function showQuestion(){
+ answered=false;
+ document.getElementById("feedback").textContent="";
+ const q=questions[current];
+ document.getElementById("question").textContent=q.q;
+ const box=document.getElementById("options");
+ box.innerHTML="";
+ q.options.forEach((option,index)=>{
+  const button=document.createElement("button");
+  button.className="option";
+  button.textContent=String.fromCharCode(65+index)+". "+option;
+  button.addEventListener("click",()=>{
+   if(answered)return;
+   answered=true;
+   const correct=index===q.answer;
+   document.getElementById("feedback").textContent=
+    (correct?"Correct! ":"Not quite. ")+q.explain;
+  });
+  box.append(button);
+ });
+}
+
+document.getElementById("level").addEventListener("change",renderLessons);
+document.getElementById("topic").addEventListener("change",renderLessons);
+document.getElementById("next").addEventListener("click",()=>{
+ current=(current+1)%questions.length;
+ showQuestion();
+});
+document.getElementById("modeBtn").addEventListener("click",function(){
+ const enabled=document.body.classList.toggle("accessible");
+ this.setAttribute("aria-pressed",String(enabled));
+ this.textContent=enabled?"Normal Mode":"Accessible Mode";
+});
+renderLessons();
+showQuestion();
+</script>
+</body>
+</html>
