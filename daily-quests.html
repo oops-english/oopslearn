@@ -72,14 +72,8 @@ body.accessible .primary{color:#000}
 <footer>Oops! — Make mistakes. Make progress.</footer>
 
 <script src="tracker.js"></script>
+<script src="accessibility.js"></script>
 <script>
-const modeBtn=document.getElementById("modeBtn");
-modeBtn.addEventListener("click",()=>{
-  const enabled=document.body.classList.toggle("accessible");
-  modeBtn.setAttribute("aria-pressed",String(enabled));
-  modeBtn.textContent=enabled?"Normal Mode":"Accessible Mode";
-});
-
 document.getElementById("questBtn").addEventListener("click",()=>{
   if(window.OopsTracker){
     window.OopsTracker.recordStudyDay();
