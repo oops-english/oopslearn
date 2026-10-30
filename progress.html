@@ -158,7 +158,24 @@ const wordbook = JSON.parse(localStorage.getItem("oopsWordbook") || "[]");
 const errors = JSON.parse(localStorage.getItem("oopsErrorHistory") || "[]");
 const level = localStorage.getItem("oopsEstimatedLevel");
 const score = localStorage.getItem("oopsPlacementScore");
+// Load Oops! XP Dashboard
+const tracker = window.OopsTracker;
 
+if (tracker) {
+  const data = tracker.getData();
+
+  document.getElementById("totalXP").textContent = data.xp + " XP";
+  document.getElementById("trackerLevel").textContent = "Level " + data.level;
+
+  document.getElementById("xpBar").style.width =
+    data.levelProgress + "%";
+
+  document.getElementById("xpProgress").textContent =
+    data.levelProgress + "% progress to next level";
+
+  document.getElementById("xpRemaining").textContent =
+    data.xpToNextLevel + " XP to next level";
+}
 document.getElementById("level").textContent = level || "Not tested";
 document.getElementById("words").textContent = wordbook.length;
 document.getElementById("errors").textContent = errors.length;
