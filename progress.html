@@ -147,14 +147,17 @@ button:focus,a:focus{outline:3px solid orange;outline-offset:3px}
 
 <footer>Oops! — Make mistakes. Make progress.</footer>
 
-  <script src="tracker.js"></script>
+ 
+<script src="tracker.js"></script>
+<script src="accessibility.js"></script>
 <script>
+// Load saved learning data
 const wordbook = JSON.parse(localStorage.getItem("oopsWordbook") || "[]");
 const errors = JSON.parse(localStorage.getItem("oopsErrorHistory") || "[]");
 const level = localStorage.getItem("oopsEstimatedLevel");
 const score = localStorage.getItem("oopsPlacementScore");
 
-// Load Oops! Learning Streak Dashboard
+// Render Learning Streak
 function renderStreak() {
   const tracker = window.OopsTracker;
 
@@ -192,51 +195,67 @@ window.addEventListener("storage", function(event) {
   }
 });
 
-document.getElementById("level").textContent = level || "Not tested";
-document.getElementById("words").textContent = wordbook.length;
-document.getElementById("errors").textContent = errors.length;
-document.getElementById("score").textContent = score ? score + " / 12" : "--";
+// Render statistics
+const wordsElement = document.getElementById("words");
+const errorsElement = document.getElementById("errors");
+const scoreElement = document.getElementById("score");
+
+wordsElement.textContent = wordbook.length;
+errorsElement.textContent = errors.length;
+scoreElement.textContent = score ? score + " / 12" : "--";
 
 const percent = Math.min(100, Math.round(wordbook.length / 50 * 100));
+
 document.getElementById("wordBar").style.width = percent + "%";
-document.querySelector('[role="progressbar"]').setAttribute("aria-valuenow", percent);
+document.querySelector('[role="progressbar"]')
+  .setAttribute("aria-valuenow", percent);
+
 document.getElementById("wordProgress").textContent =
-  "Vocabulary collection: " + wordbook.length + " / 50 words (" + percent + "%)";
+  "Vocabulary collection: " + wordbook.length +
+  " / 50 words (" + percent + "%)";
 
 document.getElementById("overview").textContent =
-  "You have saved " + wordbook.length + " vocabulary items and recorded " +
+  "You have saved " + wordbook.length +
+  " vocabulary items and recorded " +
   errors.length + " error-review entries.";
 
+// Render vocabulary list
 const wordList = document.getElementById("wordList");
-if(wordbook.length){
-  wordList.innerHTML = wordbook.slice(0,5).map(w =>
-    "<div class='item'>" + escapeHTML(typeof w === "string" ? w : (w.word || w.term || "Saved word")) + "</div>"
+
+if (wordbook.length) {
+  wordList.innerHTML = wordbook.slice(0, 5).map(w =>
+    "<div class='item'>" +
+    escapeHTML(typeof w === "string" ? w : (w.word || w.term || "Saved word")) +
+    "</div>"
   ).join("");
-}else{
-  wordList.textContent = "No saved words yet. Visit Vocabulary Lab to save your first word.";
+} else {
+  wordList.textContent =
+    "No saved words yet. Visit Vocabulary Lab to save your first word.";
 }
 
+// Render error history
 const errorList = document.getElementById("errorList");
-if(errors.length){
+
+if (errors.length) {
   errorList.innerHTML = errors.slice(-5).reverse().map(e =>
-    "<div class='item'>" + escapeHTML(typeof e === "string" ? e : (e.original || e.sentence || "Reviewed error")) + "</div>"
+    "<div class='item'>" +
+    escapeHTML(typeof e === "string" ? e : (e.original || e.sentence || "Reviewed error")) +
+    "</div>"
   ).join("");
-}else{
-  errorList.textContent = "No reviewed errors yet. Try the Error Fix activity.";
+} else {
+  errorList.textContent =
+    "No reviewed errors yet. Try the Error Fix activity.";
 }
 
-function escapeHTML(value){
+function escapeHTML(value) {
   return String(value).replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
   }[c]));
 }
-
-const modeBtn = document.getElementById("modeBtn");
-modeBtn.addEventListener("click",()=>{
-  const active = document.body.classList.toggle("accessible");
-  modeBtn.textContent = active ? "Return to Normal Mode" : "Accessible Mode";
-  modeBtn.setAttribute("aria-pressed",String(active));
-});
 </script>
 </body>
 </html>
