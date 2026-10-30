@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Roadmap | Oops!</title>
+<style>
+:root{--primary:#6957e8;--bg:#f7f7fc;--text:#26243a;--card:#fff;--muted:#77778d}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+header{padding:17px 7%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;background:var(--card);border-bottom:1px solid #eee}
+.logo{font-size:26px;font-weight:800;color:var(--primary);text-decoration:none}
+header a:not(.logo){color:var(--text);text-decoration:none}
+button{font:inherit;border:0;border-radius:10px;padding:12px 17px;cursor:pointer;font-weight:bold}
+.primary{background:var(--primary);color:white}
+.secondary{background:#eeeaff;color:var(--primary)}
+main{max-width:950px;margin:auto;padding:40px 22px}
+.hero{padding:32px;background:linear-gradient(120deg,#eeeaff,#fff0f6);border-radius:22px;margin-bottom:25px}
+.hero h1{font-size:35px;margin:0}
+.hero p{color:var(--muted)}
+.panel{background:var(--card);padding:25px;border-radius:18px;margin:20px 0;border:1px solid #eee}
+.question{padding:18px 0;border-bottom:1px solid #eee}
+.option{display:block;width:100%;text-align:left;background:#f2efff;color:#29243c;margin:9px 0}
+.option.selected{background:var(--primary);color:white}
+.progress{height:9px;background:#eee;border-radius:10px;overflow:hidden;margin:15px 0}
+.bar{height:100%;width:0;background:var(--primary);transition:width .2s}
+#result{display:none}
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.level-card{padding:18px;border-radius:14px;background:#f2efff}
+.level-card strong{color:var(--primary)}
+body.accessible{--bg:#000;--text:#fff;--card:#111;--muted:#eee;--primary:#ffeb3b}
+body.accessible .hero{background:#171717}
+body.accessible .option,body.accessible .level-card{background:#333;color:white}
+body.accessible .option.selected{background:#ffeb3b;color:black}
+:focus-visible{outline:3px solid #ff9800;outline-offset:4px}
+footer{text-align:center;padding:30px;color:var(--muted)}
+@media(max-width:600px){.levels{grid-template-columns:1fr}.hero h1{font-size:29px}}
+</style>
+</head>
+<body>
+<header>
+<a class="logo" href="index.html">Oops!</a>
+<a href="index.html">← Back to Home</a>
+<button class="secondary" id="modeBtn" aria-pressed="false">Accessible Mode</button>
+</header>
+
+<main>
+<section class="hero">
+<h1>Your Learning Roadmap 🗺️</h1>
+<p>Discover your current English level and build a learning journey that matches your goals.</p>
+<strong>Every learner has a different starting point.</strong>
+</section>
+
+<section class="panel">
+<h2>English Placement Test</h2>
+<p>Answer the following questions to receive an estimated level. This short test is for demonstration and does not replace an official CEFR assessment.</p>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<p id="counter">Question 1 of 12</p>
+<div id="quiz"></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<button class="secondary" id="back">Previous</button>
+<button class="primary" id="next">Next question →</button>
+</div>
+</section>
+
+<section class="panel" id="result">
+<h2>Your estimated level</h2>
+<h1 id="levelResult"></h1>
+<p id="description"></p>
+<h3>Suggested learning roadmap</h3>
+<div class="levels" id="roadmap"></div>
+<button class="primary" id="retake" style="margin-top:20px">Retake test</button>
+</section>
+</main>
+
+<footer>Oops! — Make mistakes. Make progress.</footer>
+
+<script>
+const questions=[
+{q:"Choose the correct sentence.",options:["She go to school.","She goes to school.","She going to school.","She gone to school."],a:1},
+{q:"What is the past form of 'buy'?",options:["Buyed","Bought","Buying","Buys"],a:1},
+{q:"I have lived here _____ 2020.",options:["for","since","during","from"],a:1},
+{q:"If I _____ more time, I would learn another language.",options:["have","had","will have","having"],a:1},
+{q:"Choose the correct relative pronoun: The woman _____ lives next door is a doctor.",options:["which","who","where","whose"],a:1},
+{q:"The report _____ by the research team last week.",options:["prepared","was prepared","has prepare","is preparing"],a:1},
+{q:"Choose the closest meaning of 'significant'.",options:["Unimportant","Considerable","Ordinary","Temporary"],a:1},
+{q:"Hardly _____ the meeting started when the lights went out.",options:["had","has","did","was"],a:0},
+{q:"The proposal is worth _____ carefully.",options:["consider","considered","considering","to consider"],a:2},
+{q:"Choose the grammatically correct sentence.",options:["Despite of the rain, we went out.","Despite the rain, we went out.","Although the rain, we went out.","In spite the rain, we went out."],a:1},
+{q:"The findings are _____ with the original hypothesis.",options:["consistent","consistency","consistently","consisted"],a:0},
+{q:"The committee recommended that the proposal _____ revised.",options:["is","was","be","being"],a:2}
+];
+
+const levels=["A1","A2","B1","B2","C1","C2"];
+let answers=Array(questions.length).fill(null);
+let current=0;
+
+function render(){
+ const q=questions[current];
+ document.getElementById("counter").textContent="Question "+(current+1)+" of "+questions.length;
+ document.getElementById("bar").style.width=((current+1)/questions.length*100)+"%";
+ const container=document.getElementById("quiz");
+ container.innerHTML="";
+ const title=document.createElement("h3");
+ title.textContent=q.q;
+ container.append(title);
+ q.options.forEach((option,index)=>{
+  const button=document.createElement("button");
+  button.className="option"+(answers[current]===index?" selected":"");
+  button.textContent=String.fromCharCode(65+index)+". "+option;
+  button.setAttribute("aria-pressed",String(answers[current]===index));
+  button.addEventListener("click",()=>{
+   answers[current]=index;
+   render();
+  });
+  container.append(button);
+ });
+ document.getElementById("back").disabled=current===0;
+ document.getElementById("next").textContent=current===questions.length-1?"See my result":"Next question →";
+}
+
+function showResult(){
+ const score=answers.reduce((total,answer,index)=>total+(answer===questions[index].a?1:0),0);
+ const percent=score/questions.length;
+ const level=percent<.25?"A1":percent<.42?"A2":percent<.59?"B1":percent<.75?"B2":percent<.92?"C1":"C2";
+ document.getElementById("levelResult").textContent=level;
+ document.getElementById("description").textContent=
+ "You answered "+score+" out of "+questions.length+" questions correctly. This is an initial estimate based on this short sample test.";
+ const index=levels.indexOf(level);
+ const roadmap=document.getElementById("roadmap");
+ roadmap.innerHTML="";
+ levels.forEach((item,i)=>{
+  const card=document.createElement("div");
+  card.className="level-card";
+  const strong=document.createElement("strong");
+  strong.textContent=item;
+  const p=document.createElement("p");
+  p.textContent=i<index?"Review previous foundations":i===index?"Your suggested starting point":"Future learning goal";
+  card.append(strong,p);
+  roadmap.append(card);
+ });
+ document.getElementById("result").style.display="block";
+ document.getElementById("result").scrollIntoView({behavior:"smooth"});
+ localStorage.setItem("oopsEstimatedLevel",level);
+ localStorage.setItem("oopsPlacementScore",score);
+}
+
+document.getElementById("back").addEventListener("click",()=>{
+ if(current>0){current--;render();}
+});
+document.getElementById("next").addEventListener("click",()=>{
+ if(answers[current]===null){
+  alert("Please select an answer before continuing.");
+  return;
+ }
+ if(current<questions.length-1){current++;render();}
+ else{showResult();}
+});
+document.getElementById("retake").addEventListener("click",()=>{
+ answers=Array(questions.length).fill(null);
+ current=0;
+ document.getElementById("result").style.display="none";
+ render();
+ window.scrollTo({top:0,behavior:"smooth"});
+});
+document.getElementById("modeBtn").addEventListener("click",function(){
+ const enabled=document.body.classList.toggle("accessible");
+ this.setAttribute("aria-pressed",String(enabled));
+ this.textContent=enabled?"Normal Mode":"Accessible Mode";
+});
+render();
+</script>
+</body>
+</html>
