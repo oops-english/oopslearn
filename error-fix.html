@@ -87,6 +87,7 @@ footer{text-align:center;padding:30px;color:var(--muted)}
 
 <footer>Oops! — Make mistakes. Make progress.</footer>
 
+<script src="tracker.js"></script>
 <script>
 const rules=[
 {pattern:/\bshe go\b/gi,replace:"she goes",reason:"In the Present Simple, verbs take -s or -es with he, she and it.",example:"She studies English every day."},
@@ -150,6 +151,11 @@ document.getElementById("checkBtn").addEventListener("click",()=>{
  document.getElementById("reason").textContent=reasons.length?reasons.join(" "):"This sentence did not match the current sample rules. That does not guarantee it is completely correct.";
  document.getElementById("example").textContent=examples.length?examples.join(" | "):"Keep practising and expanding your English knowledge.";
  saveHistory(input,output);
+
+// Record the learner's study day.
+if (window.OopsTracker) {
+  window.OopsTracker.recordStudyDay();
+}
 });
 
 document.getElementById("clearBtn").addEventListener("click",()=>{
