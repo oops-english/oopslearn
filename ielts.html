@@ -87,6 +87,7 @@ footer{text-align:center;padding:30px;color:var(--muted)}
 
 <footer>Oops! — Make mistakes. Make progress.</footer>
 
+<script src="tracker.js"></script>
 <script>
 const tasks={
 listening:{
@@ -177,6 +178,10 @@ function startSkill(skill){
   if(!value){
    document.getElementById("feedback").textContent="Please enter your response first.";
    return;
+  }
+    // Record one study day after the learner submits a practice response.
+  if(window.OopsTracker){
+   window.OopsTracker.recordStudyDay();
   }
   if(item.answer){
    const correct=value.toLowerCase().includes(item.answer);
