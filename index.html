@@ -361,18 +361,8 @@ button:focus-visible {
   <p>An inclusive English-learning platform for every learner.</p>
 </footer>
 
-<script>
-const modeBtn = document.getElementById("modeBtn");
-modeBtn.addEventListener("click", () => {
-  const enabled = document.body.classList.toggle("accessible");
-  modeBtn.setAttribute("aria-pressed", String(enabled));
-  modeBtn.textContent = enabled ? "Normal Mode" : "Accessible Mode";
-});
-
-document.getElementById("questBtn").addEventListener("click", () => {
-  document.getElementById("questMessage").textContent =
-    "Great start! Your daily quest is ready. Keep learning!";
-});
-</script>
+<script src="accessibility.js"></script>
+</body>
+</html>
 </body>
 </html>
