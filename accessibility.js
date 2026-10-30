@@ -1,4 +1,3 @@
-
 (function () {
   "use strict";
 
@@ -21,12 +20,11 @@
 
   function toggleMode() {
     const enabled = !loadMode();
-
     localStorage.setItem(STORAGE_KEY, String(enabled));
     applyMode(enabled);
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function init() {
     applyMode(loadMode());
 
     const button = document.getElementById("modeBtn");
@@ -34,7 +32,13 @@
     if (button) {
       button.addEventListener("click", toggleMode);
     }
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 
   window.OopsAccessibility = {
     applyMode,
