@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Progress | Oops!</title>
+<style>
+:root {
+  --primary:#6957d8;
+  --bg:#f6f5ff;
+  --card:#ffffff;
+  --text:#292744;
+  --muted:#77748f;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,sans-serif;
+  background:var(--bg);color:var(--text);
+}
+header{
+  background:white;padding:18px 7%;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:15px;flex-wrap:wrap;box-shadow:0 2px 12px #25204410;
+}
+.logo{font-size:25px;font-weight:800;color:var(--primary);text-decoration:none}
+nav{display:flex;gap:16px;flex-wrap:wrap}
+nav a{color:var(--text);text-decoration:none;font-weight:600}
+button{
+  border:0;border-radius:10px;padding:11px 16px;
+  background:var(--primary);color:white;font-weight:700;cursor:pointer;
+}
+main{max-width:1050px;margin:35px auto;padding:0 20px}
+h1{font-size:32px;margin-bottom:8px}
+.subtitle{color:var(--muted);line-height:1.6}
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:18px;margin:25px 0;
+}
+.card{
+  background:var(--card);padding:22px;border-radius:18px;
+  box-shadow:0 5px 20px #2520440c;
+}
+.card h3{margin:0 0 12px;font-size:15px;color:var(--muted)}
+.number{font-size:32px;font-weight:800;color:var(--primary)}
+.section{margin-top:30px}
+.progress-track{
+  height:12px;background:#e9e7f5;border-radius:20px;overflow:hidden;
+  margin:12px 0;
+}
+.progress-fill{height:100%;background:var(--primary);border-radius:20px}
+.info{line-height:1.8;color:var(--muted)}
+.item{
+  padding:13px 0;border-bottom:1px solid #eee;
+  display:flex;justify-content:space-between;gap:12px;
+}
+.empty{color:var(--muted);padding:12px 0}
+footer{text-align:center;color:var(--muted);padding:35px}
+body.accessible{background:#fff;color:#000;font-size:18px}
+body.accessible .card,body.accessible header{border:2px solid #000;box-shadow:none}
+body.accessible a{color:#000;text-decoration:underline}
+body.accessible button{background:#000;color:#fff;border:2px solid #000}
+button:focus,a:focus{outline:3px solid orange;outline-offset:3px}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html">Oops!</a>
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="vocabulary.html">Vocabulary</a>
+    <a href="grammar.html">Grammar</a>
+    <a href="error-fix.html">Error Fix</a>
+    <a href="ielts.html">IELTS</a>
+  </nav>
+  <button id="modeBtn" type="button" aria-pressed="false">Accessible Mode</button>
+</header>
+
+<main>
+  <h1>My Learning Progress 📊</h1>
+  <p class="subtitle">Track your learning journey, review your achievements and discover what to improve next.</p>
+
+  <section class="grid" aria-label="Learning statistics">
+    <div class="card">
+      <h3>Estimated English Level</h3>
+      <div class="number" id="level">Not tested</div>
+      <p class="info">Based on your placement test.</p>
+    </div>
+    <div class="card">
+      <h3>Vocabulary Saved</h3>
+      <div class="number" id="words">0</div>
+      <p class="info">Words in your personal wordbook.</p>
+    </div>
+    <div class="card">
+      <h3>Errors Reviewed</h3>
+      <div class="number" id="errors">0</div>
+      <p class="info">Entries saved in Error Fix history.</p>
+    </div>
+    <div class="card">
+      <h3>Placement Test Score</h3>
+      <div class="number" id="score">--</div>
+      <p class="info">Your latest recorded result.</p>
+    </div>
+  </section>
+
+  <section class="card section">
+    <h2>My Learning Overview</h2>
+    <p class="info" id="overview">Complete activities to begin building your learning record.</p>
+    <div class="progress-track" role="progressbar" aria-label="Vocabulary collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="progress-fill" id="wordBar" style="width:0%"></div>
+    </div>
+    <p class="info" id="wordProgress">Vocabulary collection: 0 / 50 words</p>
+  </section>
+
+  <section class="grid section">
+    <div class="card">
+      <h2>My Vocabulary</h2>
+      <div id="wordList" class="info">No saved words yet.</div>
+      <a href="vocabulary.html">Explore Vocabulary →</a>
+    </div>
+    <div class="card">
+      <h2>My Error History</h2>
+      <div id="errorList" class="info">No reviewed errors yet.</div>
+      <a href="error-fix.html">Practice Error Fix →</a>
+    </div>
+  </section>
+
+  <section class="card section">
+    <h2>Recommended Next Steps</h2>
+    <div class="item"><span>Review grammar lessons</span><a href="grammar.html">Start →</a></div>
+    <div class="item"><span>Build your vocabulary</span><a href="vocabulary.html">Start →</a></div>
+    <div class="item"><span>Practice IELTS skills</span><a href="ielts.html">Start →</a></div>
+    <div class="item"><span>Check your learning level</span><a href="roadmap.html">Start →</a></div>
+  </section>
+
+  <p class="info">Note: This is an early prototype. Statistics are calculated from activities saved in this browser and do not yet represent a complete learning record across devices.</p>
+</main>
+
+<footer>Oops! — Make mistakes. Make progress.</footer>
+
+<script>
+const wordbook = JSON.parse(localStorage.getItem("oopsWordbook") || "[]");
+const errors = JSON.parse(localStorage.getItem("oopsErrorHistory") || "[]");
+const level = localStorage.getItem("oopsEstimatedLevel");
+const score = localStorage.getItem("oopsPlacementScore");
+
+document.getElementById("level").textContent = level || "Not tested";
+document.getElementById("words").textContent = wordbook.length;
+document.getElementById("errors").textContent = errors.length;
+document.getElementById("score").textContent = score ? score + " / 12" : "--";
+
+const percent = Math.min(100, Math.round(wordbook.length / 50 * 100));
+document.getElementById("wordBar").style.width = percent + "%";
+document.querySelector('[role="progressbar"]').setAttribute("aria-valuenow", percent);
+document.getElementById("wordProgress").textContent =
+  "Vocabulary collection: " + wordbook.length + " / 50 words (" + percent + "%)";
+
+document.getElementById("overview").textContent =
+  "You have saved " + wordbook.length + " vocabulary items and recorded " +
+  errors.length + " error-review entries.";
+
+const wordList = document.getElementById("wordList");
+if(wordbook.length){
+  wordList.innerHTML = wordbook.slice(0,5).map(w =>
+    "<div class='item'>" + escapeHTML(typeof w === "string" ? w : (w.word || w.term || "Saved word")) + "</div>"
+  ).join("");
+}else{
+  wordList.textContent = "No saved words yet. Visit Vocabulary Lab to save your first word.";
+}
+
+const errorList = document.getElementById("errorList");
+if(errors.length){
+  errorList.innerHTML = errors.slice(-5).reverse().map(e =>
+    "<div class='item'>" + escapeHTML(typeof e === "string" ? e : (e.original || e.sentence || "Reviewed error")) + "</div>"
+  ).join("");
+}else{
+  errorList.textContent = "No reviewed errors yet. Try the Error Fix activity.";
+}
+
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+const modeBtn = document.getElementById("modeBtn");
+modeBtn.addEventListener("click",()=>{
+  const active = document.body.classList.toggle("accessible");
+  modeBtn.textContent = active ? "Return to Normal Mode" : "Accessible Mode";
+  modeBtn.setAttribute("aria-pressed",String(active));
+});
+</script>
+</body>
+</html>
