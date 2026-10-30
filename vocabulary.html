@@ -99,7 +99,7 @@ body.large-text{font-size:120%}
 </main>
 
 <footer>Oops! — Make mistakes. Make progress.</footer>
-
+<script src="tracker.js"></script>
 <script>
 const vocabulary = [
  {word:"achieve",ipa:"/əˈtʃiːv/",meaning:"đạt được",example:"She worked hard to achieve her goals.",level:"A2",topic:"Education"},
@@ -178,11 +178,24 @@ function render(){
    const save = document.createElement("button");
    save.className = "secondary";
    save.textContent = isSaved ? "★ Saved" : "☆ Save word";
-   save.addEventListener("click", () => {
-     saved = isSaved ? saved.filter(word => word !== item.word) : [...saved,item.word];
-     localStorage.setItem("oopsWordbook",JSON.stringify(saved));
-     render();
-   });
+save.addEventListener("click", () => {
+  if (!isSaved) {
+    saved = [...saved, item.word];
+
+    // Award XP only when a new word is saved.
+    if (window.OopsTracker) {
+      window.OopsTracker.recordActivity("vocabulary", {
+        activityId: "vocabulary-" + item.word.toLowerCase(),
+        label: item.word
+      });
+    }
+  } else {
+    saved = saved.filter(word => word !== item.word);
+  }
+
+  localStorage.setItem("oopsWordbook", JSON.stringify(saved));
+  render();
+});
 
    actions.append(audio,save);
    card.append(heading,ipa,meaning,example,actions);
