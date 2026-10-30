@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocabulary Lab | Oops!</title>
+<style>
+:root {
+  --primary:#6957e8;
+  --bg:#f7f7fc;
+  --text:#26243a;
+  --card:#fff;
+  --muted:#77778d;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:var(--card);padding:17px 7%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;border-bottom:1px solid #eee}
+.logo{font-size:26px;font-weight:800;color:var(--primary);text-decoration:none}
+header a:not(.logo){color:var(--text);text-decoration:none}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0;border-radius:10px;padding:10px 15px;font-weight:700}
+.primary{background:var(--primary);color:white}
+.secondary{background:#eeeaff;color:var(--primary)}
+main{max-width:1100px;margin:auto;padding:45px 22px}
+.intro{background:linear-gradient(120deg,#eeeaff,#fff0f6);padding:35px;border-radius:24px;margin-bottom:30px}
+.intro h1{font-size:38px;margin:0 0 8px}
+.intro p{color:var(--muted)}
+.controls{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin:25px 0}
+input,select{padding:12px;border:1px solid #ddd;border-radius:10px;background:white;color:#222;width:100%}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+.tabs button.active{background:var(--primary);color:white}
+.words{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.word{background:var(--card);padding:22px;border:1px solid #eee;border-radius:17px}
+.word h3{margin:0;font-size:22px}
+.phonetic{color:var(--primary);font-size:14px}
+.meaning{margin:10px 0}
+.example{color:var(--muted);font-size:14px;font-style:italic}
+.actions{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap}
+.actions button{font-size:13px}
+#count{color:var(--muted);margin:15px 0}
+.empty{padding:30px;text-align:center;background:white;border-radius:15px}
+footer{text-align:center;padding:30px;color:var(--muted)}
+body.accessible{--bg:#000;--text:#fff;--card:#111;--muted:#eee;--primary:#ffeb3b}
+body.accessible .intro{background:#171717}
+body.accessible input,body.accessible select{background:#111;color:white;border:2px solid white}
+body.accessible .secondary{background:#333;color:#ffeb3b}
+body.large-text{font-size:120%}
+:focus-visible{outline:3px solid #ff9800;outline-offset:3px}
+@media(max-width:750px){.words{grid-template-columns:1fr 1fr}.controls{grid-template-columns:1fr}}
+@media(max-width:480px){.words{grid-template-columns:1fr}.intro h1{font-size:30px}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html">Oops!</a>
+  <a href="index.html">← Back to Home</a>
+  <button class="secondary" id="modeBtn" aria-pressed="false">Accessible Mode</button>
+</header>
+
+<main>
+  <section class="intro">
+    <h1>Vocabulary Lab 📚</h1>
+    <p>Build your vocabulary step by step. Discover new words, practise pronunciation and save the words you want to remember.</p>
+    <strong>Learn a word. Use it. Remember it.</strong>
+  </section>
+
+  <h2>Explore vocabulary</h2>
+  <p>Choose your English level and explore words by topic.</p>
+
+  <div class="controls">
+    <input id="search" type="search" placeholder="Search for a word..." aria-label="Search vocabulary">
+    <select id="level" aria-label="Choose English level">
+      <option value="all">All levels</option>
+      <option value="A1">A1 - Beginner</option>
+      <option value="A2">A2 - Elementary</option>
+      <option value="B1">B1 - Intermediate</option>
+      <option value="B2">B2 - Upper Intermediate</option>
+      <option value="C1">C1 - Advanced</option>
+      <option value="C2">C2 - Proficient</option>
+    </select>
+    <select id="topic" aria-label="Choose vocabulary topic">
+      <option value="all">All topics</option>
+      <option value="Daily life">Daily life</option>
+      <option value="Education">Education</option>
+      <option value="Environment">Environment</option>
+      <option value="Technology">Technology</option>
+      <option value="Society">Society</option>
+    </select>
+  </div>
+
+  <div class="tabs" aria-label="Vocabulary categories">
+    <button class="secondary active" data-filter="all">All words</button>
+    <button class="secondary" data-filter="saved">My wordbook ★</button>
+  </div>
+
+  <p id="count" aria-live="polite"></p>
+  <section class="words" id="wordList" aria-label="Vocabulary results"></section>
+</main>
+
+<footer>Oops! — Make mistakes. Make progress.</footer>
+
+<script>
+const vocabulary = [
+ {word:"achieve",ipa:"/əˈtʃiːv/",meaning:"đạt được",example:"She worked hard to achieve her goals.",level:"A2",topic:"Education"},
+ {word:"environment",ipa:"/ɪnˈvaɪrənmənt/",meaning:"môi trường",example:"We should protect the environment.",level:"A2",topic:"Environment"},
+ {word:"confident",ipa:"/ˈkɒnfɪdənt/",meaning:"tự tin",example:"She feels confident when speaking English.",level:"B1",topic:"Daily life"},
+ {word:"technology",ipa:"/tekˈnɒlədʒi/",meaning:"công nghệ",example:"Technology has changed modern education.",level:"B1",topic:"Technology"},
+ {word:"opportunity",ipa:"/ˌɒpəˈtjuːnəti/",meaning:"cơ hội",example:"This course offers an opportunity to learn.",level:"B1",topic:"Education"},
+ {word:"sustainable",ipa:"/səˈsteɪnəbl/",meaning:"bền vững",example:"We need sustainable solutions.",level:"B2",topic:"Environment"},
+ {word:"inequality",ipa:"/ˌɪnɪˈkwɒləti/",meaning:"sự bất bình đẳng",example:"Education can help reduce inequality.",level:"B2",topic:"Society"},
+ {word:"innovative",ipa:"/ˈɪnəvətɪv/",meaning:"mang tính đổi mới",example:"The school introduced an innovative method.",level:"C1",topic:"Technology"},
+ {word:"comprehensive",ipa:"/ˌkɒmprɪˈhensɪv/",meaning:"toàn diện",example:"The report provides a comprehensive analysis.",level:"C1",topic:"Education"},
+ {word:"ubiquitous",ipa:"/juːˈbɪkwɪtəs/",meaning:"có mặt ở khắp nơi",example:"Smartphones have become ubiquitous.",level:"C2",topic:"Technology"},
+ {word:"book",ipa:"/bʊk/",meaning:"quyển sách",example:"I read a book every week.",level:"A1",topic:"Education"},
+ {word:"family",ipa:"/ˈfæməli/",meaning:"gia đình",example:"My family lives in Vietnam.",level:"A1",topic:"Daily life"}
+];
+
+let saved = JSON.parse(localStorage.getItem("oopsWordbook") || "[]");
+let currentFilter = "all";
+
+const list = document.getElementById("wordList");
+const search = document.getElementById("search");
+const level = document.getElementById("level");
+const topic = document.getElementById("topic");
+
+function render(){
+ const query = search.value.trim().toLowerCase();
+ const results = vocabulary.filter(item => {
+   const matchesSearch = item.word.toLowerCase().includes(query) || item.meaning.toLowerCase().includes(query);
+   const matchesLevel = level.value === "all" || item.level === level.value;
+   const matchesTopic = topic.value === "all" || item.topic === topic.value;
+   const matchesSaved = currentFilter !== "saved" || saved.includes(item.word);
+   return matchesSearch && matchesLevel && matchesTopic && matchesSaved;
+ });
+ document.getElementById("count").textContent = results.length + " words found";
+ list.innerHTML = "";
+
+ if(!results.length){
+   list.innerHTML = '<div class="empty">No words found. Try another search or filter.</div>';
+   return;
+ }
+
+ results.forEach(item => {
+   const isSaved = saved.includes(item.word);
+   const card = document.createElement("article");
+   card.className = "word";
+
+   const heading = document.createElement("h3");
+   heading.textContent = item.word;
+   const ipa = document.createElement("div");
+   ipa.className = "phonetic";
+   ipa.textContent = item.ipa + " · " + item.level;
+   const meaning = document.createElement("p");
+   meaning.className = "meaning";
+   meaning.textContent = item.meaning;
+   const example = document.createElement("p");
+   example.className = "example";
+   example.textContent = '"' + item.example + '"';
+   const actions = document.createElement("div");
+   actions.className = "actions";
+
+   const audio = document.createElement("button");
+   audio.className = "secondary";
+   audio.textContent = "🔊 Listen";
+   audio.setAttribute("aria-label", "Listen to " + item.word);
+   audio.addEventListener("click", () => {
+     if("speechSynthesis" in window){
+       speechSynthesis.cancel();
+       const utterance = new SpeechSynthesisUtterance(item.word);
+       utterance.lang = "en-US";
+       speechSynthesis.speak(utterance);
+     } else {
+       alert("Speech is not supported in this browser.");
+     }
+   });
+
+   const save = document.createElement("button");
+   save.className = "secondary";
+   save.textContent = isSaved ? "★ Saved" : "☆ Save word";
+   save.addEventListener("click", () => {
+     saved = isSaved ? saved.filter(word => word !== item.word) : [...saved,item.word];
+     localStorage.setItem("oopsWordbook",JSON.stringify(saved));
+     render();
+   });
+
+   actions.append(audio,save);
+   card.append(heading,ipa,meaning,example,actions);
+   list.append(card);
+ });
+}
+
+search.addEventListener("input",render);
+level.addEventListener("change",render);
+topic.addEventListener("change",render);
+
+document.querySelectorAll("[data-filter]").forEach(button => {
+ button.addEventListener("click",() => {
+   currentFilter = button.dataset.filter;
+   document.querySelectorAll("[data-filter]").forEach(b => b.classList.remove("active"));
+   button.classList.add("active");
+   render();
+ });
+});
+
+document.getElementById("modeBtn").addEventListener("click",function(){
+ const enabled = document.body.classList.toggle("accessible");
+ this.setAttribute("aria-pressed",String(enabled));
+ this.textContent = enabled ? "Normal Mode" : "Accessible Mode";
+});
+
+render();
+</script>
+</body>
+</html>
