@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Practice | Oops!</title>
+<style>
+:root{--primary:#6957e8;--bg:#f7f7fc;--text:#26243a;--card:#fff;--muted:#77778d}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+header{padding:17px 7%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;background:var(--card);border-bottom:1px solid #eee}
+.logo{font-size:26px;font-weight:800;color:var(--primary);text-decoration:none}
+header a:not(.logo){color:var(--text);text-decoration:none}
+button,textarea,input{font:inherit}
+button{border:0;border-radius:10px;padding:11px 16px;cursor:pointer;font-weight:bold}
+.primary{background:var(--primary);color:white}
+.secondary{background:#eeeaff;color:var(--primary)}
+main{max-width:1050px;margin:auto;padding:40px 22px}
+.hero{padding:35px;background:linear-gradient(120deg,#eeeaff,#fff0f6);border-radius:22px;margin-bottom:30px}
+.hero h1{font-size:36px;margin:0}
+.hero p{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{background:var(--card);padding:24px;border:1px solid #eee;border-radius:18px}
+.card h2{margin-top:0}
+.card p{color:var(--muted)}
+.practice{margin-top:30px;background:var(--card);padding:25px;border-radius:18px}
+.practice textarea{width:100%;min-height:130px;padding:14px;border:1px solid #ddd;border-radius:12px}
+.practice input{padding:11px;border:1px solid #ddd;border-radius:10px;width:100%;margin:10px 0}
+#feedback{font-weight:bold}
+.hidden{display:none}
+body.accessible{--bg:#000;--text:#fff;--card:#111;--muted:#eee;--primary:#ffeb3b}
+body.accessible .hero{background:#171717}
+body.accessible textarea,body.accessible input{background:#111;color:white;border:2px solid white}
+body.accessible .secondary{background:#333;color:#ffeb3b}
+:focus-visible{outline:3px solid #ff9800;outline-offset:4px}
+footer{text-align:center;padding:30px;color:var(--muted)}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.hero h1{font-size:29px}}
+</style>
+</head>
+<body>
+<header>
+<a class="logo" href="index.html">Oops!</a>
+<a href="index.html">← Back to Home</a>
+<button class="secondary" id="modeBtn" aria-pressed="false">Accessible Mode</button>
+</header>
+
+<main>
+<section class="hero">
+<h1>IELTS Practice 🎯</h1>
+<p>Develop your English skills through structured practice and thoughtful reflection.</p>
+<strong>Practise consistently. Learn from feedback. Make progress.</strong>
+</section>
+
+<h2>Choose your skill</h2>
+<div class="grid">
+<article class="card">
+<h2>🎧 Listening</h2>
+<p>Practise listening comprehension, identifying key information and understanding details.</p>
+<button class="primary" data-skill="listening">Start Listening</button>
+</article>
+<article class="card">
+<h2>📖 Reading</h2>
+<p>Develop skimming, scanning, inference and vocabulary-in-context skills.</p>
+<button class="primary" data-skill="reading">Start Reading</button>
+</article>
+<article class="card">
+<h2>✍️ Writing</h2>
+<p>Practise Task 1 and Task 2, organize ideas and improve coherence and vocabulary.</p>
+<button class="primary" data-skill="writing">Start Writing</button>
+</article>
+<article class="card">
+<h2>🗣️ Speaking</h2>
+<p>Practise Part 1, Part 2 and Part 3 with topic-based speaking prompts.</p>
+<button class="primary" data-skill="speaking">Start Speaking</button>
+</article>
+</div>
+
+<section class="practice hidden" id="practice">
+<h2 id="practiceTitle">Practice</h2>
+<p id="instructions"></p>
+<div id="task"></div>
+<p id="feedback" aria-live="polite"></p>
+<button class="secondary" id="reset">Back to skills</button>
+</section>
+</main>
+
+<footer>Oops! — Make mistakes. Make progress.</footer>
+
+<script>
+const tasks={
+listening:{
+title:"Listening Practice",
+instructions:"Listen to the sentence and answer the question. This browser-based demo uses text-to-speech.",
+content:"The student usually studies English for thirty minutes every evening.",
+question:"How long does the student study English every evening?",
+answer:"thirty minutes",
+placeholder:"Type your answer..."
+},
+reading:{
+title:"Reading Practice",
+instructions:"Read the passage and answer the question.",
+content:"Many schools are introducing digital learning tools. These tools can help students access educational materials more easily. However, technology should support teachers rather than replace meaningful human interaction.",
+question:"According to the passage, what should technology support?",
+answer:"teachers",
+placeholder:"Type your answer..."
+},
+writing:{
+title:"Writing Practice",
+instructions:"Write a short response to the following IELTS-style practice prompt. This is an original practice prompt, not an official test question.",
+content:"Some people believe that students should learn practical skills at school in addition to academic subjects. To what extent do you agree or disagree?",
+question:"Write your response below:",
+answer:null,
+placeholder:"Write your ideas here..."
+},
+speaking:{
+title:"Speaking Practice",
+instructions:"Read the question aloud and practise answering it. You can use your device's microphone or record yourself separately.",
+content:"Describe a skill you would like to learn in the future. You should say what the skill is, why you want to learn it, how you would learn it and explain how it could help you.",
+question:"Speaking Part 2 – Practice prompt",
+answer:null,
+placeholder:"Write a few notes about your answer..."
+}
+};
+
+const practice=document.getElementById("practice");
+const task=document.getElementById("task");
+let currentSkill="";
+
+function startSkill(skill){
+ currentSkill=skill;
+ const item=tasks[skill];
+ document.getElementById("practiceTitle").textContent=item.title;
+ document.getElementById("instructions").textContent=item.instructions;
+ document.getElementById("feedback").textContent="";
+ task.innerHTML="";
+
+ const passage=document.createElement("p");
+ passage.textContent=item.content;
+ task.append(passage);
+
+ const question=document.createElement("h3");
+ question.textContent=item.question;
+ task.append(question);
+
+ if(skill==="listening"){
+  const listen=document.createElement("button");
+  listen.className="secondary";
+  listen.textContent="🔊 Listen to the sentence";
+  listen.addEventListener("click",()=>{
+   if("speechSynthesis" in window){
+    speechSynthesis.cancel();
+    const utterance=new SpeechSynthesisUtterance(item.content);
+    utterance.lang="en-US";
+    speechSynthesis.speak(utterance);
+   }else{
+    document.getElementById("feedback").textContent="Speech playback is not supported in this browser.";
+   }
+  });
+  task.append(listen);
+ }
+
+ const answer=skill==="writing"||skill==="speaking"
+  ?document.createElement("textarea")
+  :document.createElement("input");
+ answer.id="answer";
+ answer.placeholder=item.placeholder;
+ answer.setAttribute("aria-label",item.placeholder);
+ task.append(answer);
+
+ const submit=document.createElement("button");
+ submit.className="primary";
+ submit.textContent=skill==="writing"||skill==="speaking"?"Save practice response":"Check answer";
+ submit.style.marginTop="12px";
+ submit.addEventListener("click",()=>{
+  const value=answer.value.trim();
+  if(!value){
+   document.getElementById("feedback").textContent="Please enter your response first.";
+   return;
+  }
+  if(item.answer){
+   const correct=value.toLowerCase().includes(item.answer);
+   document.getElementById("feedback").textContent=correct?"Correct! Well done.":"Not quite. Review the passage or listen again and try once more.";
+  }else{
+   document.getElementById("feedback").textContent="Your response has been saved in this practice session. Review your ideas and improve your answer.";
+  }
+ });
+ task.append(submit);
+ practice.classList.remove("hidden");
+ practice.scrollIntoView({behavior:"smooth"});
+}
+
+document.querySelectorAll("[data-skill]").forEach(button=>{
+ button.addEventListener("click",()=>startSkill(button.dataset.skill));
+});
+
+document.getElementById("reset").addEventListener("click",()=>{
+ practice.classList.add("hidden");
+});
+
+document.getElementById("modeBtn").addEventListener("click",function(){
+ const enabled=document.body.classList.toggle("accessible");
+ this.setAttribute("aria-pressed",String(enabled));
+ this.textContent=enabled?"Normal Mode":"Accessible Mode";
+});
+</script>
+</body>
+</html>
