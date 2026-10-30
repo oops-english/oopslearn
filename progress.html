@@ -167,24 +167,45 @@ const wordbook = JSON.parse(localStorage.getItem("oopsWordbook") || "[]");
 const errors = JSON.parse(localStorage.getItem("oopsErrorHistory") || "[]");
 const level = localStorage.getItem("oopsEstimatedLevel");
 const score = localStorage.getItem("oopsPlacementScore");
-// Load Oops! XP Dashboard
-const tracker = window.OopsTracker;
 
-if (tracker) {
+// Load Oops! Learning Streak Dashboard
+function renderStreak() {
+  const tracker = window.OopsTracker;
+
+  if (!tracker) {
+    document.getElementById("streakMessage").textContent =
+      "Learning tracker could not be loaded.";
+    return;
+  }
+
   const data = tracker.getData();
 
-  document.getElementById("totalXP").textContent = data.xp + " XP";
-  document.getElementById("trackerLevel").textContent = "Level " + data.level;
+  document.getElementById("currentStreak").textContent =
+    data.streak + (data.streak === 1 ? " day" : " days");
 
-  document.getElementById("xpBar").style.width =
-    data.levelProgress + "%";
+  document.getElementById("longestStreak").textContent =
+    data.longestStreak + (data.longestStreak === 1 ? " day" : " days");
 
-  document.getElementById("xpProgress").textContent =
-    data.levelProgress + "% progress to next level";
+  document.getElementById("totalStudyDays").textContent =
+    data.studyDays + (data.studyDays === 1 ? " day" : " days");
 
-  document.getElementById("xpRemaining").textContent =
-    data.xpToNextLevel + " XP to next level";
+  document.getElementById("streakMessage").textContent =
+    data.studiedToday
+      ? "Great work! You have studied today. Keep it up!"
+      : data.streak > 0
+        ? "Your streak is active. Complete an activity today to continue!"
+        : "Start learning today to build your streak!";
 }
+
+renderStreak();
+
+window.addEventListener("oopsStreakUpdated", renderStreak);
+window.addEventListener("storage", function(event) {
+  if (event.key === "oopsStreakData") {
+    renderStreak();
+  }
+});
+
 document.getElementById("level").textContent = level || "Not tested";
 document.getElementById("words").textContent = wordbook.length;
 document.getElementById("errors").textContent = errors.length;
