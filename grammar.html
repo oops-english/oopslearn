@@ -88,6 +88,7 @@ footer{text-align:center;padding:30px;color:var(--muted)}
 
 <footer>Oops! — Make mistakes. Make progress.</footer>
 
+<script src="tracker.js"></script>
 <script>
 const data=[
 {level:"A1",topic:"Tenses",title:"Present Simple",formula:"S + V(s/es)",ex:"She goes to school every day.",mistake:"She go to school every day.",note:"Use the third-person singular form with he, she and it."},
@@ -156,7 +157,13 @@ function showQuestion(){
   button.addEventListener("click",()=>{
    if(answered)return;
    answered=true;
-   const correct=index===q.answer;
+
+// Record one study day when the learner answers a question.
+if (window.OopsTracker) {
+  window.OopsTracker.recordStudyDay();
+}
+
+const correct=index===q.answer;
    document.getElementById("feedback").textContent=
     (correct?"Correct! ":"Not quite. ")+q.explain;
   });
