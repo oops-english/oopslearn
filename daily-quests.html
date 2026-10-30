@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Quests | Oops!</title>
+<style>
+:root {
+  --primary:#6957e8;
+  --bg:#f7f7fc;
+  --text:#24243a;
+  --card:#fff;
+  --muted:#77778d;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.site-header{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:14px 6%;background:var(--card);position:sticky;top:0;z-index:100;border-bottom:1px solid #eceaf5;flex-wrap:wrap}
+.logo{font-size:29px;font-weight:800;color:var(--primary);text-decoration:none}
+.main-nav{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.nav-link{color:var(--text);text-decoration:none;font-size:14px;font-weight:600;padding:10px 15px;border-radius:12px}
+.nav-link:hover,.nav-link.active{background:#eeeaff;color:var(--primary)}
+.profile-link{border:1px solid #eeeaf7}
+button{border:0;border-radius:12px;padding:11px 17px;cursor:pointer;font-weight:700;font:inherit}
+.secondary{background:#eeeaff;color:var(--primary)}
+.mode-button{margin-left:5px;white-space:nowrap}
+main{max-width:1200px;margin:auto;padding:55px 25px}
+.hero{margin-bottom:30px}
+h1{font-size:36px;margin-bottom:8px}
+p{color:var(--muted)}
+.card{background:var(--card);padding:30px;border-radius:20px;border:1px solid #eeeaf5}
+.card h2{margin-bottom:10px}
+.card p{margin-bottom:22px}
+.primary{background:var(--primary);color:white}
+#questMessage{margin-top:18px;font-weight:600}
+footer{text-align:center;padding:30px;color:var(--muted)}
+body.accessible{--bg:#000;--text:#fff;--card:#111;--muted:#eee;--primary:#ffeb3b}
+body.accessible .card{border:2px solid white}
+body.accessible .secondary{background:#333;color:#ffeb3b}
+body.accessible .primary{color:#000}
+:focus-visible{outline:3px solid #ff9800;outline-offset:4px}
+@media(max-width:850px){.site-header{flex-direction:column;align-items:flex-start}.main-nav{width:100%}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="logo" href="index.html">Oops!</a>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="learning-hub.html">Learning Hub</a>
+    <a class="nav-link active" href="daily-quests.html">Daily Quests</a>
+    <a class="nav-link" href="progress.html">My Progress</a>
+    <a class="nav-link profile-link" href="profile.html">👤 Profile</a>
+    <button class="mode-button secondary" id="modeBtn" type="button" aria-pressed="false">Accessible Mode</button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Daily Quests</h1>
+    <p>Small steps. Consistent progress.</p>
+  </section>
+
+  <section class="card">
+    <h2>Today's challenge</h2>
+    <p>Complete one English activity and build your daily learning habit.</p>
+    <button class="primary" id="questBtn" type="button">Start today's quest</button>
+    <p id="questMessage" aria-live="polite"></p>
+  </section>
+</main>
+
+<footer>Oops! — Make mistakes. Make progress.</footer>
+
+<script src="tracker.js"></script>
+<script>
+const modeBtn=document.getElementById("modeBtn");
+modeBtn.addEventListener("click",()=>{
+  const enabled=document.body.classList.toggle("accessible");
+  modeBtn.setAttribute("aria-pressed",String(enabled));
+  modeBtn.textContent=enabled?"Normal Mode":"Accessible Mode";
+});
+
+document.getElementById("questBtn").addEventListener("click",()=>{
+  if(window.OopsTracker){
+    window.OopsTracker.recordStudyDay();
+  }
+  document.getElementById("questMessage").textContent=
+    "Great work! Today's learning activity has been recorded.";
+});
+</script>
+</body>
+</html>
