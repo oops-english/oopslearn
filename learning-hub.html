@@ -46,16 +46,20 @@ header {
   font-weight: 700;
 }
 
+button {
+  font: inherit;
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .mode-button {
   background: #f1edff;
   color: var(--primary);
+  white-space: nowrap;
 }
-.logo{font-size:28px;font-weight:800;color:var(--primary);text-decoration:none}
-nav{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-nav a{padding:9px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-weight:600}
-nav a:hover,nav a.active{background:#eeeaff;color:var(--primary)}
-button{font:inherit;border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}
-.mode-button{background:#eeeaff;color:var(--primary)}
 main{max-width:1150px;margin:auto;padding:45px 22px}
 .hero {
   text-align: center;
@@ -86,7 +90,27 @@ body.accessible nav a{color:white}
 body.accessible nav a.active{background:#333;color:#ffeb3b}
 body.accessible .mode-button{background:#333;color:#ffeb3b}
 :focus-visible{outline:3px solid #ff9800;outline-offset:4px}
-@media(max-width:650px){.grid{grid-template-columns:1fr}.hero h1{font-size:31px}header{align-items:flex-start}}
+@media (max-width: 650px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 31px;
+  }
+
+  header {
+    height: auto;
+    min-height: 76px;
+    padding: 14px 5%;
+    gap: 10px;
+  }
+
+  .header-actions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
 </style>
 </head>
 <body>
