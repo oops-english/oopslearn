@@ -496,13 +496,50 @@ const vocabulary = [
  {word:"ubiquitous",ipa:"/juːˈbɪkwɪtəs/",meaning:"có mặt ở khắp nơi",example:"Smartphones have become ubiquitous.",level:"C2",topic:"Technology"}
 ];
 
-const topics = [
- {name:"Daily life",description:"Everyday activities and communication"},
- {name:"Education",description:"School, learning and academic life"},
- {name:"Environment",description:"Nature and environmental issues"},
- {name:"Technology",description:"Digital life and innovation"},
- {name:"Society",description:"People and social issues"}
-];
+const topicsByLevel = {
+  A1: [
+    {name:"Personal Information & Family",description:"Names, ages, nationalities and family members"},
+    {name:"Objects & Surroundings",description:"School supplies, household objects, colours and numbers"},
+    {name:"Daily Routines",description:"Food, drinks, clothes and everyday activities"},
+    {name:"Time & Weather",description:"Days, months, clock time and basic weather"},
+    {name:"Places & Transport",description:"Home, school and familiar means of transport"}
+  ],
+  A2: [
+    {name:"Jobs & Occupations",description:"Professions, workplaces and daily responsibilities"},
+    {name:"Shopping & Prices",description:"Clothes, food, prices and payments"},
+    {name:"Travel & Transport",description:"Directions, accommodation and travel plans"},
+    {name:"Basic Health",description:"Common symptoms, illnesses and parts of the body"},
+    {name:"Hobbies & Entertainment",description:"Sports, music, films and leisure activities"}
+  ],
+  B1: [
+    {name:"Education & Training",description:"Subjects, learning skills and career ambitions"},
+    {name:"Environment & Nature",description:"Climate, wildlife, pollution and recycling"},
+    {name:"Feelings & Personality",description:"Emotions, personal qualities and behaviour"},
+    {name:"Media & Technology",description:"Social media, the internet and everyday news"},
+    {name:"Relationships & Society",description:"Friendship, family events and social customs"}
+  ],
+  B2: [
+    {name:"Economics & Business",description:"Personal finance, employment, markets and marketing"},
+    {name:"Society & Law",description:"Inequality, crime, legislation and citizenship"},
+    {name:"Science & Technology",description:"Artificial intelligence, medicine, inventions and space"},
+    {name:"Culture & Arts",description:"Architecture, literature, heritage and lifestyles"},
+    {name:"Psychology & Behaviour",description:"Motivation, stress, thinking and personal development"}
+  ],
+  C1: [
+    {name:"Politics & Geopolitics",description:"Political systems, diplomacy and public policy"},
+    {name:"Macroeconomics & Finance",description:"Inflation, recession and international trade"},
+    {name:"Academic Research & Philosophy",description:"Research methods, social theories and ethics"},
+    {name:"Advanced Ecology & Sustainability",description:"Biodiversity, energy policy and global climate issues"},
+    {name:"Language & Mass Media",description:"Media manipulation, linguistics and popular culture"}
+  ],
+  C2: [
+    {name:"Philosophy & Academic Thought",description:"Epistemology, complex schools of thought and critical theory"},
+    {name:"Literature & Arts",description:"Literary analysis, metaphor and artistic expression"},
+    {name:"Specialized English (ESP)",description:"Advanced medicine, international law and emerging technologies"},
+    {name:"Linguistics & Nuances",description:"Subtle meanings, connotations and lexical distinctions"},
+    {name:"Idioms & Historical Expressions",description:"Rare idioms, historical slang and figurative language"}
+  ]
+};
 
 const $ = id => document.getElementById(id);
 
@@ -569,7 +606,7 @@ function renderTopics(){
   const container = $("topicList");
   container.innerHTML = "";
 
-  topics.forEach(item=>{
+  (topicsByLevel[selectedLevel] || []).forEach(item=>{
     const count = getWords(selectedLevel,item.name).length;
     const button = document.createElement("button");
     button.type = "button";
