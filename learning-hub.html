@@ -22,7 +22,17 @@ nav a:hover,nav a.active{background:#eeeaff;color:var(--primary)}
 button{font:inherit;border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}
 .mode-button{background:#eeeaff;color:var(--primary)}
 main{max-width:1150px;margin:auto;padding:45px 22px}
-.hero{text-align:center;padding:45px 20px;background:linear-gradient(120deg,#eeeaff,#fff0f6);border-radius:24px;margin-bottom:35px}
+.hero {
+  text-align: center;
+  padding: 45px 20px;
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--primary) 14%, white),
+    color-mix(in srgb, var(--primary) 5%, white)
+  );
+  border-radius: 24px;
+  margin-bottom: 35px;
+}
 .hero h1{font-size:40px;margin:0 0 10px}
 .hero p{color:var(--muted);max-width:650px;margin:auto}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
