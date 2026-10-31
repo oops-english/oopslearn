@@ -2438,6 +2438,8 @@ function getCurrentWords(){
 /* TOPIC BROWSER */
 function renderTopics(){
   const container = $("topicList");
+  if (!container) return;
+
   container.innerHTML = "";
 
   const topics = topicsByLevel[selectedLevel] || [];
@@ -2466,9 +2468,7 @@ function renderTopics(){
       $("topicStudy").hidden = false;
 
       $("studyTopicTitle").textContent = topic;
-      $("studyTopicLevel").textContent =
-        selectedLevel + " · Vocabulary";
-
+      $("studyTopicLevel").textContent = selectedLevel + " · Vocabulary";
       $("learnTopicHeading").textContent = topic;
 
       startQuiz();
