@@ -1,0 +1,457 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile & Settings | Oops!</title>
+<style>
+:root {
+  --primary:#6957e8;
+  --bg:#f7f7fc;
+  --card:#fff;
+  --text:#292744;
+  --muted:#77748f;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+  padding:16px 6%;
+  background:var(--card);
+  border-bottom:1px solid #eee;
+}
+.logo{
+  font-size:28px;
+  font-weight:800;
+  color:var(--primary);
+  text-decoration:none;
+}
+nav{display:flex;gap:12px;flex-wrap:wrap}
+nav a{
+  text-decoration:none;
+  color:var(--text);
+  font-weight:600;
+  padding:9px 12px;
+  border-radius:10px;
+}
+nav a.active,nav a:hover{
+  background:#eeeaff;
+  color:var(--primary);
+}
+button,input,select{font:inherit}
+button{
+  border:0;
+  border-radius:10px;
+  padding:11px 16px;
+  font-weight:700;
+  cursor:pointer;
+}
+.mode-button,.secondary{
+  background:#eeeaff;
+  color:var(--primary);
+}
+main{
+  max-width:950px;
+  margin:35px auto;
+  padding:0 20px;
+}
+h1{font-size:34px;margin-bottom:5px}
+.subtitle{color:var(--muted);margin-bottom:28px}
+.profile-card,.settings-card{
+  background:var(--card);
+  border:1px solid #eee;
+  border-radius:20px;
+  padding:26px;
+  margin-bottom:22px;
+}
+.profile-top{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.avatar{
+  width:85px;
+  height:85px;
+  border-radius:50%;
+  background:#eeeaff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:38px;
+  overflow:hidden;
+  border:2px solid var(--primary);
+}
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.profile-info h2{margin:0}
+.profile-info p{color:var(--muted);margin:4px 0}
+.field{margin-top:20px}
+label{
+  display:block;
+  font-weight:700;
+  margin-bottom:8px;
+}
+input[type="text"],select{
+  width:100%;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  background:white;
+  color:#222;
+}
+input[type="color"]{
+  width:65px;
+  height:45px;
+  border:0;
+  cursor:pointer;
+  background:transparent;
+}
+input[type="file"]{max-width:100%}
+.setting-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+.setting-row p{color:var(--muted);margin:4px 0}
+.primary{
+  background:var(--primary);
+  color:white;
+}
+.danger{
+  background:#ffecec;
+  color:#c62828;
+}
+#saveMessage{
+  margin-top:15px;
+  color:var(--primary);
+  font-weight:700;
+}
+footer{
+  text-align:center;
+  padding:30px;
+  color:var(--muted);
+}
+body.accessible{
+  --bg:#000;
+  --card:#111;
+  --text:#fff;
+  --muted:#eee;
+  --primary:#ffeb3b;
+}
+body.accessible .profile-card,
+body.accessible .settings-card{
+  border:2px solid white;
+}
+body.accessible input,
+body.accessible select{
+  background:#111;
+  color:white;
+  border:2px solid white;
+}
+body.accessible nav a{color:white}
+body.accessible .mode-button,
+body.accessible .secondary{
+  background:#333;
+  color:#ffeb3b;
+}
+body.accessible .primary{
+  background:#ffeb3b;
+  color:#000;
+}
+:focus-visible{
+  outline:3px solid #ff9800;
+  outline-offset:4px;
+}
+@media(max-width:600px){
+  header{align-items:flex-start}
+  nav{width:100%}
+}
+</style>
+</head>
+
+<body>
+<header>
+  <a class="logo" href="index.html">Oops!</a>
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="learning-hub.html">Learning Hub</a>
+    <a href="daily-quests.html">Daily Quests</a>
+    <a href="progress.html">My Progress</a>
+    <a href="profile.html" class="active">Profile</a>
+  </nav>
+  <button class="mode-button" id="modeBtn" type="button" aria-pressed="false">Accessible Mode</button>
+</header>
+
+<main>
+  <h1>My Profile</h1>
+  <p class="subtitle">Personalize your Oops! learning experience.</p>
+
+  <section class="profile-card">
+    <div class="profile-top">
+      <div class="avatar" id="avatarPreview" aria-label="Profile avatar">👤</div>
+      <div class="profile-info">
+        <h2 id="namePreview">English Learner</h2>
+        <p>Welcome to your personal learning space!</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="displayName">Display name</label>
+      <input id="displayName" type="text" maxlength="40" placeholder="Enter your name">
+    </div>
+
+    <div class="field">
+      <label for="avatarUpload">Profile picture</label>
+      <input id="avatarUpload" type="file" accept="image/*">
+    </div>
+  </section>
+
+  <section class="settings-card">
+    <h2>Appearance Settings</h2>
+
+    <div class="setting-row">
+      <div>
+        <strong>Primary color</strong>
+        <p>Choose your preferred website color.</p>
+      </div>
+      <input id="primaryColor" type="color" value="#6957e8" aria-label="Choose primary color">
+    </div>
+
+    <div class="field">
+      <label for="backgroundUpload">Upload background image</label>
+      <input id="backgroundUpload" type="file" accept="image/*">
+      <p class="subtitle">Choose a small image (ideally under 1 MB).</p>
+    </div>
+
+    <button class="secondary" id="removeBackground" type="button">Remove background image</button>
+  </section>
+
+  <section class="settings-card">
+    <h2>Language Settings</h2>
+    <div class="field">
+      <label for="language">Interface language</label>
+      <select id="language">
+        <option value="en">English</option>
+        <option value="vi">Tiếng Việt</option>
+      </select>
+    </div>
+    <p class="subtitle">Your language preference will be saved. Full translation across all pages will be connected in a later step.</p>
+  </section>
+
+  <section class="settings-card">
+    <h2>Accessibility Settings</h2>
+    <div class="setting-row">
+      <div>
+        <strong>Accessible Mode</strong>
+        <p>Use a high-contrast interface for improved readability.</p>
+      </div>
+      <button class="secondary" id="accessibilityToggle" type="button">Turn on</button>
+    </div>
+  </section>
+
+  <section class="settings-card">
+    <h2>Save Your Settings</h2>
+    <p class="subtitle">Your profile and preferences are stored in this browser.</p>
+    <button class="primary" id="saveSettings" type="button">Save changes</button>
+    <p id="saveMessage" role="status" aria-live="polite"></p>
+  </section>
+</main>
+
+<footer>Oops! — Make mistakes. Make progress.</footer>
+
+<script src="accessibility.js"></script>
+<script>
+const STORAGE_KEY = "oopsProfileSettings";
+
+const elements = {
+  name: document.getElementById("displayName"),
+  namePreview: document.getElementById("namePreview"),
+  avatar: document.getElementById("avatarPreview"),
+  avatarUpload: document.getElementById("avatarUpload"),
+  primaryColor: document.getElementById("primaryColor"),
+  backgroundUpload: document.getElementById("backgroundUpload"),
+  language: document.getElementById("language"),
+  message: document.getElementById("saveMessage"),
+  accessibilityToggle: document.getElementById("accessibilityToggle")
+};
+
+let avatarData = "";
+let backgroundData = "";
+
+function applyAppearance() {
+  document.documentElement.style.setProperty(
+    "--primary", elements.primaryColor.value
+  );
+
+  if (backgroundData) {
+    document.body.style.backgroundImage = `url("${backgroundData}")`;
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundAttachment = "fixed";
+    document.body.style.backgroundPosition = "center";
+  } else {
+    document.body.style.backgroundImage = "none";
+  }
+}
+
+function previewAvatar() {
+  elements.avatar.innerHTML = "";
+
+  if (avatarData) {
+    const image = document.createElement("img");
+    image.src = avatarData;
+    image.alt = "Profile picture";
+    elements.avatar.append(image);
+  } else {
+    elements.avatar.textContent = "👤";
+  }
+}
+
+function loadSettings() {
+  try {
+    const settings = JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || "{}"
+    );
+
+    elements.name.value = settings.name || "";
+    elements.namePreview.textContent = settings.name || "English Learner";
+    elements.primaryColor.value = settings.primaryColor || "#6957e8";
+    elements.language.value = settings.language || "en";
+
+    avatarData = settings.avatar || "";
+    backgroundData = settings.background || "";
+
+    previewAvatar();
+    applyAppearance();
+  } catch (error) {
+    elements.message.textContent = "Could not load saved settings.";
+  }
+}
+
+function saveSettings() {
+  const settings = {
+    name: elements.name.value.trim(),
+    primaryColor: elements.primaryColor.value,
+    language: elements.language.value,
+    avatar: avatarData,
+    background: backgroundData
+  };
+
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    localStorage.setItem("oopsDisplayName", settings.name);
+    localStorage.setItem("oopsPrimaryColor", settings.primaryColor);
+    localStorage.setItem("oopsLanguage", settings.language);
+
+    elements.namePreview.textContent =
+      settings.name || "English Learner";
+
+    applyAppearance();
+    previewAvatar();
+
+    elements.message.textContent = "Your settings have been saved!";
+  } catch (error) {
+    elements.message.textContent =
+      "Storage limit reached. Try using smaller images.";
+  }
+}
+
+function readImage(file, callback) {
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    elements.message.textContent = "Please choose an image file.";
+    return;
+  }
+
+  if (file.size > 1024 * 1024) {
+    elements.message.textContent =
+      "Please choose an image smaller than 1 MB.";
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function() {
+    callback(reader.result);
+    applyAppearance();
+    previewAvatar();
+  };
+
+  reader.onerror = function() {
+    elements.message.textContent = "Could not read this image.";
+  };
+
+  reader.readAsDataURL(file);
+}
+
+elements.avatarUpload.addEventListener("change", function() {
+  readImage(this.files[0], function(result) {
+    avatarData = result;
+  });
+});
+
+elements.backgroundUpload.addEventListener("change", function() {
+  readImage(this.files[0], function(result) {
+    backgroundData = result;
+  });
+});
+
+elements.name.addEventListener("input", function() {
+  elements.namePreview.textContent = this.value || "English Learner";
+});
+
+elements.primaryColor.addEventListener("input", applyAppearance);
+
+document.getElementById("removeBackground").addEventListener("click", function() {
+  backgroundData = "";
+  elements.backgroundUpload.value = "";
+  applyAppearance();
+  elements.message.textContent = "Background image removed. Save changes to keep this setting.";
+});
+
+document.getElementById("saveSettings").addEventListener("click", saveSettings);
+
+function updateAccessibilityButton() {
+  const enabled = window.OopsAccessibility &&
+    window.OopsAccessibility.loadMode();
+
+  elements.accessibilityToggle.textContent =
+    enabled ? "Turn off" : "Turn on";
+}
+
+elements.accessibilityToggle.addEventListener("click", function() {
+  if (window.OopsAccessibility) {
+    window.OopsAccessibility.toggleMode();
+    updateAccessibilityButton();
+  }
+});
+
+window.addEventListener("storage", function(event) {
+  if (event.key === "oopsAccessibleMode") {
+    updateAccessibilityButton();
+  }
+});
+
+loadSettings();
+updateAccessibilityButton();
+</script>
+</body>
+</html>
