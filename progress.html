@@ -177,6 +177,19 @@ button:focus,a:focus{outline:3px solid orange;outline-offset:3px}
       <div class="number" id="score">--</div>
       <p class="info">Your latest recorded result.</p>
     </div>
+    <div class="card">
+  <h3>Vocabulary Test Results</h3>
+  <div class="number" id="vocabTests">0</div>
+  <p class="info">Completed vocabulary tests.</p>
+
+  <h3>Average Score</h3>
+  <div class="number" id="vocabAverage">--</div>
+  <p class="info">Your average vocabulary test score.</p>
+
+  <h3>Latest Result</h3>
+  <div class="number" id="vocabLatest">--</div>
+  <p class="info" id="vocabLatestDate">No test completed yet.</p>
+</div>
   </section>
 
   <section class="card section">
@@ -257,6 +270,54 @@ function renderStreak() {
 renderStreak();
 
 window.addEventListener("oopsStreakUpdated", renderStreak);
+  // Render Vocabulary Test Statistics
+function renderVocabularyStats() {
+  const tracker = window.OopsTracker;
+
+  if (
+    !tracker ||
+    typeof tracker.getQuizStats !== "function"
+  ) {
+    return;
+  }
+
+  const stats = tracker.getQuizStats();
+
+  document.getElementById("vocabTests").textContent =
+    stats.totalTests;
+
+  document.getElementById("vocabAverage").textContent =
+    stats.totalTests > 0
+      ? Math.round(stats.averagePercentage) + "%"
+      : "--";
+
+  const latest = stats.results.length
+    ? stats.results[stats.results.length - 1]
+    : null;
+
+  document.getElementById("vocabLatest").textContent =
+    latest
+      ? latest.score + " / " + latest.total
+      : "--";
+
+  document.getElementById("vocabLatestDate").textContent =
+    latest && latest.date
+      ? "Completed on " + latest.date
+      : "No test completed yet.";
+}
+
+renderVocabularyStats();
+
+window.addEventListener(
+  "oopsQuizUpdated",
+  renderVocabularyStats
+);
+
+window.addEventListener("storage", function(event) {
+  if (event.key === "oopsQuizResults") {
+    renderVocabularyStats();
+  }
+});
 window.addEventListener("storage", function(event) {
   if (event.key === "oopsStreakData") {
     renderStreak();
