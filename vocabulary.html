@@ -7,13 +7,14 @@
 <title>Vocabulary Lab | Oops!</title>
 
 <style>
-:root {
+:root{
   --primary:#8b35e8;
   --bg:#f7f1ff;
   --text:#26243a;
   --card:#fff;
   --muted:#77778d;
   --soft:#f0eaff;
+  --border:#e8def5;
 }
 *{box-sizing:border-box}
 body{
@@ -21,7 +22,7 @@ body{
   font-family:Arial,sans-serif;
   background:var(--bg);
   color:var(--text);
-  line-height:1.6
+  line-height:1.6;
 }
 header{
   min-height:86px;
@@ -30,31 +31,27 @@ header{
   align-items:center;
   padding:12px 6%;
   background:var(--card);
-  border-bottom:1px solid #eee
+  border-bottom:1px solid #eee;
 }
 .logo{
   font-size:28px;
   font-weight:800;
   color:var(--primary);
-  text-decoration:none
+  text-decoration:none;
 }
 .header-actions{
   display:flex;
   align-items:center;
-  gap:14px
+  gap:14px;
 }
-.back-home{
+.back-home,.mode-button{
   text-decoration:none;
-  color:var(--text);
-  background:#f1edff;
-  padding:11px 17px;
-  border-radius:10px;
-  font-weight:700
-}
-.mode-button{
   background:#f1edff;
   color:var(--primary);
-  white-space:nowrap
+  padding:11px 17px;
+  border-radius:10px;
+  font-weight:700;
+  white-space:nowrap;
 }
 button,input,select{font:inherit}
 button{
@@ -62,17 +59,17 @@ button{
   border:0;
   border-radius:10px;
   padding:11px 17px;
-  font-weight:700
+  font-weight:700;
 }
 button:disabled{opacity:.5;cursor:not-allowed}
 .primary{background:var(--primary);color:white}
 .secondary{background:var(--soft);color:var(--primary)}
-main{max-width:1150px;margin:auto;padding:45px 22px}
+main{max-width:1150px;margin:auto;padding:40px 22px}
 .intro{
   background:linear-gradient(120deg,#eeeaff,#fff0f6);
   padding:35px;
   border-radius:24px;
-  margin-bottom:25px
+  margin-bottom:25px;
 }
 .intro h1{font-size:38px;margin:0 0 8px}
 .intro p{color:var(--muted)}
@@ -80,19 +77,19 @@ main{max-width:1150px;margin:auto;padding:45px 22px}
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:12px;
-  margin:0 0 30px
+  margin:0 0 30px;
 }
 .main-tab{
-  min-height:65px;
+  min-height:58px;
   background:#eeeaff;
   color:var(--primary);
   border:2px solid transparent;
-  font-size:16px
+  font-size:15px;
 }
 .main-tab.active{
   background:var(--primary);
   color:white;
-  border-color:var(--primary)
+  border-color:var(--primary);
 }
 .panel{display:none}
 .panel.active{display:block}
@@ -103,13 +100,13 @@ main{max-width:1150px;margin:auto;padding:45px 22px}
   display:flex;
   flex-wrap:wrap;
   gap:10px;
-  margin:20px 0
+  margin:20px 0;
 }
 .level-btn{
   min-width:65px;
   background:white;
   color:var(--primary);
-  border:1px solid #e4d9fa
+  border:1px solid var(--border);
 }
 .level-btn.active{background:var(--primary);color:white}
 .topic-heading{margin-top:25px}
@@ -117,49 +114,90 @@ main{max-width:1150px;margin:auto;padding:45px 22px}
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:14px;
-  margin:15px 0 25px
+  margin:15px 0 25px;
 }
 .topic-btn{
   text-align:left;
   padding:19px;
   background:white;
-  border:1px solid #eee;
+  border:1px solid var(--border);
   color:var(--text);
-  border-radius:15px;
-  min-height:85px
+  min-height:90px;
 }
 .topic-btn strong{display:block;font-size:16px}
 .topic-btn span{font-size:13px;color:var(--muted)}
-.topic-btn.active{
-  border:2px solid var(--primary);
-  background:#f8f3ff
+.topic-btn:hover{border-color:var(--primary)}
+.study-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:22px;
 }
+.study-tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:22px 0;
+}
+.study-tab{
+  background:#eeeaff;
+  color:var(--primary);
+}
+.study-tab.active{background:var(--primary);color:white}
+.activity-panel{display:none}
+.activity-panel.active{display:block}
+.flashcard{
+  max-width:600px;
+  min-height:260px;
+  margin:20px auto;
+  padding:30px;
+  background:white;
+  border:2px solid var(--border);
+  border-radius:22px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  cursor:pointer;
+}
+.flashcard h2{font-size:32px;margin:8px 0}
+.flashcard .phonetic{color:var(--primary)}
+.flashcard .meaning{font-size:21px}
+.flashcard .example{color:var(--muted);font-style:italic}
+.flashcard-hint{color:var(--muted);font-size:13px}
+.flashcard-actions{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:15px 0;
+}
+.flashcard-actions button{min-width:140px}
+.mastery-info{text-align:center;color:var(--muted)}
 .stage-heading{
   display:flex;
   justify-content:space-between;
   align-items:center;
   flex-wrap:wrap;
   gap:10px;
-  margin:25px 0 15px
+  margin:20px 0 15px;
 }
-.stage-list{
-  display:flex;
-  flex-wrap:wrap;
-  gap:9px;
-  margin-bottom:20px
-}
+.stage-list{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:20px}
 .stage-btn{background:#eeeaff;color:var(--primary)}
 .stage-btn.active{background:var(--primary);color:white}
 .word-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:16px
+  gap:16px;
 }
 .word-card{
   background:white;
   padding:22px;
-  border:1px solid #eee;
-  border-radius:17px
+  border:1px solid var(--border);
+  border-radius:17px;
 }
 .word-card h3{margin:0;font-size:22px}
 .phonetic{color:var(--primary);font-size:14px}
@@ -172,7 +210,7 @@ main{max-width:1150px;margin:auto;padding:45px 22px}
   display:grid;
   grid-template-columns:2fr 1fr;
   gap:12px;
-  margin:20px 0
+  margin:20px 0;
 }
 input,select{
   width:100%;
@@ -180,7 +218,7 @@ input,select{
   border:1px solid #ddd;
   border-radius:10px;
   background:white;
-  color:#222
+  color:#222;
 }
 .result-count{color:var(--muted);margin:15px 0}
 .empty{
@@ -188,62 +226,84 @@ input,select{
   text-align:center;
   background:white;
   border-radius:15px;
-  grid-column:1/-1
+  grid-column:1/-1;
 }
-.dictionary-note,.learning-note{
+.note{
   background:#f0eaff;
   padding:15px 18px;
   border-radius:12px;
   margin:15px 0;
-  color:#57418b
+  color:#57418b;
 }
+.quiz-box{
+  max-width:650px;
+  margin:20px auto;
+  padding:25px;
+  background:white;
+  border-radius:18px;
+}
+.quiz-options{display:grid;gap:10px;margin-top:20px}
+.quiz-option{
+  text-align:left;
+  background:#f3edff;
+  color:var(--text);
+  border:1px solid var(--border);
+}
+.quiz-option.correct{background:#dcfce7;color:#166534}
+.quiz-option.wrong{background:#fee2e2;color:#991b1b}
+.feedback{text-align:center;font-weight:700;margin:15px 0}
 footer{text-align:center;padding:30px;color:var(--muted)}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid #ff9800;outline-offset:3px}
 body.accessible{
   --bg:#000;
   --text:#fff;
   --card:#111;
   --muted:#eee;
   --primary:#ffeb3b;
-  --soft:#333
+  --soft:#333;
+  --border:#777;
 }
 body.accessible .intro,
 body.accessible .topic-btn,
 body.accessible .word-card,
+body.accessible .flashcard,
+body.accessible .quiz-box,
 body.accessible .empty{background:#171717;color:white}
 body.accessible .main-tab,
 body.accessible .level-btn,
 body.accessible .stage-btn,
-body.accessible .secondary{
+body.accessible .study-tab,
+body.accessible .secondary,
+body.accessible .quiz-option{
   background:#333;
-  color:#ffeb3b
+  color:#ffeb3b;
 }
 body.accessible .main-tab.active,
+body.accessible .study-tab.active,
 body.accessible .level-btn.active,
 body.accessible .stage-btn.active{
   background:#ffeb3b;
-  color:#000
+  color:#000;
 }
 body.accessible input,
 body.accessible select{
   background:#111;
   color:white;
-  border:2px solid white
+  border:2px solid white;
 }
 body.large-text{font-size:120%}
-:focus-visible{outline:3px solid #ff9800;outline-offset:3px}
-
 @media(max-width:750px){
   .word-grid,.topic-list{grid-template-columns:repeat(2,1fr)}
-  .search-row{grid-template-columns:1fr}
 }
 @media(max-width:550px){
-  header{flex-wrap:wrap}
+  header{flex-wrap:wrap;gap:12px}
   .header-actions{gap:8px;flex-wrap:wrap}
   main{padding:25px 15px}
   .intro{padding:25px}
   .intro h1{font-size:30px}
-  .main-tabs{gap:6px}
-  .main-tab{padding:10px 5px;font-size:13px}
+  .main-tabs,.study-tabs{gap:6px}
+  .main-tab,.study-tab{padding:10px 5px;font-size:13px}
   .word-grid,.topic-list{grid-template-columns:1fr}
 }
 </style>
@@ -254,10 +314,8 @@ body.large-text{font-size:120%}
   <a class="logo" href="index.html">Oops!</a>
   <div class="header-actions">
     <a class="back-home" href="index.html">← Back to Home</a>
-    <button class="mode-button" id="modeBtn"
-      type="button" aria-pressed="false">
-      Accessible Mode
-    </button>
+    <button class="mode-button" id="modeBtn" type="button"
+      aria-pressed="false">Accessible Mode</button>
   </div>
 </header>
 
@@ -268,74 +326,116 @@ body.large-text{font-size:120%}
     <strong>Learn a word. Use it. Remember it.</strong>
   </section>
 
-  <!-- THREE MAIN SECTIONS -->
   <nav class="main-tabs" aria-label="Vocabulary sections">
     <button class="main-tab active" data-panel="learnPanel"
-      aria-pressed="true">Learn Vocabulary</button>
+      type="button" aria-pressed="true">Learn Vocabulary</button>
     <button class="main-tab" data-panel="dictionaryPanel"
-      aria-pressed="false">Dictionary</button>
+      type="button" aria-pressed="false">Dictionary</button>
     <button class="main-tab" data-panel="wordbookPanel"
-      aria-pressed="false">My Wordbook ★</button>
+      type="button" aria-pressed="false">My Wordbook ★</button>
   </nav>
 
   <!-- LEARN VOCABULARY -->
   <section class="panel active" id="learnPanel">
     <div id="topicBrowser">
-    <div class="section-heading">
-      <h2>Learn Vocabulary</h2>
-      <p>Choose your English level, explore a topic and learn step by step.</p>
-    </div>
-
-    <h3>1. Choose your English level</h3>
-    <div class="level-list" id="learnLevels">
-      <button class="level-btn active" data-level="A1">A1</button>
-      <button class="level-btn" data-level="A2">A2</button>
-      <button class="level-btn" data-level="B1">B1</button>
-      <button class="level-btn" data-level="B2">B2</button>
-      <button class="level-btn" data-level="C1">C1</button>
-      <button class="level-btn" data-level="C2">C2</button>
-    </div>
-
-    <h3 class="topic-heading">2. Choose a topic</h3>
-    <div class="topic-list" id="topicList"></div>
+      <div class="section-heading">
+        <h2>Learn Vocabulary</h2>
+        <p>Choose your English level and explore a topic.</p>
       </div>
 
-<section id="topicStudy" hidden>
-  <button type="button" class="secondary" id="backToTopics">
-    ← Back to Topics
-  </button>
-
-  <div class="section-heading">
-    <h2 id="studyTopicTitle">Topic</h2>
-    <p id="studyTopicLevel"></p>
-  </div>
-
-  <div class="main-tabs" aria-label="Learning activities">
-    <button class="main-tab active" type="button">Flashcards</button>
-    <button class="main-tab" type="button">Learn</button>
-    <button class="main-tab" type="button">Test</button>
-  </div>
-
-  <p>Learning activities will appear here.</p>
-</section>
-
-    <div class="stage-heading">
-      <div>
-        <h3 id="selectedTopicTitle">3. Start learning</h3>
-        <p id="selectedTopicDescription">Choose a topic to see its vocabulary.</p>
+      <h3>1. Choose your English level</h3>
+      <div class="level-list" id="learnLevels">
+        <button class="level-btn active" data-level="A1" type="button">A1</button>
+        <button class="level-btn" data-level="A2" type="button">A2</button>
+        <button class="level-btn" data-level="B1" type="button">B1</button>
+        <button class="level-btn" data-level="B2" type="button">B2</button>
+        <button class="level-btn" data-level="C1" type="button">C1</button>
+        <button class="level-btn" data-level="C2" type="button">C2</button>
       </div>
+
+      <h3 class="topic-heading">2. Choose a topic</h3>
+      <div class="topic-list" id="topicList"></div>
     </div>
 
-    <div class="stage-list" id="stageList"></div>
-    <p class="result-count" id="learnCount" aria-live="polite"></p>
-    <section class="word-grid" id="learnWords"></section>
+    <!-- TOPIC STUDY SCREEN -->
+    <section id="topicStudy" hidden>
+      <div class="study-header">
+        <div class="section-heading">
+          <h2 id="studyTopicTitle">Topic</h2>
+          <p id="studyTopicLevel"></p>
+        </div>
+        <button class="secondary" id="backToTopics" type="button">
+          ← Back to Topics
+        </button>
+      </div>
+
+      <nav class="study-tabs" aria-label="Learning activities">
+        <button class="study-tab active" data-activity="flashcards"
+          type="button">Flashcards</button>
+        <button class="study-tab" data-activity="learn"
+          type="button">Learn</button>
+        <button class="study-tab" data-activity="test"
+          type="button">Test</button>
+      </nav>
+
+      <section class="activity-panel active" id="flashcardsPanel">
+        <h3>Flashcards</h3>
+        <p>Review each word. Click the card to reveal its meaning.</p>
+
+        <div class="flashcard" id="flashcard" role="button"
+          tabindex="0" aria-label="Flip vocabulary flashcard">
+          <div id="flashcardContent"></div>
+          <p class="flashcard-hint">Click or press Enter to flip</p>
+        </div>
+
+        <div class="flashcard-actions">
+          <button class="secondary" id="previousCard" type="button">← Previous</button>
+          <button class="secondary" id="nextCard" type="button">Next →</button>
+        </div>
+
+        <div class="flashcard-actions">
+          <button class="secondary" id="markLearning" type="button">
+            Still learning
+          </button>
+          <button class="primary" id="markKnown" type="button">
+            ✓ I know this
+          </button>
+        </div>
+
+        <p class="mastery-info" id="masteryInfo" aria-live="polite"></p>
+      </section>
+
+      <section class="activity-panel" id="learnActivityPanel">
+        <h3>Learn</h3>
+        <p>Study the words, meanings, pronunciation and examples.</p>
+        <div class="stage-heading">
+          <h3 id="learnTopicHeading">Vocabulary</h3>
+          <p id="learnCount" aria-live="polite"></p>
+        </div>
+        <div class="word-grid" id="learnWords"></div>
+      </section>
+
+      <section class="activity-panel" id="testPanel">
+        <h3>Vocabulary Test</h3>
+        <p>Choose the correct meaning of the English word.</p>
+        <div class="quiz-box">
+          <p id="quizProgress"></p>
+          <h2 id="quizQuestion">Ready to test your vocabulary?</h2>
+          <div class="quiz-options" id="quizOptions"></div>
+          <p class="feedback" id="quizFeedback" aria-live="polite"></p>
+          <button class="primary" id="nextQuestion" type="button">
+            Start Test
+          </button>
+        </div>
+      </section>
+    </section>
   </section>
 
   <!-- DICTIONARY -->
   <section class="panel" id="dictionaryPanel">
     <div class="section-heading">
       <h2>Dictionary</h2>
-      <p>Search for a word and explore its meaning and pronunciation.</p>
+      <p>Search for an English word or Vietnamese meaning.</p>
     </div>
 
     <div class="search-row">
@@ -349,9 +449,8 @@ body.large-text{font-size:120%}
         <option>C1</option><option>C2</option>
       </select>
     </div>
-    <div class="dictionary-note">
-      Search by English word or Vietnamese meaning.
-    </div>
+
+    <div class="note">Search by English word or Vietnamese meaning.</div>
     <p class="result-count" id="dictionaryCount" aria-live="polite"></p>
     <section class="word-grid" id="dictionaryWords"></section>
   </section>
@@ -362,7 +461,8 @@ body.large-text{font-size:120%}
       <h2>My Wordbook ★</h2>
       <p>Your personal collection of words that you choose to remember.</p>
     </div>
-    <div class="learning-note">
+
+    <div class="note">
       Words are added only when you press the Save word button.
     </div>
     <p class="result-count" id="wordbookCount" aria-live="polite"></p>
@@ -377,6 +477,9 @@ body.large-text{font-size:120%}
 <script src="settings.js"></script>
 
 <script>
+"use strict";
+
+/* WORD BANK: CURRENTLY SAMPLE DATA */
 const vocabulary = [
  {word:"book",ipa:"/bʊk/",meaning:"quyển sách",example:"I read a book every week.",level:"A1",topic:"Education"},
  {word:"family",ipa:"/ˈfæməli/",meaning:"gia đình",example:"My family lives in Vietnam.",level:"A1",topic:"Daily life"},
@@ -400,109 +503,156 @@ const topics = [
  {name:"Society",description:"People and social issues"}
 ];
 
-let saved = [];
-try {
-  saved = JSON.parse(localStorage.getItem("oopsWordbook") || "[]");
-  if (!Array.isArray(saved)) saved = [];
-} catch(error) {
-  saved = [];
+const $ = id => document.getElementById(id);
+
+function readStorage(key,fallback){
+  try{
+    const value = JSON.parse(localStorage.getItem(key) || "null");
+    return value === null ? fallback : value;
+  }catch(error){
+    return fallback;
+  }
+}
+
+let saved = readStorage("oopsWordbook",[]);
+if(!Array.isArray(saved)) saved = [];
+
+let mastery = readStorage("oopsVocabMastery",{});
+if(!mastery || typeof mastery !== "object" || Array.isArray(mastery)){
+  mastery = {};
 }
 
 let selectedLevel = "A1";
 let selectedTopic = "";
-let selectedStage = 1;
+let currentActivity = "flashcards";
+let flashcardIndex = 0;
+let cardFlipped = false;
+let quizQuestions = [];
+let quizIndex = 0;
+let quizScore = 0;
+let quizAnswered = false;
 
-const $ = id => document.getElementById(id);
-
-function switchPanel(panelId) {
-  document.querySelectorAll(".main-tab").forEach(button => {
+/* MAIN NAVIGATION */
+function switchPanel(panelId){
+  document.querySelectorAll("nav.main-tabs .main-tab").forEach(button=>{
     const active = button.dataset.panel === panelId;
     button.classList.toggle("active",active);
     button.setAttribute("aria-pressed",String(active));
   });
 
-  document.querySelectorAll(".panel").forEach(panel => {
+  document.querySelectorAll(".panel").forEach(panel=>{
     panel.classList.toggle("active",panel.id === panelId);
   });
 }
 
-document.querySelectorAll(".main-tab").forEach(button => {
-  button.addEventListener("click",() => switchPanel(button.dataset.panel));
+document.querySelectorAll("nav.main-tabs .main-tab").forEach(button=>{
+  button.addEventListener("click",()=>{
+    switchPanel(button.dataset.panel);
+  });
 });
 
-function getWords(levelValue,topicValue) {
-  return vocabulary.filter(item =>
+/* DATA HELPERS */
+function getWords(levelValue,topicValue){
+  return vocabulary.filter(item=>
     item.level === levelValue &&
     (!topicValue || item.topic === topicValue)
   );
 }
 
-function renderTopics() {
+function getCurrentWords(){
+  return getWords(selectedLevel,selectedTopic);
+}
+
+/* TOPIC BROWSER */
+function renderTopics(){
   const container = $("topicList");
   container.innerHTML = "";
 
-  topics.forEach(item => {
+  topics.forEach(item=>{
     const count = getWords(selectedLevel,item.name).length;
     const button = document.createElement("button");
-    button.className = "topic-btn" +
-      (selectedTopic === item.name ? " active" : "");
-    button.innerHTML =
-      `<strong>${item.name}</strong>
-       <span>${item.description} · ${count} sample words</span>`;
+    button.type = "button";
+    button.className = "topic-btn";
 
-    button.addEventListener("click",() => {
-  selectedTopic = item.name;
-  selectedStage = 1;
+    const title = document.createElement("strong");
+    title.textContent = item.name;
 
-  $("topicBrowser").hidden = true;
-  $("topicStudy").hidden = false;
+    const description = document.createElement("span");
+    description.textContent =
+      item.description + " · " + count + " sample words";
 
-  $("studyTopicTitle").textContent = item.name;
-  $("studyTopicLevel").textContent =
-    selectedLevel + " · Vocabulary";
+    button.append(title,description);
 
-  renderTopics();
+    button.addEventListener("click",()=>{
+      selectedTopic = item.name;
+      flashcardIndex = 0;
+      cardFlipped = false;
 
-$("backToTopics").addEventListener("click",() => {
-  $("topicStudy").hidden = true;
-  $("topicBrowser").hidden = false;
-});
+      $("topicBrowser").hidden = true;
+      $("topicStudy").hidden = false;
+
+      $("studyTopicTitle").textContent = item.name;
+      $("studyTopicLevel").textContent =
+        selectedLevel + " · Vocabulary";
+
+      $("learnTopicHeading").textContent = item.name;
+      startQuiz();
+      switchActivity("flashcards");
+      renderFlashcard();
+      renderLearnWords();
+    });
 
     container.append(button);
   });
 }
 
-function renderStages() {
-  const container = $("stageList");
-  container.innerHTML = "";
+/* LEVEL SELECTION */
+document.querySelectorAll("[data-level]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    selectedLevel = button.dataset.level;
+    selectedTopic = "";
 
-  if (!selectedTopic) {
-    $("selectedTopicTitle").textContent = "3. Start learning";
-    $("selectedTopicDescription").textContent =
-      "Choose a topic to see its vocabulary.";
-    return;
-  }
-
-  $("selectedTopicTitle").textContent = "3. " + selectedTopic;
-  $("selectedTopicDescription").textContent =
-    "Choose a learning stage.";
-
-  // Three learning stages. More content can be added to each stage.
-  for (let i=1;i<=3;i++) {
-    const button = document.createElement("button");
-    button.className = "stage-btn" +
-      (selectedStage === i ? " active" : "");
-    button.textContent = "Stage " + i;
-    button.addEventListener("click",() => {
-      selectedStage = i;
-      renderStages();
-      renderLearnWords();
+    document.querySelectorAll("[data-level]").forEach(item=>{
+      item.classList.toggle("active",item === button);
     });
-    container.append(button);
-  }
+
+    renderTopics();
+  });
+});
+
+/* BACK TO TOPICS */
+$("backToTopics").addEventListener("click",()=>{
+  $("topicStudy").hidden = true;
+  $("topicBrowser").hidden = false;
+  selectedTopic = "";
+});
+
+/* ACTIVITY TABS */
+function switchActivity(activity){
+  currentActivity = activity;
+
+  document.querySelectorAll(".study-tab").forEach(button=>{
+    const active = button.dataset.activity === activity;
+    button.classList.toggle("active",active);
+    button.setAttribute("aria-pressed",String(active));
+  });
+
+  $("flashcardsPanel").classList.toggle("active",activity === "flashcards");
+  $("learnActivityPanel").classList.toggle("active",activity === "learn");
+  $("testPanel").classList.toggle("active",activity === "test");
+
+  if(activity === "flashcards") renderFlashcard();
+  if(activity === "learn") renderLearnWords();
 }
 
-function createWordCard(item) {
+document.querySelectorAll(".study-tab").forEach(button=>{
+  button.addEventListener("click",()=>{
+    switchActivity(button.dataset.activity);
+  });
+});
+
+/* WORD CARDS */
+function createWordCard(item){
   const isSaved = saved.includes(item.word);
   const card = document.createElement("article");
   card.className = "word-card";
@@ -530,38 +680,40 @@ function createWordCard(item) {
   actions.className = "actions";
 
   const audio = document.createElement("button");
+  audio.type = "button";
   audio.className = "secondary";
   audio.textContent = "🔊 Listen";
   audio.setAttribute("aria-label","Listen to " + item.word);
 
-  audio.addEventListener("click",() => {
-    if ("speechSynthesis" in window) {
+  audio.addEventListener("click",()=>{
+    if("speechSynthesis" in window){
       speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(item.word);
       utterance.lang = "en-US";
       speechSynthesis.speak(utterance);
-    } else {
+    }else{
       alert("Speech is not supported in this browser.");
     }
   });
 
   const save = document.createElement("button");
+  save.type = "button";
   save.className = "secondary";
   save.textContent = isSaved ? "★ Saved" : "☆ Save word";
   save.setAttribute("aria-pressed",String(isSaved));
 
-  save.addEventListener("click",() => {
-    if (!saved.includes(item.word)) {
+  save.addEventListener("click",()=>{
+    if(!saved.includes(item.word)){
       saved.push(item.word);
 
-      if (window.OopsTracker) {
+      if(window.OopsTracker){
         window.OopsTracker.recordActivity("vocabulary",{
           activityId:"vocabulary-" + item.word.toLowerCase(),
           label:item.word
         });
       }
-    } else {
-      saved = saved.filter(word => word !== item.word);
+    }else{
+      saved = saved.filter(word=>word !== item.word);
     }
 
     localStorage.setItem("oopsWordbook",JSON.stringify(saved));
@@ -573,33 +725,236 @@ function createWordCard(item) {
   return card;
 }
 
-function renderLearnWords() {
+/* LEARN */
+function renderLearnWords(){
   const container = $("learnWords");
   container.innerHTML = "";
 
-  if (!selectedTopic) {
-    $("learnCount").textContent = "Choose a topic to begin.";
-    return;
-  }
+  const results = getCurrentWords();
+  $("learnCount").textContent = results.length + " sample words";
 
-  const results = getWords(selectedLevel,selectedTopic);
-  $("learnCount").textContent =
-    results.length + " sample words · " + selectedLevel;
-
-  if (!results.length) {
+  if(!results.length){
     container.innerHTML =
       '<div class="empty">Vocabulary for this level and topic is being developed. Please explore another topic or level.</div>';
     return;
   }
 
-  results.forEach(item => container.append(createWordCard(item)));
+  results.forEach(item=>container.append(createWordCard(item)));
 }
 
-function renderDictionary() {
+/* FLASHCARDS */
+function renderFlashcard(){
+  const words = getCurrentWords();
+  const content = $("flashcardContent");
+
+  if(!words.length){
+    content.innerHTML = "<h2>No words available yet</h2>";
+    $("masteryInfo").textContent = "This topic currently has no sample words.";
+    return;
+  }
+
+  if(flashcardIndex >= words.length) flashcardIndex = 0;
+
+  const item = words[flashcardIndex];
+  const status = mastery[item.word] || "learning";
+
+  if(!cardFlipped){
+    content.innerHTML = "";
+    const word = document.createElement("h2");
+    word.textContent = item.word;
+    const ipa = document.createElement("p");
+    ipa.className = "phonetic";
+    ipa.textContent = item.ipa;
+    content.append(word,ipa);
+  }else{
+    content.innerHTML = "";
+
+    const meaning = document.createElement("p");
+    meaning.className = "meaning";
+    meaning.textContent = item.meaning;
+
+    const example = document.createElement("p");
+    example.className = "example";
+    example.textContent = item.example;
+
+    const word = document.createElement("h2");
+    word.textContent = item.word;
+
+    const audio = document.createElement("button");
+    audio.type = "button";
+    audio.className = "secondary";
+    audio.textContent = "🔊 Listen";
+    audio.addEventListener("click",()=>{
+      if("speechSynthesis" in window){
+        const utterance = new SpeechSynthesisUtterance(item.word);
+        utterance.lang = "en-US";
+        speechSynthesis.speak(utterance);
+      }
+    });
+
+    content.append(word,meaning,example,audio);
+  }
+
+  $("masteryInfo").textContent =
+    "Card " + (flashcardIndex+1) + " of " + words.length +
+    " · Status: " + (status === "known" ? "Known" : "Still learning");
+}
+
+function flipFlashcard(){
+  cardFlipped = !cardFlipped;
+  renderFlashcard();
+}
+
+$("flashcard").addEventListener("click",event=>{
+  if(event.target.closest("button")) return;
+  flipFlashcard();
+});
+
+$("flashcard").addEventListener("keydown",event=>{
+  if(event.key === "Enter" || event.key === " "){
+    event.preventDefault();
+    flipFlashcard();
+  }
+});
+
+$("previousCard").addEventListener("click",()=>{
+  const words = getCurrentWords();
+  if(!words.length) return;
+  flashcardIndex = (flashcardIndex - 1 + words.length) % words.length;
+  cardFlipped = false;
+  renderFlashcard();
+});
+
+$("nextCard").addEventListener("click",()=>{
+  const words = getCurrentWords();
+  if(!words.length) return;
+  flashcardIndex = (flashcardIndex + 1) % words.length;
+  cardFlipped = false;
+  renderFlashcard();
+});
+
+function saveMastery(status){
+  const words = getCurrentWords();
+  if(!words.length) return;
+
+  const item = words[flashcardIndex];
+  mastery[item.word] = status;
+  localStorage.setItem("oopsVocabMastery",JSON.stringify(mastery));
+
+  renderFlashcard();
+}
+
+$("markKnown").addEventListener("click",()=>saveMastery("known"));
+$("markLearning").addEventListener("click",()=>saveMastery("learning"));
+
+/* TEST */
+function startQuiz(){
+  const words = getCurrentWords();
+
+  quizQuestions = words.map(item=>{
+    const alternatives = vocabulary
+      .filter(other=>other.word !== item.word)
+      .map(other=>other.meaning);
+
+    const shuffled = alternatives.sort(()=>Math.random()-0.5);
+    const options = [item.meaning,...shuffled.slice(0,3)]
+      .sort(()=>Math.random()-0.5);
+
+    return {item,options};
+  });
+
+  quizIndex = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  renderQuiz();
+}
+
+function renderQuiz(){
+  const question = quizQuestions[quizIndex];
+
+  $("quizFeedback").textContent = "";
+
+  if(!question){
+    $("quizProgress").textContent = "Test completed";
+    $("quizQuestion").textContent =
+      "Your score: " + quizScore + " / " + quizQuestions.length;
+    $("quizOptions").innerHTML = "";
+    $("nextQuestion").textContent = "Try Again";
+    $("nextQuestion").hidden = false;
+    return;
+  }
+
+  $("quizProgress").textContent =
+    "Question " + (quizIndex+1) + " of " + quizQuestions.length;
+
+  $("quizQuestion").textContent =
+    "What does “" + question.item.word + "” mean?";
+
+  $("quizOptions").innerHTML = "";
+  $("nextQuestion").textContent = "Next Question";
+  $("nextQuestion").hidden = true;
+
+  question.options.forEach(option=>{
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "quiz-option";
+    button.textContent = option;
+
+    button.addEventListener("click",()=>{
+      if(quizAnswered) return;
+      quizAnswered = true;
+
+      if(option === question.item.meaning){
+        quizScore++;
+        button.classList.add("correct");
+        $("quizFeedback").textContent = "Correct! Well done.";
+      }else{
+        button.classList.add("wrong");
+        $("quizFeedback").textContent =
+          "Not quite. Correct answer: " + question.item.meaning;
+      }
+
+      $("quizOptions").querySelectorAll("button").forEach(other=>{
+        other.disabled = true;
+        if(other.textContent === question.item.meaning){
+          other.classList.add("correct");
+        }
+      });
+
+      $("nextQuestion").hidden = false;
+    });
+
+    $("quizOptions").append(button);
+  });
+}
+
+$("nextQuestion").addEventListener("click",()=>{
+  if(!quizQuestions.length){
+    startQuiz();
+    return;
+  }
+
+  if(quizIndex >= quizQuestions.length){
+    startQuiz();
+    return;
+  }
+
+  if(!quizAnswered){
+    $("quizFeedback").textContent = "Choose an answer first.";
+    return;
+  }
+
+  quizIndex++;
+  quizAnswered = false;
+  renderQuiz();
+});
+
+/* DICTIONARY */
+function renderDictionary(){
   const query = $("dictionarySearch").value.trim().toLowerCase();
   const selected = $("dictionaryLevel").value;
 
-  const results = vocabulary.filter(item => {
+  const results = vocabulary.filter(item=>{
     const matches =
       item.word.toLowerCase().includes(query) ||
       item.meaning.toLowerCase().includes(query);
@@ -608,61 +963,47 @@ function renderDictionary() {
   });
 
   $("dictionaryCount").textContent = results.length + " words found";
+
   const container = $("dictionaryWords");
   container.innerHTML = "";
 
-  if (!results.length) {
+  if(!results.length){
     container.innerHTML =
       '<div class="empty">No words found. Try another search.</div>';
     return;
   }
 
-  results.forEach(item => container.append(createWordCard(item)));
+  results.forEach(item=>container.append(createWordCard(item)));
 }
 
-function renderWordbook() {
+/* WORDBOOK */
+function renderWordbook(){
   const container = $("savedWords");
   container.innerHTML = "";
 
-  const results = vocabulary.filter(item => saved.includes(item.word));
+  const results = vocabulary.filter(item=>saved.includes(item.word));
   $("wordbookCount").textContent = results.length + " saved words";
 
-  if (!results.length) {
+  if(!results.length){
     container.innerHTML =
       '<div class="empty">Your wordbook is empty. Save a word to see it here.</div>';
     return;
   }
 
-  results.forEach(item => container.append(createWordCard(item)));
+  results.forEach(item=>container.append(createWordCard(item)));
 }
 
-function renderAll() {
+function renderAll(){
+  renderTopics();
   renderLearnWords();
   renderDictionary();
   renderWordbook();
 }
 
-document.querySelectorAll("[data-level]").forEach(button => {
-  button.addEventListener("click",() => {
-    selectedLevel = button.dataset.level;
-    selectedTopic = "";
-    selectedStage = 1;
-
-    document.querySelectorAll("[data-level]").forEach(item =>
-      item.classList.toggle("active",item === button)
-    );
-
-    renderTopics();
-    renderStages();
-    renderLearnWords();
-  });
-});
-
 $("dictionarySearch").addEventListener("input",renderDictionary);
 $("dictionaryLevel").addEventListener("change",renderDictionary);
 
-renderTopics();
-renderStages();
+/* INITIAL DISPLAY */
 renderAll();
 </script>
 </body>
