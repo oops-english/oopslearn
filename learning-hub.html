@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Hub | Oops!</title>
+<style>
+:root {
+  --primary:#6957e8;
+  --bg:#f7f7fc;
+  --card:#fff;
+  --text:#292744;
+  --muted:#77748f;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding:16px 6%;background:var(--card);border-bottom:1px solid #eee}
+.logo{font-size:28px;font-weight:800;color:var(--primary);text-decoration:none}
+nav{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+nav a{padding:9px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-weight:600}
+nav a:hover,nav a.active{background:#eeeaff;color:var(--primary)}
+button{font:inherit;border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}
+.mode-button{background:#eeeaff;color:var(--primary)}
+main{max-width:1150px;margin:auto;padding:45px 22px}
+.hero{text-align:center;padding:45px 20px;background:linear-gradient(120deg,#eeeaff,#fff0f6);border-radius:24px;margin-bottom:35px}
+.hero h1{font-size:40px;margin:0 0 10px}
+.hero p{color:var(--muted);max-width:650px;margin:auto}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.card{background:var(--card);padding:28px;border-radius:20px;border:1px solid #eee;transition:.2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 10px 25px #29274412}
+.card h2{margin:0 0 8px}
+.card p{color:var(--muted);min-height:48px}
+.card a{display:inline-block;margin-top:12px;text-decoration:none;background:var(--primary);color:white;padding:10px 17px;border-radius:10px;font-weight:700}
+.number{font-size:13px;color:var(--primary);font-weight:800}
+footer{text-align:center;padding:35px;color:var(--muted)}
+body.accessible{--bg:#000;--card:#111;--text:#fff;--muted:#eee;--primary:#ffeb3b}
+body.accessible .hero{background:#171717;border:2px solid white}
+body.accessible .card{border:2px solid white}
+body.accessible .card a{background:#ffeb3b;color:#000}
+body.accessible nav a{color:white}
+body.accessible nav a.active{background:#333;color:#ffeb3b}
+body.accessible .mode-button{background:#333;color:#ffeb3b}
+:focus-visible{outline:3px solid #ff9800;outline-offset:4px}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.hero h1{font-size:31px}header{align-items:flex-start}}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="index.html">Oops!</a>
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="learning-hub.html" class="active">Learning Hub</a>
+    <a href="daily-quests.html">Daily Quests</a>
+    <a href="progress.html">My Progress</a>
+    <a href="profile.html">Profile</a>
+  </nav>
+  <button class="mode-button" id="modeBtn" type="button" aria-pressed="false">Accessible Mode</button>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Welcome to Learning Hub!</h1>
+    <p>Explore four learning spaces designed to help you improve your English step by step, from A1 to C2.</p>
+  </section>
+
+  <section class="grid" aria-label="Learning activities">
+
+    <article class="card">
+      <div class="number">01 · VOCABULARY</div>
+      <h2>Vocabulary Lab 📚</h2>
+      <p>Discover new words, learn pronunciation, explore topics and build your personal wordbook.</p>
+      <a href="vocabulary.html">Explore Vocabulary →</a>
+    </article>
+
+    <article class="card">
+      <div class="number">02 · GRAMMAR</div>
+      <h2>Grammar Lab ✏️</h2>
+      <p>Learn grammar rules and practise exercises suitable for different English levels.</p>
+      <a href="grammar.html">Explore Grammar →</a>
+    </article>
+
+    <article class="card">
+      <div class="number">03 · ERROR FIX</div>
+      <h2>Error Detective 🔍</h2>
+      <p>Find, understand and correct common English mistakes to strengthen your accuracy.</p>
+      <a href="error-fix.html">Start Error Fix →</a>
+    </article>
+
+    <article class="card">
+      <div class="number">04 · IELTS</div>
+      <h2>IELTS Practice 🎯</h2>
+      <p>Develop your IELTS skills through focused practice in Listening, Reading, Writing and Speaking.</p>
+      <a href="ielts.html">Explore IELTS →</a>
+    </article>
+
+  </section>
+</main>
+
+<footer>Oops! — Make mistakes. Make progress.</footer>
+
+<script src="accessibility.js"></script>
+</body>
+</html>
