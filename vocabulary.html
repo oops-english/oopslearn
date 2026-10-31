@@ -280,6 +280,7 @@ body.large-text{font-size:120%}
 
   <!-- LEARN VOCABULARY -->
   <section class="panel active" id="learnPanel">
+    <div id="topicBrowser">
     <div class="section-heading">
       <h2>Learn Vocabulary</h2>
       <p>Choose your English level, explore a topic and learn step by step.</p>
@@ -297,6 +298,26 @@ body.large-text{font-size:120%}
 
     <h3 class="topic-heading">2. Choose a topic</h3>
     <div class="topic-list" id="topicList"></div>
+      </div>
+
+<section id="topicStudy" hidden>
+  <button type="button" class="secondary" id="backToTopics">
+    ← Back to Topics
+  </button>
+
+  <div class="section-heading">
+    <h2 id="studyTopicTitle">Topic</h2>
+    <p id="studyTopicLevel"></p>
+  </div>
+
+  <div class="main-tabs" aria-label="Learning activities">
+    <button class="main-tab active" type="button">Flashcards</button>
+    <button class="main-tab" type="button">Learn</button>
+    <button class="main-tab" type="button">Test</button>
+  </div>
+
+  <p>Learning activities will appear here.</p>
+</section>
 
     <div class="stage-heading">
       <div>
@@ -430,12 +451,22 @@ function renderTopics() {
        <span>${item.description} · ${count} sample words</span>`;
 
     button.addEventListener("click",() => {
-      selectedTopic = item.name;
-      selectedStage = 1;
-      renderTopics();
-      renderStages();
-      renderLearnWords();
-    });
+  selectedTopic = item.name;
+  selectedStage = 1;
+
+  $("topicBrowser").hidden = true;
+  $("topicStudy").hidden = false;
+
+  $("studyTopicTitle").textContent = item.name;
+  $("studyTopicLevel").textContent =
+    selectedLevel + " · Vocabulary";
+
+  renderTopics();
+
+$("backToTopics").addEventListener("click",() => {
+  $("topicStudy").hidden = true;
+  $("topicBrowser").hidden = false;
+});
 
     container.append(button);
   });
