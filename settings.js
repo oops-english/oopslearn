@@ -28,9 +28,9 @@
 }
 
     // Apply the background image across the website
-    if (settings.backgroundImage) {
+   if (settings.background) {
       document.body.style.backgroundImage =
-        `url("${settings.backgroundImage}")`;
+        `url("${settings.background}")`;
       document.body.style.backgroundSize = "cover";
       document.body.style.backgroundPosition = "center";
       document.body.style.backgroundAttachment = "fixed";
