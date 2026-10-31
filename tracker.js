@@ -1,10 +1,11 @@
 
-/* Oops! Learning Streak Tracker */
+/* Oops! Learning Streak & Progress Tracker */
 
 (function () {
   "use strict";
 
   const STORAGE_KEY = "oopsStreakData";
+  const QUIZ_STORAGE_KEY = "oopsQuizResults";
 
   function todayKey() {
     const d = new Date();
@@ -107,6 +108,76 @@
     };
   }
 
+  function loadQuizResults() {
+    try {
+      const results = JSON.parse(
+        localStorage.getItem(QUIZ_STORAGE_KEY) || "[]"
+      );
+
+      return Array.isArray(results) ? results : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function recordQuizResult(score, total, activity) {
+    const safeScore = Number(score);
+    const safeTotal = Number(total);
+
+    if (
+      !Number.isFinite(safeScore) ||
+      !Number.isFinite(safeTotal) ||
+      safeTotal <= 0 ||
+      safeScore < 0 ||
+      safeScore > safeTotal
+    ) {
+      return null;
+    }
+
+    const results = loadQuizResults();
+
+    const result = {
+      activity: activity || "Vocabulary",
+      score: safeScore,
+      total: safeTotal,
+      percentage: Math.round((safeScore / safeTotal) * 100),
+      date: todayKey(),
+      completedAt: new Date().toISOString()
+    };
+
+    results.push(result);
+    localStorage.setItem(QUIZ_STORAGE_KEY, JSON.stringify(results));
+
+    recordStudyDay();
+
+    window.dispatchEvent(new CustomEvent("oopsQuizUpdated", {
+      detail: getQuizStats()
+    }));
+
+    return result;
+  }
+
+  function getQuizStats() {
+    const results = loadQuizResults();
+    const totalTests = results.length;
+    const totalCorrect = results.reduce(
+      (sum, item) => sum + item.score, 0
+    );
+    const totalQuestions = results.reduce(
+      (sum, item) => sum + item.total, 0
+    );
+
+    return {
+      totalTests,
+      totalCorrect,
+      totalQuestions,
+      averagePercentage: totalQuestions
+        ? Math.round((totalCorrect / totalQuestions) * 100)
+        : 0,
+      results
+    };
+  }
+
   function resetData() {
     const data = { studyDates: [] };
     save(data);
@@ -118,6 +189,8 @@
     recordStudyDay,
     getData,
     resetData,
-    todayKey
+    todayKey,
+    recordQuizResult,
+    getQuizStats
   };
 })();
