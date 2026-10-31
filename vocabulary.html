@@ -2440,34 +2440,37 @@ function renderTopics(){
   const container = $("topicList");
   container.innerHTML = "";
 
-  (topicsByLevel[selectedLevel] || []).forEach(item=>{
-    const count = getWords(selectedLevel,item.name).length;
+  const topics = topicsByLevel[selectedLevel] || [];
+
+  topics.forEach(topic => {
+    const count = getWords(selectedLevel, topic).length;
+
     const button = document.createElement("button");
     button.type = "button";
     button.className = "topic-btn";
 
     const title = document.createElement("strong");
-    title.textContent = item.name;
+    title.textContent = topic;
 
     const description = document.createElement("span");
-    description.textContent =
-      item.description + " · " + count + " sample words";
+    description.textContent = count + " words available";
 
-    button.append(title,description);
+    button.append(title, description);
 
-    button.addEventListener("click",()=>{
-      selectedTopic = item.name;
+    button.addEventListener("click", () => {
+      selectedTopic = topic;
       flashcardIndex = 0;
       cardFlipped = false;
 
       $("topicBrowser").hidden = true;
       $("topicStudy").hidden = false;
 
-      $("studyTopicTitle").textContent = item.name;
+      $("studyTopicTitle").textContent = topic;
       $("studyTopicLevel").textContent =
         selectedLevel + " · Vocabulary";
 
-      $("learnTopicHeading").textContent = item.name;
+      $("learnTopicHeading").textContent = topic;
+
       startQuiz();
       switchActivity("flashcards");
       renderFlashcard();
