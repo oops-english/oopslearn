@@ -100,6 +100,7 @@ body.large-text{font-size:120%}
 
 <footer>Oops! — Make mistakes. Make progress.</footer>
 <script src="tracker.js"></script>
+<script src="accessibility.js"></script>
 <script>
 const vocabulary = [
  {word:"achieve",ipa:"/əˈtʃiːv/",meaning:"đạt được",example:"She worked hard to achieve her goals.",level:"A2",topic:"Education"},
@@ -214,12 +215,6 @@ document.querySelectorAll("[data-filter]").forEach(button => {
    button.classList.add("active");
    render();
  });
-});
-
-document.getElementById("modeBtn").addEventListener("click",function(){
- const enabled = document.body.classList.toggle("accessible");
- this.setAttribute("aria-pressed",String(enabled));
- this.textContent = enabled ? "Normal Mode" : "Accessible Mode";
 });
 
 render();
