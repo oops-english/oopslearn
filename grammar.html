@@ -177,13 +177,11 @@ document.getElementById("next").addEventListener("click",()=>{
  current=(current+1)%questions.length;
  showQuestion();
 });
-document.getElementById("modeBtn").addEventListener("click",function(){
- const enabled=document.body.classList.toggle("accessible");
- this.setAttribute("aria-pressed",String(enabled));
- this.textContent=enabled?"Normal Mode":"Accessible Mode";
-});
 renderLessons();
 showQuestion();
 </script>
+
+<script src="accessibility.js"></script>
+<script src="settings.js"></script>
 </body>
 </html>
