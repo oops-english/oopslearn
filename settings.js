@@ -16,11 +16,16 @@
 
     // Apply the primary color across the website
     if (settings.primaryColor) {
-      document.documentElement.style.setProperty(
-        "--primary",
-        settings.primaryColor
-      );
-    }
+  document.documentElement.style.setProperty(
+    "--primary",
+    settings.primaryColor
+  );
+
+  document.documentElement.style.setProperty(
+    "--bg",
+    settings.primaryColor + "12"
+  );
+}
 
     // Apply the background image across the website
     if (settings.backgroundImage) {
