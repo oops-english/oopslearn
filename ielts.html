@@ -203,11 +203,9 @@ document.getElementById("reset").addEventListener("click",()=>{
  practice.classList.add("hidden");
 });
 
-document.getElementById("modeBtn").addEventListener("click",function(){
- const enabled=document.body.classList.toggle("accessible");
- this.setAttribute("aria-pressed",String(enabled));
- this.textContent=enabled?"Normal Mode":"Accessible Mode";
-});
 </script>
+
+<script src="accessibility.js"></script>
+<script src="settings.js"></script>
 </body>
 </html>
