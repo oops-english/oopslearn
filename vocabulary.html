@@ -482,18 +482,77 @@ body.large-text{font-size:120%}
 
 /* WORD BANK: CURRENTLY SAMPLE DATA */
 const vocabulary = [
- {word:"book",ipa:"/bʊk/",meaning:"quyển sách",example:"I read a book every week.",level:"A1",topic:"Education"},
- {word:"family",ipa:"/ˈfæməli/",meaning:"gia đình",example:"My family lives in Vietnam.",level:"A1",topic:"Daily life"},
- {word:"achieve",ipa:"/əˈtʃiːv/",meaning:"đạt được",example:"She worked hard to achieve her goals.",level:"A2",topic:"Education"},
- {word:"environment",ipa:"/ɪnˈvaɪrənmənt/",meaning:"môi trường",example:"We should protect the environment.",level:"A2",topic:"Environment"},
- {word:"confident",ipa:"/ˈkɒnfɪdənt/",meaning:"tự tin",example:"She feels confident when speaking English.",level:"B1",topic:"Daily life"},
- {word:"technology",ipa:"/tekˈnɒlədʒi/",meaning:"công nghệ",example:"Technology has changed modern education.",level:"B1",topic:"Technology"},
- {word:"opportunity",ipa:"/ˌɒpəˈtjuːnəti/",meaning:"cơ hội",example:"This course offers an opportunity to learn.",level:"B1",topic:"Education"},
- {word:"sustainable",ipa:"/səˈsteɪnəbl/",meaning:"bền vững",example:"We need sustainable solutions.",level:"B2",topic:"Environment"},
- {word:"inequality",ipa:"/ˌɪnɪˈkwɒləti/",meaning:"sự bất bình đẳng",example:"Education can help reduce inequality.",level:"B2",topic:"Society"},
- {word:"innovative",ipa:"/ˈɪnəvətɪv/",meaning:"mang tính đổi mới",example:"The school introduced an innovative method.",level:"C1",topic:"Technology"},
- {word:"comprehensive",ipa:"/ˌkɒmprɪˈhensɪv/",meaning:"toàn diện",example:"The report provides a comprehensive analysis.",level:"C1",topic:"Education"},
- {word:"ubiquitous",ipa:"/juːˈbɪkwɪtəs/",meaning:"có mặt ở khắp nơi",example:"Smartphones have become ubiquitous.",level:"C2",topic:"Technology"}
+  // A1
+  {word:"relative",ipa:"/ˈrelətɪv/",meaning:"họ hàng",example:"I have many relatives.",level:"A1",topic:"Family & Personal Information"},
+  {word:"surname",ipa:"/ˈsɜːneɪm/",meaning:"họ",example:"What is your surname?",level:"A1",topic:"Family & Personal Information"},
+  {word:"furniture",ipa:"/ˈfɜːnɪtʃə(r)/",meaning:"đồ nội thất",example:"The furniture is new.",level:"A1",topic:"Everyday Objects"},
+  {word:"drawer",ipa:"/drɔː(r)/",meaning:"ngăn kéo",example:"The keys are in the drawer.",level:"A1",topic:"Everyday Objects"},
+  {word:"noodles",ipa:"/ˈnuːdlz/",meaning:"mì",example:"I often eat noodles for breakfast.",level:"A1",topic:"Food & Basic Clothing"},
+  {word:"jacket",ipa:"/ˈdʒækɪt/",meaning:"áo khoác",example:"Wear a jacket today.",level:"A1",topic:"Food & Basic Clothing"},
+  {word:"midnight",ipa:"/ˈmɪdnaɪt/",meaning:"nửa đêm",example:"The film ends at midnight.",level:"A1",topic:"Time & Weather"},
+  {word:"cloudy",ipa:"/ˈklaʊdi/",meaning:"nhiều mây",example:"It is cloudy this morning.",level:"A1",topic:"Time & Weather"},
+  {word:"museum",ipa:"/mjuˈziːəm/",meaning:"bảo tàng",example:"We visited the museum.",level:"A1",topic:"Places & Transport"},
+  {word:"motorbike",ipa:"/ˈməʊtəbaɪk/",meaning:"xe máy",example:"He goes to school by motorbike.",level:"A1",topic:"Places & Transport"},
+
+  // A2
+  {word:"salary",ipa:"/ˈsæləri/",meaning:"tiền lương",example:"She receives a monthly salary.",level:"A2",topic:"Jobs & Workplaces"},
+  {word:"colleague",ipa:"/ˈkɒliːɡ/",meaning:"đồng nghiệp",example:"My colleagues are helpful.",level:"A2",topic:"Jobs & Workplaces"},
+  {word:"discount",ipa:"/ˈdɪskaʊnt/",meaning:"giảm giá",example:"This shop offers a discount.",level:"A2",topic:"Shopping & Prices"},
+  {word:"receipt",ipa:"/rɪˈsiːt/",meaning:"hóa đơn",example:"Keep the receipt after shopping.",level:"A2",topic:"Shopping & Prices"},
+  {word:"reservation",ipa:"/ˌrezəˈveɪʃn/",meaning:"sự đặt chỗ",example:"I made a hotel reservation.",level:"A2",topic:"Travel & Accommodation"},
+  {word:"destination",ipa:"/ˌdestɪˈneɪʃn/",meaning:"điểm đến",example:"Paris is our final destination.",level:"A2",topic:"Travel & Accommodation"},
+  {word:"symptom",ipa:"/ˈsɪmptəm/",meaning:"triệu chứng",example:"A fever is a common symptom.",level:"A2",topic:"Health & Body"},
+  {word:"headache",ipa:"/ˈhedeɪk/",meaning:"đau đầu",example:"I have a terrible headache.",level:"A2",topic:"Health & Body"},
+  {word:"tournament",ipa:"/ˈtʊənəmənt/",meaning:"giải đấu",example:"Our school won the tournament.",level:"A2",topic:"Sports & Entertainment"},
+  {word:"leisure",ipa:"/ˈleʒə(r)/",meaning:"thời gian rảnh",example:"I read books in my leisure time.",level:"A2",topic:"Sports & Entertainment"},
+
+  // B1
+  {word:"scholarship",ipa:"/ˈskɒləʃɪp/",meaning:"học bổng",example:"She received a university scholarship.",level:"B1",topic:"Education & Careers"},
+  {word:"qualification",ipa:"/ˌkwɒlɪfɪˈkeɪʃn/",meaning:"bằng cấp; trình độ",example:"The job requires professional qualifications.",level:"B1",topic:"Education & Careers"},
+  {word:"endangered",ipa:"/ɪnˈdeɪndʒəd/",meaning:"có nguy cơ tuyệt chủng",example:"Many endangered species need protection.",level:"B1",topic:"Environment & Natural Disasters"},
+  {word:"drought",ipa:"/draʊt/",meaning:"hạn hán",example:"The drought damaged local crops.",level:"B1",topic:"Environment & Natural Disasters"},
+  {word:"empathetic",ipa:"/ˌempəˈθetɪk/",meaning:"biết đồng cảm",example:"A good friend should be empathetic.",level:"B1",topic:"Emotions & Relationships"},
+  {word:"conflict",ipa:"/ˈkɒnflɪkt/",meaning:"xung đột",example:"They resolved their conflict peacefully.",level:"B1",topic:"Emotions & Relationships"},
+  {word:"broadcast",ipa:"/ˈbrɔːdkɑːst/",meaning:"phát sóng",example:"The interview was broadcast live.",level:"B1",topic:"Media & Digital Technology"},
+  {word:"privacy",ipa:"/ˈprɪvəsi/",meaning:"quyền riêng tư",example:"Users should protect their online privacy.",level:"B1",topic:"Media & Digital Technology"},
+  {word:"heritage",ipa:"/ˈherɪtɪdʒ/",meaning:"di sản",example:"The festival celebrates our cultural heritage.",level:"B1",topic:"Culture & Lifestyle"},
+  {word:"custom",ipa:"/ˈkʌstəm/",meaning:"phong tục",example:"It is a local custom to share food.",level:"B1",topic:"Culture & Lifestyle"},
+
+  // B2
+  {word:"recruitment",ipa:"/rɪˈkruːtmənt/",meaning:"sự tuyển dụng",example:"The company has improved its recruitment process.",level:"B2",topic:"Employment & Marketing"},
+  {word:"expenditure",ipa:"/ɪkˈspendɪtʃə(r)/",meaning:"khoản chi tiêu",example:"Track your monthly expenditure carefully.",level:"B2",topic:"Employment & Marketing"},
+  {word:"inequality",ipa:"/ˌɪnɪˈkwɒləti/",meaning:"bất bình đẳng",example:"Education can help reduce inequality.",level:"B2",topic:"Social Issues & Citizenship"},
+  {word:"legislation",ipa:"/ˌledʒɪsˈleɪʃn/",meaning:"luật pháp; hệ thống luật",example:"New legislation protects consumers.",level:"B2",topic:"Social Issues & Citizenship"},
+  {word:"automation",ipa:"/ˌɔːtəˈmeɪʃn/",meaning:"sự tự động hóa",example:"Automation has transformed manufacturing.",level:"B2",topic:"Automation & Medical Innovation"},
+  {word:"breakthrough",ipa:"/ˈbreɪkθruː/",meaning:"bước đột phá",example:"Researchers announced a medical breakthrough.",level:"B2",topic:"Automation & Medical Innovation"},
+  {word:"resilience",ipa:"/rɪˈzɪliəns/",meaning:"khả năng phục hồi",example:"Resilience helps people overcome difficulties.",level:"B2",topic:"Psychology & Personal Development"},
+  {word:"mindset",ipa:"/ˈmaɪndset/",meaning:"tư duy; cách suy nghĩ",example:"A growth mindset encourages lifelong learning.",level:"B2",topic:"Psychology & Personal Development"},
+  {word:"renewable",ipa:"/rɪˈnjuːəbl/",meaning:"có thể tái tạo",example:"Solar power is a renewable energy source.",level:"B2",topic:"Renewable Energy & Sustainability"},
+  {word:"emissions",ipa:"/ɪˈmɪʃnz/",meaning:"khí thải",example:"Governments aim to reduce carbon emissions.",level:"B2",topic:"Renewable Energy & Sustainability"},
+
+  // C1
+  {word:"diplomacy",ipa:"/dɪˈpləʊməsi/",meaning:"ngoại giao",example:"Diplomacy plays a vital role in peace negotiations.",level:"C1",topic:"International Relations & Diplomacy"},
+  {word:"sovereignty",ipa:"/ˈsɒvrənti/",meaning:"chủ quyền",example:"The treaty recognises national sovereignty.",level:"C1",topic:"International Relations & Diplomacy"},
+  {word:"macroeconomic",ipa:"/ˌmækrəʊˌiːkəˈnɒmɪk/",meaning:"thuộc kinh tế vĩ mô",example:"Macroeconomic conditions affect investment.",level:"C1",topic:"Financial Markets & Macroeconomics"},
+  {word:"inflationary",ipa:"/ɪnˈfleɪʃənəri/",meaning:"gây lạm phát; thuộc lạm phát",example:"Inflationary pressure can reduce purchasing power.",level:"C1",topic:"Financial Markets & Macroeconomics"},
+  {word:"methodology",ipa:"/ˌmeθəˈdɒlədʒi/",meaning:"phương pháp luận",example:"The study adopts a qualitative methodology.",level:"C1",topic:"Research & Ethics"},
+  {word:"integrity",ipa:"/ɪnˈteɡrəti/",meaning:"tính chính trực",example:"Researchers must maintain academic integrity.",level:"C1",topic:"Research & Ethics"},
+  {word:"biodiversity",ipa:"/ˌbaɪəʊdaɪˈvɜːsəti/",meaning:"đa dạng sinh học",example:"Deforestation threatens biodiversity.",level:"C1",topic:"Climate Policy & Biodiversity"},
+  {word:"mitigation",ipa:"/ˌmɪtɪˈɡeɪʃn/",meaning:"sự giảm nhẹ; giảm thiểu",example:"Climate mitigation requires international cooperation.",level:"C1",topic:"Climate Policy & Biodiversity"},
+  {word:"misrepresentation",ipa:"/ˌmɪsˌreprɪzenˈteɪʃn/",meaning:"sự trình bày sai lệch",example:"The article was criticised for misrepresentation.",level:"C1",topic:"Mass Media & Rhetoric"},
+  {word:"persuasive",ipa:"/pəˈsweɪsɪv/",meaning:"có sức thuyết phục",example:"She delivered a persuasive argument.",level:"C1",topic:"Mass Media & Rhetoric"},
+
+  // C2
+  {word:"metacognition",ipa:"/ˌmetəkɒɡˈnɪʃn/",meaning:"siêu nhận thức",example:"Metacognition involves reflecting on one's thinking.",level:"C2",topic:"Behavioural Psychology & Cognition"},
+  {word:"cognitive",ipa:"/ˈkɒɡnətɪv/",meaning:"thuộc nhận thức",example:"Sleep can influence cognitive performance.",level:"C2",topic:"Behavioural Psychology & Cognition"},
+  {word:"cryptography",ipa:"/krɪpˈtɒɡrəfi/",meaning:"mật mã học",example:"Cryptography helps secure digital communication.",level:"C2",topic:"Emerging Technologies"},
+  {word:"quantum",ipa:"/ˈkwɒntəm/",meaning:"thuộc lượng tử",example:"Quantum computing is an emerging field.",level:"C2",topic:"Emerging Technologies"},
+  {word:"hegemony",ipa:"/hɪˈdʒeməni/",meaning:"quyền bá chủ",example:"The region experienced a shift in political hegemony.",level:"C2",topic:"Geopolitics & International Law"},
+  {word:"jurisdiction",ipa:"/ˌdʒʊərɪsˈdɪkʃn/",meaning:"thẩm quyền tài phán",example:"The court has jurisdiction over the case.",level:"C2",topic:"Geopolitics & International Law"},
+  {word:"embezzlement",ipa:"/ɪmˈbezlmənt/",meaning:"sự tham ô; biển thủ",example:"The investigation uncovered financial embezzlement.",level:"C2",topic:"Financial Crime & Justice"},
+  {word:"prosecution",ipa:"/ˌprɒsɪˈkjuːʃn/",meaning:"sự truy tố; bên công tố",example:"The prosecution presented further evidence.",level:"C2",topic:"Financial Crime & Justice"},
+  {word:"aesthetic",ipa:"/iːsˈθetɪk/",meaning:"thuộc thẩm mỹ",example:"The building has a distinctive aesthetic.",level:"C2",topic:"Art Theory & Semiotics"},
+  {word:"connotation",ipa:"/ˌkɒnəˈteɪʃn/",meaning:"hàm ý; sắc thái nghĩa",example:"The word carries a negative connotation.",level:"C2",topic:"Art Theory & Semiotics"}
 ];
 
 const topicsByLevel = {
