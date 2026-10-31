@@ -18,14 +18,47 @@ body{
   margin:0;font-family:Arial,sans-serif;
   background:var(--bg);color:var(--text);
 }
-header{
-  background:white;padding:18px 7%;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:15px;flex-wrap:wrap;box-shadow:0 2px 12px #25204410;
+header {
+  height: 86px;
+  background: var(--card);
+  padding: 0 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 12px #25204410;
 }
-.logo{font-size:25px;font-weight:800;color:var(--primary);text-decoration:none}
-nav{display:flex;gap:16px;flex-wrap:wrap}
-nav a{color:var(--text);text-decoration:none;font-weight:600}
+
+.logo {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.back-home {
+  text-decoration: none;
+  color: var(--text);
+  background: #f1edff;
+  padding: 11px 17px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+header button {
+  background: #f1edff;
+  color: var(--primary);
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
 button{
   border:0;border-radius:10px;padding:11px 16px;
   background:var(--primary);color:white;font-weight:700;cursor:pointer;
@@ -61,19 +94,38 @@ body.accessible .card,body.accessible header{border:2px solid #000;box-shadow:no
 body.accessible a{color:#000;text-decoration:underline}
 body.accessible button{background:#000;color:#fff;border:2px solid #000}
 button:focus,a:focus{outline:3px solid orange;outline-offset:3px}
+  @media (max-width: 650px) {
+  header {
+    height: auto;
+    min-height: 76px;
+    padding: 14px 5%;
+    gap: 10px;
+  }
+
+  .header-actions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
 </style>
 </head>
 <body>
 <header>
   <a class="logo" href="index.html">Oops!</a>
-  <nav aria-label="Main navigation">
-    <a href="index.html">Home</a>
-    <a href="vocabulary.html">Vocabulary</a>
-    <a href="grammar.html">Grammar</a>
-    <a href="error-fix.html">Error Fix</a>
-    <a href="ielts.html">IELTS</a>
-  </nav>
-  <button id="modeBtn" type="button" aria-pressed="false">Accessible Mode</button>
+
+  <div class="header-actions">
+    <a class="back-home" href="index.html">
+      ← Back to Home
+    </a>
+
+    <button
+      id="modeBtn"
+      type="button"
+      aria-pressed="false"
+    >
+      Accessible Mode
+    </button>
+  </div>
 </header>
 
 <main>
