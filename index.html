@@ -104,7 +104,11 @@ button, .btn {
 
 .hero {
   padding: 85px 8%;
-  background: linear-gradient(120deg,#eeeaff,#fff1f6);
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--primary) 14%, white),
+    color-mix(in srgb, var(--primary) 5%, white)
+  );
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 35px;
