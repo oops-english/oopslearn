@@ -967,7 +967,7 @@ function startQuiz(){
     return;
   }
 
-  quizQuestions = shuffleArray(words).map((item,index)=>{
+  quizQuestions = shuffleArray([...words, ...words.slice(0,1)]).map((item,index)=>{
     const types = ["meaning","context","fill"];
     const type = types[index % types.length];
 
@@ -1141,7 +1141,7 @@ function renderQuiz(){
 
 $("nextQuestion").addEventListener("click",()=>{
   if(!quizQuestions.length ||
-     quizIndex >= quizQuestions.length - 1){
+     $("nextQuestion").textContent === "Try Again"){
     startQuiz();
     return;
   }
