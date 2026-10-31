@@ -15,9 +15,50 @@
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-header{background:var(--card);padding:17px 7%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;border-bottom:1px solid #eee}
-.logo{font-size:26px;font-weight:800;color:var(--primary);text-decoration:none}
-header a:not(.logo){color:var(--text);text-decoration:none}
+header {
+  background: var(--card);
+  padding: 17px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--primary);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 18px;
+}
+
+header .header-actions a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+header .header-actions a:hover {
+  text-decoration: underline;
+}
+
+@media(max-width:480px) {
+  header {
+    padding: 14px 4%;
+  }
+
+  .header-actions {
+    gap: 10px;
+  }
+}
 button,input,select{font:inherit}
 button{cursor:pointer;border:0;border-radius:10px;padding:10px 15px;font-weight:700}
 .primary{background:var(--primary);color:white}
@@ -54,8 +95,13 @@ body.large-text{font-size:120%}
 <body>
 <header>
   <a class="logo" href="index.html">Oops!</a>
-  <a href="index.html">← Back to Home</a>
-  <button class="secondary" id="modeBtn" aria-pressed="false">Accessible Mode</button>
+
+  <div class="header-actions">
+    <a href="index.html">← Back to Home</a>
+    <button class="secondary" id="modeBtn" type="button" aria-pressed="false">
+      Accessible Mode
+    </button>
+  </div>
 </header>
 
 <main>
