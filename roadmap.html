@@ -164,12 +164,11 @@ document.getElementById("retake").addEventListener("click",()=>{
  render();
  window.scrollTo({top:0,behavior:"smooth"});
 });
-document.getElementById("modeBtn").addEventListener("click",function(){
- const enabled=document.body.classList.toggle("accessible");
- this.setAttribute("aria-pressed",String(enabled));
- this.textContent=enabled?"Normal Mode":"Accessible Mode";
-});
+
 render();
 </script>
+
+<script src="accessibility.js"></script>
+<script src="settings.js"></script>
 </body>
 </html>
