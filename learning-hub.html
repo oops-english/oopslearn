@@ -14,7 +14,42 @@
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-header{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding:16px 6%;background:var(--card);border-bottom:1px solid #eee}
+header {
+  height: 86px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 6%;
+  background: var(--card);
+  border-bottom: 1px solid #eee;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.back-home {
+  text-decoration: none;
+  color: var(--text);
+  background: #f1edff;
+  padding: 11px 17px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.mode-button {
+  background: #f1edff;
+  color: var(--primary);
+}
 .logo{font-size:28px;font-weight:800;color:var(--primary);text-decoration:none}
 nav{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 nav a{padding:9px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-weight:600}
@@ -58,14 +93,21 @@ body.accessible .mode-button{background:#333;color:#ffeb3b}
 
 <header>
   <a class="logo" href="index.html">Oops!</a>
-  <nav aria-label="Main navigation">
-    <a href="index.html">Home</a>
-    <a href="learning-hub.html" class="active">Learning Hub</a>
-    <a href="daily-quests.html">Daily Quests</a>
-    <a href="progress.html">My Progress</a>
-    <a href="profile.html">Profile</a>
-  </nav>
-  <button class="mode-button" id="modeBtn" type="button" aria-pressed="false">Accessible Mode</button>
+
+  <div class="header-actions">
+    <a class="back-home" href="index.html">
+      ← Back to Home
+    </a>
+
+    <button
+      class="mode-button"
+      id="modeBtn"
+      type="button"
+      aria-pressed="false"
+    >
+      Accessible Mode
+    </button>
+  </div>
 </header>
 
 <main>
