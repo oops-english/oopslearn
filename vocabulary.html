@@ -1031,6 +1031,17 @@ function renderQuiz(){
   $("quizOptions").innerHTML = "";
 
   if(!question){
+        if(
+      quizQuestions.length > 0 &&
+      window.OopsTracker &&
+      typeof window.OopsTracker.recordQuizResult === "function"
+    ){
+      window.OopsTracker.recordQuizResult(
+        quizScore,
+        quizQuestions.length,
+        "Vocabulary"
+      );
+    }
     $("quizProgress").textContent = "Test completed";
     $("quizQuestion").textContent =
       "Your score: " + quizScore + " / " + quizQuestions.length;
@@ -1140,8 +1151,10 @@ function renderQuiz(){
 }
 
 $("nextQuestion").addEventListener("click",()=>{
-  if(!quizQuestions.length ||
-     $("nextQuestion").textContent === "Try Again"){
+  if(
+    !quizQuestions.length ||
+    $("nextQuestion").textContent === "Try Again"
+  ){
     startQuiz();
     return;
   }
