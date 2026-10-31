@@ -417,7 +417,7 @@ body.large-text{font-size:120%}
 
       <section class="activity-panel" id="testPanel">
         <h3>Vocabulary Test</h3>
-        <p>Choose the correct meaning of the English word.</p>
+        <p>Practise word meanings, vocabulary in context and sentence completion.</p>
         <div class="quiz-box">
           <p id="quizProgress"></p>
           <h2 id="quizQuestion">Ready to test your vocabulary?</h2>
@@ -944,20 +944,78 @@ function saveMastery(status){
 $("markKnown").addEventListener("click",()=>saveMastery("known"));
 $("markLearning").addEventListener("click",()=>saveMastery("learning"));
 
-/* TEST */
+
+/* TEST — THREE QUESTION TYPES */
+
+function shuffleArray(array){
+  const result = [...array];
+
+  for(let i = result.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+
+  return result;
+}
+
 function startQuiz(){
   const words = getCurrentWords();
 
-  quizQuestions = words.map(item=>{
-    const alternatives = vocabulary
-      .filter(other=>other.word !== item.word)
-      .map(other=>other.meaning);
+  if(!words.length){
+    quizQuestions = [];
+    renderQuiz();
+    return;
+  }
 
-    const shuffled = alternatives.sort(()=>Math.random()-0.5);
-    const options = [item.meaning,...shuffled.slice(0,3)]
-      .sort(()=>Math.random()-0.5);
+  quizQuestions = shuffleArray(words).map((item,index)=>{
+    const types = ["meaning","context","fill"];
+    const type = types[index % types.length];
 
-    return {item,options};
+    const otherWords = vocabulary.filter(
+      other => other.word !== item.word
+    );
+
+    const distractors = shuffleArray(otherWords).slice(0,3);
+
+    if(type === "meaning"){
+      return {
+        type,
+        item,
+        prompt: `What does "${item.word}" mean?`,
+        options: shuffleArray([
+          item.meaning,
+          ...shuffleArray(vocabulary.filter(
+            other => other.word !== item.word
+          )).slice(0,3).map(other => other.meaning)
+        ]),
+        answer: item.meaning
+      };
+    }
+
+    if(type === "context"){
+      return {
+        type,
+        item,
+        prompt: `Choose the word that best completes this sentence:\n\n"${item.example}"`,
+        options: shuffleArray([
+          item.word,
+          ...distractors.map(other => other.word)
+        ]),
+        answer: item.word
+      };
+    }
+
+    const blankSentence = item.example.replace(
+      new RegExp(item.word.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"i"),
+      "________"
+    );
+
+    return {
+      type,
+      item,
+      prompt: `Complete the sentence with the correct word:\n\n"${blankSentence}"`,
+      answer: item.word
+    };
   });
 
   quizIndex = 0;
@@ -970,26 +1028,80 @@ function renderQuiz(){
   const question = quizQuestions[quizIndex];
 
   $("quizFeedback").textContent = "";
+  $("quizOptions").innerHTML = "";
 
   if(!question){
     $("quizProgress").textContent = "Test completed";
     $("quizQuestion").textContent =
       "Your score: " + quizScore + " / " + quizQuestions.length;
-    $("quizOptions").innerHTML = "";
+
+    $("quizFeedback").textContent =
+      quizScore === quizQuestions.length
+        ? "Excellent work! You got every question right."
+        : "Well done! Review the words you found difficult.";
+
     $("nextQuestion").textContent = "Try Again";
     $("nextQuestion").hidden = false;
     return;
   }
 
   $("quizProgress").textContent =
-    "Question " + (quizIndex+1) + " of " + quizQuestions.length;
+    "Question " + (quizIndex + 1) +
+    " of " + quizQuestions.length;
 
-  $("quizQuestion").textContent =
-    "What does “" + question.item.word + "” mean?";
-
-  $("quizOptions").innerHTML = "";
+  $("quizQuestion").textContent = question.prompt;
   $("nextQuestion").textContent = "Next Question";
   $("nextQuestion").hidden = true;
+
+  if(question.type === "fill"){
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Type your answer...";
+    input.setAttribute("aria-label","Your answer");
+    input.autocomplete = "off";
+
+    const submit = document.createElement("button");
+    submit.type = "button";
+    submit.className = "primary";
+    submit.textContent = "Check Answer";
+
+    function checkTypedAnswer(){
+      if(quizAnswered) return;
+
+      const answer = input.value.trim().toLowerCase();
+
+      if(!answer){
+        $("quizFeedback").textContent =
+          "Please type an answer first.";
+        input.focus();
+        return;
+      }
+
+      quizAnswered = true;
+
+      if(answer === question.answer.toLowerCase()){
+        quizScore++;
+        $("quizFeedback").textContent = "Correct! Well done.";
+      }else{
+        $("quizFeedback").textContent =
+          "Not quite. Correct answer: " + question.answer;
+      }
+
+      input.disabled = true;
+      submit.disabled = true;
+      $("nextQuestion").hidden = false;
+    }
+
+    submit.addEventListener("click",checkTypedAnswer);
+
+    input.addEventListener("keydown",event=>{
+      if(event.key === "Enter") checkTypedAnswer();
+    });
+
+    $("quizOptions").append(input,submit);
+    input.focus();
+    return;
+  }
 
   question.options.forEach(option=>{
     const button = document.createElement("button");
@@ -999,21 +1111,23 @@ function renderQuiz(){
 
     button.addEventListener("click",()=>{
       if(quizAnswered) return;
+
       quizAnswered = true;
 
-      if(option === question.item.meaning){
+      if(option === question.answer){
         quizScore++;
         button.classList.add("correct");
         $("quizFeedback").textContent = "Correct! Well done.";
       }else{
         button.classList.add("wrong");
         $("quizFeedback").textContent =
-          "Not quite. Correct answer: " + question.item.meaning;
+          "Not quite. Correct answer: " + question.answer;
       }
 
       $("quizOptions").querySelectorAll("button").forEach(other=>{
         other.disabled = true;
-        if(other.textContent === question.item.meaning){
+
+        if(other.textContent === question.answer){
           other.classList.add("correct");
         }
       });
@@ -1026,18 +1140,15 @@ function renderQuiz(){
 }
 
 $("nextQuestion").addEventListener("click",()=>{
-  if(!quizQuestions.length){
-    startQuiz();
-    return;
-  }
-
-  if(quizIndex >= quizQuestions.length){
+  if(!quizQuestions.length ||
+     quizIndex >= quizQuestions.length - 1){
     startQuiz();
     return;
   }
 
   if(!quizAnswered){
-    $("quizFeedback").textContent = "Choose an answer first.";
+    $("quizFeedback").textContent =
+      "Please answer the question first.";
     return;
   }
 
