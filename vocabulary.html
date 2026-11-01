@@ -306,17 +306,6 @@ body.large-text{font-size:120%}
   .main-tab,.study-tab{padding:10px 5px;font-size:13px}
   .word-grid,.topic-list{grid-template-columns:1fr}
 }
-
-/* OOPS! ONE CONTINUOUS 35-QUESTION LEARN JOURNEY */
-.learn-shell{max-width:850px;margin:10px auto 35px;padding:clamp(18px,4vw,38px);background:#fff;border:1px solid #e9e1f5;border-radius:26px;box-shadow:0 14px 40px rgba(66,42,110,.08)}
-.learn-topline{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:25px}.learn-topline h2{font-size:clamp(23px,3vw,32px);margin:2px 0;color:#28213c}.learn-kicker{font-size:11px;letter-spacing:1.5px;font-weight:800;color:#9060d9}.learn-exit{font-size:12px;padding:9px 12px}
-.learn-progress-meta{display:flex;justify-content:space-between;gap:12px;font-size:12px;font-weight:800;color:#7953bb;margin-bottom:9px}.learn-progress-track{height:9px;background:#eee9f7;border-radius:99px;overflow:hidden}.learn-progress-track div{height:100%;width:0;background:linear-gradient(90deg,#8b35e8,#c28af7);border-radius:99px;transition:width .25s}
-.learn-stage-track{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 25px}.learn-stage-track span{padding:9px 7px;text-align:center;border-radius:10px;background:#f4f0fa;color:#81778f;font-size:11px;font-weight:800}.learn-stage-track span.current{background:#eee4ff;color:#713ac0}.learn-stage-track span.done{background:#e5f8ed;color:#247849}
-.learn-question-card{min-height:270px;padding:clamp(20px,4vw,34px);border:1px solid #eee8f7;border-radius:20px;background:#fff}.learn-question-card .question-type{font-size:12px;font-weight:800;letter-spacing:1px;color:#9863d9;margin-bottom:13px}.learn-question-card h3{font-size:clamp(20px,3vw,27px);line-height:1.4;color:#29243a;margin-bottom:22px}.learn-question-card .question-example{padding:13px 16px;background:#f8f5fc;border-left:3px solid #a77add;border-radius:8px;margin:0 0 18px;color:#514761}.learn-options{display:grid;grid-template-columns:1fr 1fr;gap:12px}.learn-option{min-height:58px;text-align:left;background:#f7f3fc;color:#342b45;border:1.5px solid #e8def4;border-radius:13px;padding:13px 16px;font-weight:650}.learn-option:hover:not(:disabled){border-color:#a77add;background:#f0e7fc}.learn-option.selected{border:2px solid #8750cf;background:#eee3ff;color:#56318b}.learn-option.correct{background:#e1f7e9;border-color:#43a66b;color:#17643a}.learn-option.incorrect{background:#ffeded;border-color:#dc7777;color:#9b3030}.learn-feedback{min-height:28px;margin:14px 2px;color:#514761;font-weight:700}.learn-feedback.good{color:#21804b}.learn-feedback.bad{color:#b33d3d}.learn-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}.learn-actions button{min-width:145px;min-height:48px;border-radius:12px}.learn-actions button:disabled{opacity:.45;cursor:not-allowed}
-.learn-result{text-align:center;padding:30px 12px}.learn-result .result-score{font-size:42px;font-weight:900;color:#8050c8;margin:12px}.learn-result h3{margin-bottom:8px}.learn-result p{color:#6e657a}
-@media(max-width:600px){.learn-stage-track{grid-template-columns:1fr;gap:5px}.learn-stage-track span{text-align:left}.learn-options{grid-template-columns:1fr}.learn-topline{align-items:flex-start;flex-direction:column}.learn-actions button{flex:1}}
-body.accessible .learn-shell,body.accessible .learn-question-card{background:#111;color:#fff;border-color:#ffeb3b}body.accessible .learn-topline h2,body.accessible .learn-question-card h3{color:#fff}body.accessible .learn-option{background:#171717;color:#fff;border-color:#ffeb3b}body.accessible .learn-option.selected{background:#383000;color:#ffeb3b}body.accessible .learn-stage-track span{background:#222;color:#fff}body.accessible .learn-stage-track span.current{background:#383000;color:#ffeb3b}
-
 </style>
 </head>
 
@@ -417,18 +406,13 @@ body.accessible .learn-shell,body.accessible .learn-question-card{background:#11
       </section>
 
       <section class="activity-panel" id="learnActivityPanel">
-        <div class="learn-shell">
-          <div class="learn-topline">
-            <div><p class="learn-kicker">OOPS! VOCABULARY JOURNEY</p><h2 id="learnTopicHeading">Vocabulary</h2></div>
-            <button class="secondary learn-exit" id="restartLearn" type="button">Restart lesson</button>
-          </div>
-          <div class="learn-progress-meta"><span id="learnStageLabel">STAGE 1 · RECOGNITION</span><span id="learnCount" aria-live="polite">Question 1 of 35</span></div>
-          <div class="learn-progress-track"><div id="learnProgressBar"></div></div>
-          <div class="learn-stage-track" aria-label="Lesson stages"><span id="stageOne" class="current">01 Recognition · 12</span><span id="stageTwo">02 Application · 12</span><span id="stageThree">03 Challenge · 11</span></div>
-          <div class="learn-question-card" id="learnQuestionArea"></div>
-          <div id="learnFeedback" class="learn-feedback" aria-live="polite"></div>
-          <div class="learn-actions"><button class="primary" id="learnCheckBtn" type="button" hidden disabled>CHECK</button><button class="primary" id="learnNextBtn" type="button" hidden>NEXT QUESTION →</button></div>
+        <h3>Learn</h3>
+        <p>Study the words, meanings, pronunciation and examples.</p>
+        <div class="stage-heading">
+          <h3 id="learnTopicHeading">Vocabulary</h3>
+          <p id="learnCount" aria-live="polite"></p>
         </div>
+        <div class="word-grid" id="learnWords"></div>
       </section>
 
       <section class="activity-panel" id="testPanel">
@@ -2227,18 +2211,763 @@ const vocabulary = [
 { word: "Ant", ipa: "/ænt/", meaning: "Con kiến", example: "An ant is carrying a small piece of food.", level: "A1", topic: "Basic Animals" },
 { word: "Mosquito", ipa: "/məˈskiːtəʊ/", meaning: "Con muỗi", example: "A mosquito is flying around the room.", level: "A1", topic: "Basic Animals" },
 { word: "Dolphin", ipa: "/ˈdɒlfɪn/", meaning: "Con cá thần / Cá heo", example: "The dolphin swims quickly in the sea.", level: "A1", topic: "Basic Animals" },
-  
-  // A2
-  {word:"salary",ipa:"/ˈsæləri/",meaning:"tiền lương",example:"She receives a monthly salary.",level:"A2",topic:"Jobs & Workplaces"},
-  {word:"colleague",ipa:"/ˈkɒliːɡ/",meaning:"đồng nghiệp",example:"My colleagues are helpful.",level:"A2",topic:"Jobs & Workplaces"},
-  {word:"discount",ipa:"/ˈdɪskaʊnt/",meaning:"giảm giá",example:"This shop offers a discount.",level:"A2",topic:"Shopping & Prices"},
-  {word:"receipt",ipa:"/rɪˈsiːt/",meaning:"hóa đơn",example:"Keep the receipt after shopping.",level:"A2",topic:"Shopping & Prices"},
-  {word:"reservation",ipa:"/ˌrezəˈveɪʃn/",meaning:"sự đặt chỗ",example:"I made a hotel reservation.",level:"A2",topic:"Travel & Accommodation"},
-  {word:"destination",ipa:"/ˌdestɪˈneɪʃn/",meaning:"điểm đến",example:"Paris is our final destination.",level:"A2",topic:"Travel & Accommodation"},
-  {word:"symptom",ipa:"/ˈsɪmptəm/",meaning:"triệu chứng",example:"A fever is a common symptom.",level:"A2",topic:"Health & Body"},
-  {word:"headache",ipa:"/ˈhedeɪk/",meaning:"đau đầu",example:"I have a terrible headache.",level:"A2",topic:"Health & Body"},
-  {word:"tournament",ipa:"/ˈtʊənəmənt/",meaning:"giải đấu",example:"Our school won the tournament.",level:"A2",topic:"Sports & Entertainment"},
-  {word:"leisure",ipa:"/ˈleʒə(r)/",meaning:"thời gian rảnh",example:"I read books in my leisure time.",level:"A2",topic:"Sports & Entertainment"},
+
+  // A2 — 755 từ lấy từ tài liệu nguồn; chưa có câu ví dụ trong PDF.
+  { word: "Attractive", ipa: "/əˈtræk.tɪv/", meaning: "Quyến rũ, thu hút", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Beautiful", ipa: "/ˈbjuː.tɪ.fəl/", meaning: "Đẹp, xinh đẹp", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Handsome", ipa: "/ˈhæn.səm/", meaning: "Đẹp trai", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Pretty", ipa: "/ˈprɪt.i/", meaning: "Xinh xắn", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Ugly", ipa: "/ˈʌɡ.li/", meaning: "Xấu xí", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Tall", ipa: "/tɔːl/", meaning: "Cao", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Short", ipa: "/ʃɔːt/", meaning: "Thấp, ngắn", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Slim", ipa: "/slɪm/", meaning: "Mảnh khảnh, thon thả", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Thin", ipa: "/θɪn/", meaning: "Gầy", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Fat", ipa: "/fæt/", meaning: "Béo, mập", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Overweight", ipa: "/ˌəʊ.vəˈweɪt/", meaning: "Thừa cân", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Medium-height", ipa: "/ˌmiː.di.əm ˈhaɪt/", meaning: "Chiều cao trung bình", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Plump", ipa: "/plʌmp/", meaning: "Đầy đặn", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Blonde", ipa: "/blɒnd/", meaning: "Vàng hoe (tóc)", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Curly", ipa: "/ˈkɜː.li/", meaning: "Xoăn (tóc)", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Straight", ipa: "/streɪt/", meaning: "Thẳng (tóc)", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Wavy", ipa: "/ˈweɪ.vi/", meaning: "Gợn sóng (tóc)", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Dark", ipa: "/dɑːk/", meaning: "Tối màu, đen", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Fair", ipa: "/feər/", meaning: "Trắng, sáng (da/tóc)", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Beard", ipa: "/bɪəd/", meaning: "Râu quai nón", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Moustache", ipa: "/məˈstɑːʃ/", meaning: "Râu mép", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Friendly", ipa: "/ˈfrend.li/", meaning: "Thân thiện", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Kind", ipa: "/kaɪnd/", meaning: "Tốt bụng", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Generous", ipa: "/ˈdʒen.ər.əs/", meaning: "Rộng lượng, hào phóng", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Polite", ipa: "/pəˈlaɪt/", meaning: "Lịch sự", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Rude", ipa: "/ruːd/", meaning: "Bất lịch sự, thô lỗ", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Lazy", ipa: "/ˈleɪ.zi/", meaning: "Lười biếng", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Hard-working", ipa: "/ˌhɑːdˈwɜː.kɪŋ/", meaning: "Chăm chỉ", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Clever", ipa: "/ˈklev.ər/", meaning: "Thông minh", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Smart", ipa: "/smɑːt/", meaning: "Nhanh trí, thông minh", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Stupid", ipa: "/ˈstjuː.pɪd/", meaning: "Ngốc nghếch", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Shy", ipa: "/ʃaɪ/", meaning: "Nhút nhát", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Confident", ipa: "/ˈkɒn.fɪ.dənt/", meaning: "Tự tin", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Funny", ipa: "/ˈfʌn.i/", meaning: "Hài hước", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Serious", ipa: "/ˈsɪə.ri.əs/", meaning: "Nghiêm túc", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Honest", ipa: "/ˈɒn.ɪst/", meaning: "Trung thực", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Patient", ipa: "/ˈpeɪ.ʃənt/", meaning: "Kiên nhẫn", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Impatient", ipa: "/ɪmˈpeɪ.ʃənt/", meaning: "Nóng vội, thiếu kiên nhẫn", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Quiet", ipa: "/ˈkwaɪ.ət/", meaning: "Trầm tính, yên lặng", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Talkative", ipa: "/ˈtɔː.kə.tɪv/", meaning: "Hay nói, nói nhiều", example: "", level: "A2", topic: "Appearance & Personality" },
+  { word: "Friend", ipa: "/frend/", meaning: "Bạn bè", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Best friend", ipa: "/ˌbest ˈfrend/", meaning: "Bạn thân", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Neighbor", ipa: "/ˈneɪ.bər/", meaning: "Hàng xóm", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Colleague", ipa: "/ˈkɒl.iːɡ/", meaning: "Đồng nghiệp", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Classmate", ipa: "/ˈklɑːs.meɪt/", meaning: "Bạn cùng lớp", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Partner", ipa: "/ˈpɑːt.nər/", meaning: "Đối tác, bạn đời", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Couple", ipa: "/ˈkʌp.əl/", meaning: "Cặp đôi", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Relative", ipa: "/ˈrel.ə.tɪv/", meaning: "Họ hàng", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Parent", ipa: "/ˈpeər.ənt/", meaning: "Phụ huynh", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Stepfather", ipa: "/ˈstepˌfɑː.ðər/", meaning: "Bố dượng", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Stepmother", ipa: "/ˈstepˌmʌð.ər/", meaning: "Mẹ kế", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Fiancé", ipa: "/fiˈɒn.seɪ/", meaning: "Chồng hôn phu", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Fiancée", ipa: "/fiˈɒn.seɪ/", meaning: "Vợ hôn thê", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Single", ipa: "/ˈsɪŋ.ɡəl/", meaning: "Đơn thân, độc thân", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Married", ipa: "/ˈmær.id/", meaning: "Đã kết hôn", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Divorced", ipa: "/dɪˈvɔːst/", meaning: "Đã ly hôn", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Happy", ipa: "/ˈhæp.i/", meaning: "Vui vẻ", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Sad", ipa: "/sæd/", meaning: "Buồn bã", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Angry", ipa: "/ˈæŋ.ɡri/", meaning: "Tức giận", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Annoyed", ipa: "/əˈnɔɪd/", meaning: "Bực mình", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Upset", ipa: "/ʌpˈset/", meaning: "Thất vọng, buồn phiền", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Nervous", ipa: "/ˈnɜː.vəs/", meaning: "Lo lắng, hồi hộp", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Anxious", ipa: "/ˈæŋk.ʃəs/", meaning: "Lo âu", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Worried", ipa: "/ˈwʌr.id/", meaning: "Lo nghĩ", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Excited", ipa: "/ɪkˈsaɪ.tɪd/", meaning: "Hào hứng", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Bored", ipa: "/bɔːd/", meaning: "Chán nản", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Tired", ipa: "/ˈtaɪəd/", meaning: "Mệt mỏi", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Exhausted", ipa: "/ɪɡˈzɔː.stɪd/", meaning: "Kiệt sức", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Surprised", ipa: "/səˈpraɪzd/", meaning: "Ngạc nhiên", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Scared", ipa: "/skeəd/", meaning: "Sợ hãi", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Frightened", ipa: "/ˈfraɪ.tənd/", meaning: "Hoảng sợ", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Proud", ipa: "/praʊd/", meaning: "Tự hào", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Jealous", ipa: "/ˈdʒel.əs/", meaning: "Ghen tị", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Lonely", ipa: "/ˈləʊn.li/", meaning: "Cô đơn", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Calm", ipa: "/kɑːm/", meaning: "Bình tĩnh", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Relaxed", ipa: "/rɪˈlækst/", meaning: "Thư giãn", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Confused", ipa: "/kənˈfjuːzd/", meaning: "Bối rối", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Embarrassed", ipa: "/ɪmˈbær.əst/", meaning: "Ngượng ngùng", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Disappointed", ipa: "/ˌdɪs.əˈpɔɪn.tɪd/", meaning: "Thất vọng", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "Hopeful", ipa: "/ˈhəʊp.fəl/", meaning: "Hi vọng", example: "", level: "A2", topic: "Relationships & Feelings" },
+  { word: "House", ipa: "/haʊs/", meaning: "Nhà riêng", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Flat", ipa: "/flæt/", meaning: "Căn hộ (Anh-Anh)", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Apartment", ipa: "/əˈpɑːt.mənt/", meaning: "Căn hộ (Anh-Mỹ)", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Villa", ipa: "/ˈvɪl.ə/", meaning: "Biệt thự", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Cottage", ipa: "/ˈkɒt.ɪdʒ/", meaning: "Nhà tranh, nhà nhỏ ở quê", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Bungalow", ipa: "/ˈbʌŋ.ɡə.ləʊ/", meaning: "Nhà 1 tầng", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Detached house", ipa: "/dɪˈtætʃt haʊs/", meaning: "Nhà biệt lập", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Semi-detached house", ipa: "/ˌsem.i.dɪˈtætʃt haʊs/", meaning: "Nhà song lập", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Terraced house", ipa: "/ˈter.əst haʊs/", meaning: "Nhà dãy, nhà liền kề", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Skyscraper", ipa: "/ˈskaɪˌskreɪ.pər/", meaning: "Nhà cao tầng, tòa nhà keo kiệt", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Block of flats", ipa: "/ˌblɒk əv ˈflæts/", meaning: "Tòa nhà căn hộ", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Studio apartment", ipa: "/ˈstjuː.di.əʊ əˈpɑːt.mənt/", meaning: "Căn hộ nhỏ (không chia phòng)", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Houseboat", ipa: "/ˈhaʊs.bəʊt/", meaning: "Nhà thuyền", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Caravan", ipa: "/ˈkær.ə.væn/", meaning: "Xe nhà lưu động", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Tent", ipa: "/tent/", meaning: "Lều", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Dormitory", ipa: "/ˈdɔː.mɪ.tər.i/", meaning: "Ký túc xá", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Farmhouse", ipa: "/ˈfɑːm.haʊs/", meaning: "Nhà ở trang trại", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Mansion", ipa: "/ˈmæn.ʃən/", meaning: "Dinh biệt thự lớn", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Palace", ipa: "/ˈpæl.ɪs/", meaning: "Cung điện", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Castle", ipa: "/ˈkɑː.səl/", meaning: "Lâu đài", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Cabin", ipa: "/ˈkæb.ɪn/", meaning: "Nhà gỗ nhỏ", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Basement flat", ipa: "/ˈbeɪs.mənt flæt/", meaning: "Căn hộ tầng hầm", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Penthouse", ipa: "/ˈpent.haʊs/", meaning: "Căn hộ tầng thượng cao cấp", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Duplex", ipa: "/ˈdjuː.pleks/", meaning: "Căn hộ thông tầng", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Shelter", ipa: "/ˈʃel.tər/", meaning: "Nơi trú ẩn", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Building", ipa: "/ˈbɪl.dɪŋ/", meaning: "Tòa nhà", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Floor", ipa: "/flɔːr/", meaning: "Tầng (nhà)", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Ground floor", ipa: "/ˌɡraʊnd ˈflɔːr/", meaning: "Tầng trệt", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "First floor", ipa: "/ˌfɜːst ˈflɔːr/", meaning: "Tầng một", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Balcony", ipa: "/ˈbæl.kə.ni/", meaning: "Ban công", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Terrace", ipa: "/ˈter.əs/", meaning: "Sân thượng", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Garden", ipa: "/ˈɡɑː.dən/", meaning: "Khu vườn", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Yard", ipa: "/jɑːd/", meaning: "Sân nhà", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Garage", ipa: "/ˈɡær.ɑːʒ/", meaning: "Nhà để xe", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Roof", ipa: "/ruːf/", meaning: "Mái nhà", example: "", level: "A2", topic: "Types of Homes" },
+  { word: "Fridge", ipa: "/frɪdʒ/", meaning: "Tủ lạnh", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Refrigerator", ipa: "/rɪˈfrɪdʒ.ər.eɪ.tər/", meaning: "Tủ lạnh (tên đầy đủ)", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Freezer", ipa: "/ˈfriː.zər/", meaning: "Tủ đông", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Washing machine", ipa: "/ˈwɒʃ.ɪŋ məˌʃiːn/", meaning: "Máy giặt", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Dryer", ipa: "/ˈdraɪ.ər/", meaning: "Máy sấy", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Dishwasher", ipa: "/ˈdɪʃˌwɒʃ.ər/", meaning: "Máy rửa bát", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Microwave", ipa: "/ˈmaɪ.krə.weɪv/", meaning: "Lò vi sóng", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Oven", ipa: "/ˈʌv.ən/", meaning: "Lò nướng", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Cooker", ipa: "/ˈkʊk.ər/", meaning: "Bếp nướng/bếp nấu", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Stove", ipa: "/stəʊv/", meaning: "Bếp", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Vacuum cleaner", ipa: "/ˈvæk.juːm ˌkliː.nər/", meaning: "Máy hút bụi", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Air conditioner", ipa: "/ˈeə kənˌdɪʃ.ən.ər/", meaning: "Điều hòa nhiệt độ", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Heater", ipa: "/ˈhiː.tər/", meaning: "Máy sưởi", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Fan", ipa: "/fæn/", meaning: "Quạt điện", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Kettle", ipa: "/ˈket.əl/", meaning: "Ấm đun nước", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Toaster", ipa: "/ˈtəʊ.stər/", meaning: "Máy nướng bánh mì", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Blender", ipa: "/ˈblen.dər/", meaning: "Máy xay sinh tố", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Mixer", ipa: "/ˈmɪk.sər/", meaning: "Máy đánh trứng/xay", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Coffee maker", ipa: "/ˈkɒf.i ˌmeɪ.kər/", meaning: "Máy pha cà phê", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Iron", ipa: "/ˈaɪən/", meaning: "Bàn là, bàn ủi", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Ironing board", ipa: "/ˈaɪə.nɪŋ bɔːd/", meaning: "Cầu là quần áo", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Hairdryer", ipa: "/ˈheəˌdraɪ.ər/", meaning: "Máy sấy tóc", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Television", ipa: "/ˈtel.ɪ.vɪʒ.ən/", meaning: "Tivi", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Remote control", ipa: "/rɪˌməʊt kənˈtrəʊl/", meaning: "Điều khiển từ xa", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Speaker", ipa: "/ˈspiː.kər/", meaning: "Loa", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Lamp", ipa: "/læmp/", meaning: "Đèn bàn", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Clock", ipa: "/klɒk/", meaning: "Đồng hồ treo tường", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Alarm clock", ipa: "/əˈlɑːm klɒk/", meaning: "Đồng hồ báo thức", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Broom", ipa: "/bruːm/", meaning: "Chổi", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Mop", ipa: "/mɒp/", meaning: "Cây lau nhà", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Dustpan", ipa: "/ˈdʌst.pæn/", meaning: "Hót rác", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Trash can", ipa: "/ˈtræʃ kæn/", meaning: "Thùng rác", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Bucket", ipa: "/ˈbʌk.ɪt/", meaning: "Cái xô", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Plug", ipa: "/plʌɡ/", meaning: "Phích cắm", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Socket", ipa: "/ˈsɒk.ɪt/", meaning: "Ổ cắm điện", example: "", level: "A2", topic: "Household Appliances & Equipment" },
+  { word: "Do the housework", ipa: "/duː ðə ˈhaʊs.wɜːk/", meaning: "Làm việc nhà", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Clean the house", ipa: "/kliːn ðə haʊs/", meaning: "Lau dọn nhà cửa", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Sweep the floor", ipa: "/swiːp ðə flɔːr/", meaning: "Quét nhà", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Mop the floor", ipa: "/mɒp ðə flɔːr/", meaning: "Lau nhà", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Vacuum the carpet", ipa: "/ˈvæk.juːm ðə ˈkɑː.pɪt/", meaning: "Hút bụi thảm", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Dust the furniture", ipa: "/dʌst ðə ˈfɜː.nɪ.tʃər/", meaning: "Lau bụi nội thất", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Do the laundry", ipa: "/duː ðə ˈlɔːn.dri/", meaning: "Giặt quần áo", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Wash the clothes", ipa: "/wɒʃ ðə kləʊðz/", meaning: "Giặt đồ", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Fold the clothes", ipa: "/fəʊld ðə kləʊðz/", meaning: "Gấp quần áo", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Iron the clothes", ipa: "/ˈaɪən ðə kləʊðz/", meaning: "Là/ủi quần áo", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Hang out the washing", ipa: "/hæŋ aʊt ðə ˈwɒʃ.ɪŋ/", meaning: "Phơi quần áo", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Make the bed", ipa: "/meɪk ðə bed/", meaning: "Dọn dẹp giường ngủ", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Change the sheets", ipa: "/tʃeɪndʒ ðə ʃiːts/", meaning: "Thay ga giường", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Do the dishes", ipa: "/duː ðə dɪʃ.ɪz/", meaning: "Rửa bát", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Wash the dishes", ipa: "/wɒʃ ðə dɪʃ.ɪz/", meaning: "Rửa chén bát", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Load the dishwasher", ipa: "/ləʊd ðə ˈdɪʃˌwɒʃ.ər/", meaning: "Xếp bát vào máy rửa", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Empty the dishwasher", ipa: "/ˈemp.ti ðə ˈdɪʃˌwɒʃ.ər/", meaning: "Lấy bát ra khỏi máy rửa", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Cook dinner", ipa: "/kʊk ˈdɪn.ər/", meaning: "Nấu bữa tối", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Prepare meals", ipa: "/prɪˈpeər miːlz/", meaning: "Chuẩn bị bữa ăn", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Set the table", ipa: "/set ðə ˈteɪ.bəl/", meaning: "Dọn bàn ăn", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Clear the table", ipa: "/klɪər ðə ˈteɪ.bəl/", meaning: "Dọn dẹp bàn ăn sau khi ăn", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Take out the rubbish", ipa: "/teɪk aʊt ðə ˈrʌb.ɪʃ/", meaning: "Đi đổ rác", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Empty the bin", ipa: "/ˈemp.ti ðə bɪn/", meaning: "Đổ thùng rác", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Water the plants", ipa: "/ˈwɔː.tər ðə plɑːnts/", meaning: "Tưới cây", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Tidy up the room", ipa: "/ˈtaɪ.di ʌp ðə ruːm/", meaning: "Dọn dẹp phòng ngăn nắp", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Clean the windows", ipa: "/kliːn ðə ˈwɪn.dəʊz/", meaning: "Lau cửa sổ", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Walk the dog", ipa: "/wɔːk ðə dɒɡ/", meaning: "Dắt chó đi dạo", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Feed the cat", ipa: "/fiːd ðə kæt/", meaning: "Cho mèo ăn", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Do the shopping", ipa: "/duː ðə ˈʃɒp.ɪŋ/", meaning: "Đi mua sắm nhu yếu phẩm", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Buy groceries", ipa: "/baɪ ˈɡrəʊ.sər.iz/", meaning: "Mua thực phẩm/tạp hóa", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Fix things", ipa: "/fɪks θɪŋz/", meaning: "Sửa chữa đồ đạc", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Paint the wall", ipa: "/peɪnt ðə wɔːl/", meaning: "Sơn tường", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Cut the grass", ipa: "/kʌt ðə ɡrɑːs/", meaning: "Cắt cỏ", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Mow the lawn", ipa: "/məʊ ðə lɔːn/", meaning: "Cắt cỏ bằng máy", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Clean the bathroom", ipa: "/kliːn ðə ˈbɑːθ.ruːm/", meaning: "Dọn nhà vệ sinh", example: "", level: "A2", topic: "Household Chores" },
+  { word: "Teacher", ipa: "/ˈtiː.tʃər/", meaning: "Giáo viên", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Doctor", ipa: "/ˈdɒk.tər/", meaning: "Bác sĩ", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Nurse", ipa: "/nɜːs/", meaning: "Y tá", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Dentist", ipa: "/ˈden.tɪst/", meaning: "Nha sĩ", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Engineer", ipa: "/ˌen.dʒɪˈnɪər/", meaning: "Kỹ sư", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Architect", ipa: "/ˈɑː.kɪ.tekt/", meaning: "Kiến trúc sư", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Chef", ipa: "/ʃef/", meaning: "Đầu bếp", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Cook", ipa: "/kʊk/", meaning: "Người nấu ăn", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Waiter", ipa: "/ˈweɪ.tər/", meaning: "Bồi bàn nam", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Waitress", ipa: "/ˈweɪ.trəs/", meaning: "Bồi bàn nữ", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Driver", ipa: "/ˈdraɪ.vər/", meaning: "Tài xế", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Taxi driver", ipa: "/ˈtæk.si ˌdraɪ.vər/", meaning: "Tài xế taxi", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Pilot", ipa: "/ˈpaɪ.lət/", meaning: "Phi công", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Flight attendant", ipa: "/ˈflaɪt əˌten.dənt/", meaning: "Tiếp viên hàng không", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Police officer", ipa: "/pəˈliːs ˌɒf.ɪ.sər/", meaning: "Cảnh sát", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Firefighter", ipa: "/ˈfaɪəˌfaɪ.tər/", meaning: "Lính hỏa hụi/Cứu hỏa", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Mechanic", ipa: "/məˈkæn.ɪk/", meaning: "Thợ máy, thợ sửa chữa", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Electrician", ipa: "/ɪˌlekˈtrɪʃ.ən/", meaning: "Thợ điện", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Plumber", ipa: "/ˈplʌm.ər/", meaning: "Thợ sửa ống nước", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Builder", ipa: "/ˈbɪl.dər/", meaning: "Thợ xây", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Painter", ipa: "/ˈpeɪn.tər/", meaning: "Thợ sơn, họa sĩ", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Shop assistant", ipa: "/ˈʃɒp əˌsɪs.tənt/", meaning: "Nhân viên bán hàng", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Cashier", ipa: "/kæˈʃɪər/", meaning: "Thu ngân", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Manager", ipa: "/ˈmæn.ɪ.dʒər/", meaning: "Quản lý", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Secretary", ipa: "/ˈsek.rə.tər.i/", meaning: "Thư ký", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Accountant", ipa: "/əˈkaʊn.tənt/", meaning: "Kế toán", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Lawyer", ipa: "/ˈlɔː.jər/", meaning: "Luật sư", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Journalist", ipa: "/ˈdʒɜː.nə.lɪst/", meaning: "Nhà báo", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Photographer", ipa: "/fəˈtɒɡ.rə.fər/", meaning: "Nhiếp ảnh gia", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Actor", ipa: "/ˈæk.tər/", meaning: "Diễn viên nam", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Actress", ipa: "/ˈæk.trəs/", meaning: "Diễn viên nữ", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Singer", ipa: "/ˈsɪŋ.ər/", meaning: "Ca sĩ", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Musician", ipa: "/mjuːˈzɪʃ.ən/", meaning: "Nhạc sĩ/Nhạc công", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Artist", ipa: "/ˈɑː.tɪst/", meaning: "Họa sĩ/Nghệ sĩ", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Hairdresser", ipa: "/ˈheəˌdres.ər/", meaning: "Thợ làm tóc", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Cleaner", ipa: "/ˈkliː.nər/", meaning: "Nhân viên vệ sinh", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Farmer", ipa: "/ˈfɑː.mər/", meaning: "Nông dân", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Vet", ipa: "/vet/", meaning: "Bác sĩ thú y", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Scientist", ipa: "/ˈsaɪən.tɪst/", meaning: "Nhà khoa học", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Businessman", ipa: "/ˈbɪz.nɪs.mæn/", meaning: "Nam doanh nhân", example: "", level: "A2", topic: "Jobs & Professions" },
+  { word: "Office", ipa: "/ˈɒf.ɪs/", meaning: "Văn phòng", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Factory", ipa: "/ˈfæk.tər.i/", meaning: "Nhà máy, xưởng", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Hospital", ipa: "/ˈhɒs.pɪ.təl/", meaning: "Bệnh viện", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Clinic", ipa: "/ˈklɪn.ɪk/", meaning: "Phòng khám", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "School", ipa: "/skuːl/", meaning: "Trường học", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Company", ipa: "/ˈkʌm.pə.ni/", meaning: "Công ty", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Store / Shop /stɔːr/", ipa: "/ʃɒp/", meaning: "Cửa hàng", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Restaurant", ipa: "/ˈres.trɒnt/", meaning: "Nhà hàng", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Hotel", ipa: "/həʊˈtel/", meaning: "Khách sạn", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Bank", ipa: "/bæŋk/", meaning: "Ngân hàng", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Workplace", ipa: "/ˈwɜːk.pleɪs/", meaning: "Nơi làm việc", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Building site", ipa: "/ˈbɪl.dɪŋ saɪt/", meaning: "Công trường xây dựng", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Studio", ipa: "/ˈstjuː.di.əʊ/", meaning: "Phòng thu, xưởng nghệ thuật", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Laboratory", ipa: "/ləˈbɒr.ə.tər.i/", meaning: "Phòng thí nghiệm", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Farm", ipa: "/fɑːm/", meaning: "Trang trại", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Work full-time", ipa: "/wɜːk ˌfʊl ˈtaɪm/", meaning: "Làm việc toàn thời gian", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Work part-time", ipa: "/wɜːk ˌpɑːt ˈtaɪm/", meaning: "Làm việc bán thời gian", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Do overtime", ipa: "/duː ˈəʊ.və.taɪm/", meaning: "Làm thêm giờ", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Earn money", ipa: "/ɜːn ˈmʌn.i/", meaning: "Kiếm tiền", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Get a salary", ipa: "/ɡet ə ˈsæl.ər.i/", meaning: "Nhận lương", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Attend a meeting", ipa: "/əˈtend ə ˈmiː.tɪŋ/", meaning: "Tham dự cuộc họp", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Write emails", ipa: "/raɪt ˈiː.meɪlz/", meaning: "Viết thư điện tử", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Answer the phone", ipa: "/ˈɑːn.sər ðə fəʊn/", meaning: "Nghe điện thoại", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Serve customers", ipa: "/sɜːv ˈkʌs.tə.məz/", meaning: "Phục vụ khách hàng", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Sign a contract", ipa: "/saɪn ə ˈkɒn.trækt/", meaning: "Ký hợp đồng", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Organize events", ipa: "/ˈɔː.ɡən.aɪz ɪˈvents/", meaning: "Tổ chức sự kiện", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Manage a team", ipa: "/ˈmæn.ɪdʒ ə tiːm/", meaning: "Quản lý nhóm", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Solve problems", ipa: "/sɒlv ˈprɒb.ləmz/", meaning: "Giải quyết vấn đề", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Apply for a job", ipa: "/əˈplaɪ fɔːr ə dʒɒb/", meaning: "Nộp đơn xin việc", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Have an interview", ipa: "/hæv æn ˈɪn.tə.vjuː/", meaning: "Phỏng vấn", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Get promoted", ipa: "/ɡet prəˈməʊ.tɪd/", meaning: "Được thăng chức", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Resign", ipa: "/rɪˈzaɪn/", meaning: "Từ chức, xin nghỉ việc", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Retire", ipa: "/rɪˈtaɪər/", meaning: "Nghỉ hưu", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Uniform", ipa: "/ˈjuː.nɪ.fɔːm/", meaning: "Đồng phục", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Break time", ipa: "/ˈbreɪk taɪm/", meaning: "Giờ nghỉ giải lao", example: "", level: "A2", topic: "Workplaces & Work Activities" },
+  { word: "Primary school", ipa: "/ˈpraɪ.mər.i skuːl/", meaning: "Trường tiểu học", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Secondary school", ipa: "/ˈsek.ən.dri skuːl/", meaning: "Trường trung học cơ sở", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "High school", ipa: "/ˈhaɪ skuːl/", meaning: "Trường trung học phổ thông", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "College", ipa: "/ˈkɒl.ɪdʒ/", meaning: "Trường cao đẳng/đại học", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "University", ipa: "/ˌjuː.nɪˈvɜː.sə.ti/", meaning: "Trường đại học", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Classroom", ipa: "/ˈklɑːs.ruːm/", meaning: "Phòng học", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Library", ipa: "/ˈlaɪ.brər.i/", meaning: "Thư viện", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Laboratory", ipa: "/ləˈbɒr.ə.tər.i/", meaning: "Phòng thí nghiệm", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Gymnasium (Gym)", ipa: "/dʒɪmˈneɪ.zi.əm/", meaning: "Phòng thể chất", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Playground", ipa: "/ˈpleɪ.ɡraʊnd/", meaning: "Sân chơi", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Student", ipa: "/ˈstjuː.dənt/", meaning: "Học sinh, sinh viên", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Pupil", ipa: "/ˈpjuː.pəl/", meaning: "Học sinh tiểu học", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Teacher", ipa: "/ˈtiː.tʃər/", meaning: "Giáo viên", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Professor", ipa: "/prəˈfes.ər/", meaning: "Giáo sư", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Headteacher", ipa: "/ˌhedˈtiː.tʃər/", meaning: "Hiệu trưởng", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Lesson", ipa: "/ˈles.ən/", meaning: "Bài học", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Subject", ipa: "/ˈsʌb.dʒekt/", meaning: "Môn học", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Timetable", ipa: "/ˈtaɪmˌteɪ.bəl/", meaning: "Thời khóa biểu", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Homework", ipa: "/ˈhəʊm.wɜːk/", meaning: "Bài tập về nhà", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Exam", ipa: "/ɪɡˈzæm/", meaning: "Kỳ thi", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Test", ipa: "/test/", meaning: "Bài kiểm tra", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Grade / Mark /ɡreɪd/", ipa: "/mɑːk/", meaning: "Điểm số", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Pass", ipa: "/pɑːs/", meaning: "Đỗ, qua môn", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Fail", ipa: "/feɪl/", meaning: "Trượt, hỏng", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Mathematics (Maths)", ipa: "/ˌmæθˈmæt.ɪks/", meaning: "Môn Toán", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "English", ipa: "/ˈɪŋ.ɡlɪʃ/", meaning: "Môn Tiếng Anh", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Science", ipa: "/ˈsaɪ.əns/", meaning: "Môn Khoa học", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Biology", ipa: "/baɪˈɒl.ə.dʒi/", meaning: "Môn Sinh học", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Chemistry", ipa: "/ˈkem.ɪ.stri/", meaning: "Môn Hóa học", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Physics", ipa: "/ˈfɪz.ɪks/", meaning: "Môn Vật lý", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "History", ipa: "/ˈhɪs.tər.i/", meaning: "Môn Lịch sử", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Geography", ipa: "/dʒiˈɒɡ.rə.fi/", meaning: "Môn Địa lý", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Art", ipa: "/ɑːt/", meaning: "Môn Mỹ thuật", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Music", ipa: "/ˈmjuː.zɪk/", meaning: "Môn Âm nhạc", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Physical Education (PE)", ipa: "/ˌfɪz.ɪ.kəl ed.jʊˈkeɪ.ʃən/", meaning: "Môn Thể dục", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Information Technology (IT)", ipa: "/ˌɪn.fəˈmeɪ.ʃən tekˈnɒl.ə.dʒi/", meaning: "Môn Tin học", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Literature", ipa: "/ˈlɪt.rə.tʃər/", meaning: "Môn Ngữ văn", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Foreign language", ipa: "/ˌfɒr.ən ˈlæŋ.ɡwɪdʒ/", meaning: "Ngoại ngữ", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Textbook", ipa: "/ˈtekst.bʊk/", meaning: "Sách giáo khoa", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Notebook", ipa: "/ˈnəʊt.bʊk/", meaning: "Vở ghi", example: "", level: "A2", topic: "Education & School Subjects" },
+  { word: "Travel", ipa: "/ˈtræv.əl/", meaning: "Du lịch, đi lại", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Trip", ipa: "/trɪp/", meaning: "Chuyến đi", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Journey", ipa: "/ˈdʒɜː.ni/", meaning: "Hành trình", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Tour", ipa: "/tʊər/", meaning: "Chuyến tham quan", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Tourist", ipa: "/ˈtʊə.rɪst/", meaning: "Khách du lịch", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Passenger", ipa: "/ˈpæs.ən.dʒər/", meaning: "Hành khách", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Guide", ipa: "/ɡaɪd/", meaning: "Hướng dẫn viên", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Luggage / Baggage /ˈlʌɡ.ɪdʒ/", ipa: "/ˈbæɡ.ɪdʒ/", meaning: "Hành lý", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Suitcase", ipa: "/ˈsuːt.keɪs/", meaning: "Vali", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Backpack", ipa: "/ˈbæk.pæk/", meaning: "Balo", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Passport", ipa: "/ˈpɑːs.pɔːt/", meaning: "Hộ chiếu", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Visa", ipa: "/ˈviː.zə/", meaning: "Thị thực", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Ticket", ipa: "/ˈtɪk.ɪt/", meaning: "Vé", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Reservation", ipa: "/ˌrez.əˈveɪ.ʃən/", meaning: "Sự đặt chỗ", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Book a room", ipa: "/bʊk ə ruːm/", meaning: "Đặt phòng", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Hotel", ipa: "/həʊˈtel/", meaning: "Khách sạn", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Hostel", ipa: "/ˈhɒs.təl/", meaning: "Nhà trọ giá rẻ", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Resort", ipa: "/rɪˈzɔːt/", meaning: "Khu nghỉ dưỡng", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Reception", ipa: "/rɪˈsep.ʃən/", meaning: "Quầy lễ tân", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Receptionist", ipa: "/rɪˈsep.ʃən.ɪst/", meaning: "Nhân viên lễ tân", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Check-in", ipa: "/ˈtʃek.ɪn/", meaning: "Nhận phòng/Làm thủ tục", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Check-out", ipa: "/ˈtʃek.aʊt/", meaning: "Trả phòng", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Single room", ipa: "/ˌsɪŋ.ɡəl ˈruːm/", meaning: "Phòng đơn", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Double room", ipa: "/ˌdʌb.əl ˈruːm/", meaning: "Phòng đôi (1 giường lớn)", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Twin room", ipa: "/twin ruːm/", meaning: "Phòng 2 giường đơn", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Key card", ipa: "/ˈkiː kɑːd/", meaning: "Thẻ chìa khóa", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Room service", ipa: "/ˈruːm ˌsɜː.vɪs/", meaning: "Dịch vụ phòng", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Air conditioning", ipa: "/ˈeə kənˌdɪʃ.ən.ɪŋ/", meaning: "Máy điều hòa", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Sightseeing", ipa: "/ˈsaɪtˌsiː.ɪŋ/", meaning: "Thăm quan ngắm cảnh", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Souvenir", ipa: "/ˌsuː.vənˈɪər/", meaning: "Quà lưu niệm", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Map", ipa: "/mæp/", meaning: "Bản đồ", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Camera", ipa: "/ˈkæm.rə/", meaning: "Máy ảnh", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Destination", ipa: "/ˌdes.tɪˈneɪ.ʃən/", meaning: "Điểm đến", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Brochure", ipa: "/ˈbrəʊ.ʃər/", meaning: "Tờ rơi du lịch", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Flight", ipa: "/flaɪt/", meaning: "Chuyến bay", example: "", level: "A2", topic: "Travel & Hotels" },
+  { word: "Map", ipa: "/mæp/", meaning: "Bản đồ", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "GPS", ipa: "/ˌdʒiː.piːˈes/", meaning: "Định vị toàn cầu", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Compass", ipa: "/ˈkʌm.pəs/", meaning: "La bàn", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Direction", ipa: "/daɪˈrek.ʃən/", meaning: "Hướng đi", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Left", ipa: "/left/", meaning: "Bên trái", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Right", ipa: "/raɪt/", meaning: "Bên phải", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Straight ahead", ipa: "/streɪt əˈhed/", meaning: "Đi thẳng phía trước", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Turn left", ipa: "/tɜːn left/", meaning: "Rẽ trái", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Turn right", ipa: "/tɜːn raɪt/", meaning: "Rẽ phải", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Go past", ipa: "/ɡəʊ pɑːst/", meaning: "Đi qua", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Cross the street", ipa: "/krɒs ðə striːt/", meaning: "Băng qua đường", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Next to", ipa: "/ˈnekst ˌtʊ/", meaning: "Bên cạnh", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Opposite", ipa: "/ˈɒp.ə.zɪt/", meaning: "Đối diện", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Between", ipa: "/bɪˈtwiːn/", meaning: "Ở giữa", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Behind", ipa: "/bɪˈhaɪnd/", meaning: "Phía sau", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "In front of", ipa: "/ɪn frʌnt əv/", meaning: "Phía trước", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Near", ipa: "/nɪər/", meaning: "Gần", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Far", ipa: "/fɑːr/", meaning: "Xa", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Corner", ipa: "/ˈkɔː.nər/", meaning: "Góc đường", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Traffic lights", ipa: "/ˈtræf.ɪk laɪts/", meaning: "Đèn giao thông", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Roundabout", ipa: "/ˈraʊnd.ə.baʊt/", meaning: "Vòng xuyến", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Crossroads", ipa: "/ˈkrɒs.rəʊdz/", meaning: "Ngã tư", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Zebra crossing", ipa: "/ˌzeb.rə ˈkrɒs.ɪŋ/", meaning: "Vạch sang đường", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Signpost", ipa: "/ˈsaɪn.pəʊst/", meaning: "Biển chỉ dẫn", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Bridge", ipa: "/brɪdʒ/", meaning: "Cây cầu", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Tunnel", ipa: "/ˈtʌn.əl/", meaning: "Đường hầm", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Bus stop", ipa: "/ˈbʌs stɒp/", meaning: "Trạm xe buýt", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Train station", ipa: "/ˈtreɪn ˌsteɪ.ʃən/", meaning: "Ga tàu hỏa", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Airport", ipa: "/ˈeə.pɔːt/", meaning: "Sân bay", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Platform", ipa: "/ˈplæt.fɔːm/", meaning: "Sân ga", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Lost", ipa: "/lɒst/", meaning: "Bị lạc", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Ask the way", ipa: "/ɑːsk ðə weɪ/", meaning: "Hỏi đường", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Show the way", ipa: "/ʃəʊ ðə weɪ/", meaning: "Chỉ đường", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Route", ipa: "/ruːt/", meaning: "Tuyến đường", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Distance", ipa: "/ˈdɪs.təns/", meaning: "Khoảng cách", example: "", level: "A2", topic: "Journeys & Directions" },
+  { word: "Head", ipa: "/hed/", meaning: "Đầu", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Hair", ipa: "/heər/", meaning: "Tóc", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Face", ipa: "/feɪs/", meaning: "Khuôn mặt", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Eye", ipa: "/aɪ/", meaning: "Mắt", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Ear", ipa: "/ɪər/", meaning: "Tai", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Nose", ipa: "/nəʊz/", meaning: "Mũi", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Mouth", ipa: "/maʊθ/", meaning: "Miệng", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Tooth / Teeth /tuːθ/", ipa: "/tiːθ/", meaning: "Răng", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Lip", ipa: "/lɪp/", meaning: "Môi", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Tongue", ipa: "/tʌŋ/", meaning: "Lưỡi", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Neck", ipa: "/nek/", meaning: "Cổ", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Shoulder", ipa: "/ˈʃəʊl.dər/", meaning: "Vai", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Chest", ipa: "/tʃest/", meaning: "Ngực", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Back", ipa: "/bæk/", meaning: "Lưng", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Stomach", ipa: "/ˈstʌm.ək/", meaning: "Bụng, dạ dày", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Waist", ipa: "/weɪst/", meaning: "Eo, thắt lưng", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Arm", ipa: "/ɑːm/", meaning: "Cánh tay", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Elbow", ipa: "/ˈel.bəʊ/", meaning: "Khuỷu tay", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Wrist", ipa: "/rɪst/", meaning: "Cổ tay", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Hand", ipa: "/hænd/", meaning: "Bàn tay", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Finger", ipa: "/ˈfɪŋ.ɡər/", meaning: "Ngón tay", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Thumb", ipa: "/θʌm/", meaning: "Ngón tay cái", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Nail", ipa: "/neɪl/", meaning: "Móng tay/chân", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Leg", ipa: "/leɡ/", meaning: "Cẳng chân", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Knee", ipa: "/niː/", meaning: "Đầu gối", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Ankle", ipa: "/ˈæŋ.kəl/", meaning: "Cổ chân", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Foot / Feet /fʊt/", ipa: "/fiːt/", meaning: "Bàn chân", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Toe", ipa: "/təʊ/", meaning: "Ngón chân", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Skin", ipa: "/skɪn/", meaning: "Da", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Bone", ipa: "/bəʊn/", meaning: "Xương", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Blood", ipa: "/blʌd/", meaning: "Máu", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Heart", ipa: "/hɑːt/", meaning: "Trái tim", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Brain", ipa: "/breɪn/", meaning: "Bộ não", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Muscle", ipa: "/ˈmʌs.əl/", meaning: "Cơ bắp", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Throat", ipa: "/θrəʊt/", meaning: "Cổ họng", example: "", level: "A2", topic: "Parts of the Body" },
+  { word: "Sick / Ill /sɪk/", ipa: "/ɪl/", meaning: "Ốm, bệnh", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Fever", ipa: "/ˈfiː.vər/", meaning: "Sốt", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Temperature", ipa: "/ˈtem.prə.tʃər/", meaning: "Nhiệt độ, sốt", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Cold", ipa: "/kəʊld/", meaning: "Cảm lạnh", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Flu", ipa: "/fluː/", meaning: "Cảm cúm", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Cough", ipa: "/kɒf/", meaning: "Ho", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Headache", ipa: "/ˈhed.eɪk/", meaning: "Đau đầu", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Toothache", ipa: "/ˈtuːθ.eɪk/", meaning: "Đau răng", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Stomach-ache", ipa: "/ˈstʌm.ək.eɪk/", meaning: "Đau bụng", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Earache", ipa: "/ˈɪə.reɪk/", meaning: "Đau tai", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Backache", ipa: "/ˈbæk.eɪk/", meaning: "Đau lưng", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Sore throat", ipa: "/ˌsɔː ˈθrəʊt/", meaning: "Đau họng", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Pain", ipa: "/peɪn/", meaning: "Cơn đau", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Hurt", ipa: "/hɜːt/", meaning: "Bị đau, làm đau", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Dizzy", ipa: "/ˈdɪz.i/", meaning: "Chóng mặt", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Tired", ipa: "/ˈtaɪəd/", meaning: "Mệt mỏi", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Weak", ipa: "/wiːk/", meaning: "Yếu ớt", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Sneezing", ipa: "/ˈsniː.zɪŋ/", meaning: "Hắt hơi", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Runny nose", ipa: "/ˌrʌn.i ˈnəʊz/", meaning: "Sổ mũi", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Cut", ipa: "/kʌt/", meaning: "Vết cắt, bị đứt", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Burn", ipa: "/bɜːn/", meaning: "Vết bỏng", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Bruise", ipa: "/bruːz/", meaning: "Vết bầm tím", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Bleed", ipa: "/bliːd/", meaning: "Chảy máu", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Broken bone", ipa: "/ˌbrəʊ.kən ˈbəʊn/", meaning: "Gãy xương", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Injury", ipa: "/ˈɪn.dʒər.i/", meaning: "Chấn thương", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Infection", ipa: "/ɪnˈfek.ʃən/", meaning: "Nhiễm trùng", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Allergy", ipa: "/ˈæl.ə.dʒi/", meaning: "Dị ứng", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Prescription", ipa: "/prɪˈskrɪp.ʃən/", meaning: "Đơn thuốc", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Medicine", ipa: "/ˈmed.sən/", meaning: "Thuốc", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Pill / Tablet /pɪl/", ipa: "/ˈtæb.lət/", meaning: "Viên thuốc", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Painkiller", ipa: "/ˈpeɪnˌkɪl.ər/", meaning: "Thuốc giảm đau", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Bandage", ipa: "/ˈbæn.dɪdʒ/", meaning: "Băng gạc", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Plaster", ipa: "/ˈplɑː.stər/", meaning: "Băng cá nhân", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Injection", ipa: "/ɪnˈdʒek.ʃən/", meaning: "Mũi tiêm", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Appointment", ipa: "/əˈpɔɪnt.mənt/", meaning: "Cuộc hẹn bác sĩ", example: "", level: "A2", topic: "Illnesses & Symptoms" },
+  { word: "Healthy", ipa: "/ˈhel.θi/", meaning: "Khỏe mạnh, lành mạnh", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Unhealthy", ipa: "/ʌnˈhel.θi/", meaning: "Không lành mạnh", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Fit", ipa: "/fɪt/", meaning: "Cân đối, khỏe mạnh", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Diet", ipa: "/ˈdaɪ.ət/", meaning: "Chế độ ăn uống", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Balanced diet", ipa: "/ˌbæl.ənst ˈdaɪ.ət/", meaning: "Chế độ ăn cân bằng", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Exercise", ipa: "/ˈek.sə.saɪz/", meaning: "Tập thể dục", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Workout", ipa: "/ˈwɜːk.aʊt/", meaning: "Buổi tập luyện", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Gym", ipa: "/dʒɪm/", meaning: "Phòng tập thể hình", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Stay active", ipa: "/steɪ ˈæk.tɪv/", meaning: "Duy trì năng động", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Rest", ipa: "/rest/", meaning: "Nghỉ ngơi", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Sleep", ipa: "/sliːp/", meaning: "Giấc ngủ", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Stress", ipa: "/stres/", meaning: "Căng thẳng", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Relaxation", ipa: "/ˌriː.lækˈseɪ.ʃən/", meaning: "Sự thư giãn", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Fresh air", ipa: "/ˌfreʃ ˈeər/", meaning: "Không khí trong lành", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Organic food", ipa: "/ɔːˈɡæn.ɪk fuːd/", meaning: "Thực phẩm hữu cơ", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Fast food", ipa: "/ˌfɑːst ˈfuːd/", meaning: "Đồ ăn nhanh", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Junk food", ipa: "/ˈdʒʌŋk ˌfuːd/", meaning: "Đồ ăn rác/không bổ dưỡng", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Calories", ipa: "/ˈkæl.ər.iz/", meaning: "Calo", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Weight", ipa: "/weɪt/", meaning: "Cân nặng", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Lose weight", ipa: "/luːz weɪt/", meaning: "Giảm cân", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Gain weight", ipa: "/ɡeɪn weɪt/", meaning: "Tăng cân", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Habit", ipa: "/ˈhæb.ɪt/", meaning: "Thói quen", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Smoking", ipa: "/ˈsməʊ.kɪŋ/", meaning: "Hút thuốc", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Alcohol", ipa: "/ˈæl.kə.hɒl/", meaning: "Đồ uống có cồn", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Hydrated", ipa: "/haɪˈdreɪ.tɪd/", meaning: "Đủ nước", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Vitamins", ipa: "/ˈvɪt.ə.mɪnz/", meaning: "Vitamin", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Hygiene", ipa: "/ˈhaɪ.dʒiːn/", meaning: "Vệ sinh cá nhân", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Routine", ipa: "/ruːˈtiːn/", meaning: "Lịch trình hàng ngày", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Mental health", ipa: "/ˌmen.təl ˈhelθ/", meaning: "Sức khỏe tinh thần", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Physical health", ipa: "/ˌfɪz.ɪ.kəl ˈhelθ/", meaning: "Sức khỏe thể chất", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Energy", ipa: "/ˈen.ə.dʒi/", meaning: "Năng lượng", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Lifestyle", ipa: "/ˈlaɪf.staɪl/", meaning: "Lối sống", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Well-being", ipa: "/ˌwelˈbiː.ɪŋ/", meaning: "Sự trạng thái hạnh phúc/khỏe mạnh", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Prevent", ipa: "/prɪˈvent/", meaning: "Phòng ngừa", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Protect", ipa: "/prəˈtekt/", meaning: "Bảo vệ", example: "", level: "A2", topic: "Lifestyle & Health" },
+  { word: "Shop / Store /ʃɒp/", ipa: "/stɔːr/", meaning: "Cửa hàng", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Supermarket", ipa: "/ˈsuː.pəˌmɑː.kɪt/", meaning: "Siêu thị", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Department store", ipa: "/dɪˈpɑːt.mənt ˌstɔːr/", meaning: "Trung tâm thương mại", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Baker’s", ipa: "/ˈbeɪ.kəz/", meaning: "Tiệm bánh mì", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Butcher’s", ipa: "/ˈbʊtʃ.əz/", meaning: "Cửa hàng thịt", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Chemist’s / Pharmacy /ˈkem.ɪsts/", ipa: "/ˈfɑː.mə.si/", meaning: "Hiệu thuốc", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Bookshop", ipa: "/ˈbʊk.ʃɒp/", meaning: "Hiệu sách", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Clothes shop", ipa: "/ˈkləʊðz ʃɒp/", meaning: "Cửa hàng quần áo", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Shoe shop", ipa: "/ˈʃuː ʃɒp/", meaning: "Cửa hàng giày", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Customer", ipa: "/ˈkʌs.tə.mər/", meaning: "Khách hàng", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Shop assistant", ipa: "/ˈʃɒp əˌsɪs.tənt/", meaning: "Nhân viên bán hàng", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Cashier", ipa: "/kæˈʃɪər/", meaning: "Thu ngân", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Price", ipa: "/praɪs/", meaning: "Giá cả", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Cost", ipa: "/kɒst/", meaning: "Chi phí, có giá là", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Cheap", ipa: "/tʃiːp/", meaning: "Rẻ", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Expensive", ipa: "/ɪkˈspen.sɪv/", meaning: "Đắt", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Sale", ipa: "/seɪl/", meaning: "Giảm giá", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Discount", ipa: "/ˈdɪs.kaʊnt/", meaning: "Chết khấu, giảm giá", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Special offer", ipa: "/ˌspeʃ.əl ˈɒf.ər/", meaning: "Ưu đãi đặc biệt", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Buy", ipa: "/baɪ/", meaning: "Mua", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Sell", ipa: "/sel/", meaning: "Bán", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Pay", ipa: "/peɪ/", meaning: "Thanh toán", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Cash", ipa: "/kæʃ/", meaning: "Tiền mặt", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Credit card", ipa: "/ˈkred.ɪt ˌkɑːd/", meaning: "Thẻ tín dụng", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Change", ipa: "/tʃeɪndʒ/", meaning: "Tiền thừa", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Receipt", ipa: "/rɪˈsiːt/", meaning: "Hóa đơn", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Bill", ipa: "/bɪl/", meaning: "Hóa đơn thanh toán", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Shopping bag", ipa: "/ˈʃɒp.ɪŋ bæɡ/", meaning: "Túi mua hàng", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Trolley", ipa: "/ˈtrɒl.i/", meaning: "Xe đẩy hàng", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Basket", ipa: "/ˈbɑː.skɪt/", meaning: "Giỏ hàng", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Try on", ipa: "/traɪ ɒn/", meaning: "Thử (quần áo)", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Fitting room", ipa: "/ˈfɪt.ɪŋ ruːm/", meaning: "Phòng thử đồ", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Size", ipa: "/saɪz/", meaning: "Kích cỡ", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Refund", ipa: "/ˈriː.fʌnd/", meaning: "Hoàn tiền", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Exchange", ipa: "/ɪksˈtʃeɪndʒ/", meaning: "Đổi hàng", example: "", level: "A2", topic: "Shops & Shopping" },
+  { word: "Post office", ipa: "/ˈpəʊst ˌɒf.ɪs/", meaning: "Bưu điện", example: "", level: "A2", topic: "Public Services" },
+  { word: "Bank", ipa: "/bæŋk/", meaning: "Ngân hàng", example: "", level: "A2", topic: "Public Services" },
+  { word: "Police station", ipa: "/pəˈliːs ˌsteɪ.ʃən/", meaning: "Đồn cảnh sát", example: "", level: "A2", topic: "Public Services" },
+  { word: "Fire station", ipa: "/ˈfaɪə ˌsteɪ.ʃən/", meaning: "Trạm cứu hỏa", example: "", level: "A2", topic: "Public Services" },
+  { word: "Hospital", ipa: "/ˈhɒs.pɪ.təl/", meaning: "Bệnh viện", example: "", level: "A2", topic: "Public Services" },
+  { word: "Library", ipa: "/ˈlaɪ.brər.i/", meaning: "Thư viện", example: "", level: "A2", topic: "Public Services" },
+  { word: "Town hall", ipa: "/ˌtaʊn ˈhɔːl/", meaning: "Tòa thị chính", example: "", level: "A2", topic: "Public Services" },
+  { word: "Community center", ipa: "/kəˈmjuː.nə.ti ˌsen.tər/", meaning: "Trung tâm cộng đồng", example: "", level: "A2", topic: "Public Services" },
+  { word: "Museum", ipa: "/mjuːˈziː.əm/", meaning: "Bảo tàng", example: "", level: "A2", topic: "Public Services" },
+  { word: "Art gallery", ipa: "/ˈɑːt ˌɡæl.ər.i/", meaning: "Triển lãm nghệ thuật", example: "", level: "A2", topic: "Public Services" },
+  { word: "Bus station", ipa: "/ˈbʌs ˌsteɪ.ʃən/", meaning: "Bến xe buýt", example: "", level: "A2", topic: "Public Services" },
+  { word: "Railway station", ipa: "/ˈreɪl.weɪ ˌsteɪ.ʃən/", meaning: "Ga tàu hỏa", example: "", level: "A2", topic: "Public Services" },
+  { word: "Information desk", ipa: "/ˌɪn.fəˈmeɪ.ʃən desk/", meaning: "Bàn thông tin", example: "", level: "A2", topic: "Public Services" },
+  { word: "Public transport", ipa: "/ˌpʌb.lɪk ˈtræn.spɔːt/", meaning: "Phương tiện công cộng", example: "", level: "A2", topic: "Public Services" },
+  { word: "Park", ipa: "/pɑːk/", meaning: "Công viên", example: "", level: "A2", topic: "Public Services" },
+  { word: "Playground", ipa: "/ˈpleɪ.ɡraʊnd/", meaning: "Sân chơi công cộng", example: "", level: "A2", topic: "Public Services" },
+  { word: "Swimming pool", ipa: "/ˈswɪm.ɪŋ puːl/", meaning: "Bể bơi công cộng", example: "", level: "A2", topic: "Public Services" },
+  { word: "Sports center", ipa: "/ˈspɔːts ˌsen.tər/", meaning: "Trung tâm thể thao", example: "", level: "A2", topic: "Public Services" },
+  { word: "Public toilet", ipa: "/ˌpʌb.lɪk ˈtɔɪ.lət/", meaning: "Nhà vệ sinh công cộng", example: "", level: "A2", topic: "Public Services" },
+  { word: "Tourist information", ipa: "/ˌtʊə.rɪst ˌɪn.fəˈmeɪ.ʃən/", meaning: "Trạm thông tin du lịch", example: "", level: "A2", topic: "Public Services" },
+  { word: "ATM", ipa: "/ˌeɪ.tiːˈem/", meaning: "Máy rút tiền tự động", example: "", level: "A2", topic: "Public Services" },
+  { word: "Letterbox / Mailbox /ˈlet.ə.bɒks/", ipa: "/ˈmeɪl.bɒks/", meaning: "Hòm thư", example: "", level: "A2", topic: "Public Services" },
+  { word: "Stamp", ipa: "/stæmp/", meaning: "Tem thư", example: "", level: "A2", topic: "Public Services" },
+  { word: "Parcel", ipa: "/ˈpɑː.səl/", meaning: "Bưu kiện", example: "", level: "A2", topic: "Public Services" },
+  { word: "Service", ipa: "/ˈsɜː.vɪs/", meaning: "Dịch vụ", example: "", level: "A2", topic: "Public Services" },
+  { word: "Staff", ipa: "/stɑːf/", meaning: "Nhân viên", example: "", level: "A2", topic: "Public Services" },
+  { word: "Queue", ipa: "/kjuː/", meaning: "Hàng đợi, xếp hàng", example: "", level: "A2", topic: "Public Services" },
+  { word: "Form", ipa: "/fɔːm/", meaning: "Tờ khai, mẫu đơn", example: "", level: "A2", topic: "Public Services" },
+  { word: "Fill in", ipa: "/fɪl ɪn/", meaning: "Điền vào đơn", example: "", level: "A2", topic: "Public Services" },
+  { word: "Fee", ipa: "/fiː/", meaning: "Phí dịch vụ", example: "", level: "A2", topic: "Public Services" },
+  { word: "Free", ipa: "/friː/", meaning: "Miễn phí", example: "", level: "A2", topic: "Public Services" },
+  { word: "Opening hours", ipa: "/ˈəʊ.pən.ɪŋ aʊəz/", meaning: "Giờ mở cửa", example: "", level: "A2", topic: "Public Services" },
+  { word: "Closed", ipa: "/kləʊzd/", meaning: "Đóng cửa", example: "", level: "A2", topic: "Public Services" },
+  { word: "Security", ipa: "/sɪˈkjʊə.rə.ti/", meaning: "An ninh", example: "", level: "A2", topic: "Public Services" },
+  { word: "Helpdesk", ipa: "/ˈhelp.desk/", meaning: "Trợ giúp/Tư vấn", example: "", level: "A2", topic: "Public Services" },
+  { word: "Hobby", ipa: "/ˈhɒb.i/", meaning: "Sở thích", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Reading", ipa: "/ˈriː.dɪŋ/", meaning: "Đọc sách", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Listening to music", ipa: "/ˌlɪs.ən.ɪŋ tə ˈmjuː.zɪk/", meaning: "Nghe nhạc", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Watching TV", ipa: "/ˌwɒtʃ.ɪŋ ˌtiːˈviː/", meaning: "Xem tivi", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Gardening", ipa: "/ˈɡɑː.dən.ɪŋ/", meaning: "Làm vườn", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Cooking", ipa: "/ˈkʊk.ɪŋ/", meaning: "Nấu ăn", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Baking", ipa: "/ˈbeɪ.kɪŋ/", meaning: "Nướng bánh", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Drawing", ipa: "/ˈdrɔː.ɪŋ/", meaning: "Vẽ tranh (bằng bút)", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Painting", ipa: "/ˈpeɪn.tɪŋ/", meaning: "Vẽ sơn/màu", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Photography", ipa: "/fəˈtɒɡ.rə.fi/", meaning: "Nhiếp ảnh", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Dancing", ipa: "/ˈdɑːn.sɪŋ/", meaning: "Nhảy múa", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Singing", ipa: "/ˈsɪŋ.ɪŋ/", meaning: "Ca hát", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Playing video games", ipa: "/ˌpleɪ.ɪŋ ˈvɪd.i.əʊ ɡeɪmz/", meaning: "Chơi điện tử", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Board game", ipa: "/ˈbɔːd ɡeɪm/", meaning: "Trò chơi bàn cờ", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Chess", ipa: "/tʃes/", meaning: "Cờ vua", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Puzzle", ipa: "/ˈpʌz.əl/", meaning: "Trò chơi xếp hình/đố vui", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Collecting", ipa: "/kəˈlek.tɪŋ/", meaning: "Sưu tầm", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Travelling", ipa: "/ˈtræv.əl.ɪŋ/", meaning: "Đi du lịch", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Fishing", ipa: "/ˈfɪʃ.ɪŋ/", meaning: "Câu cá", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Camping", ipa: "/ˈkæm.pɪŋ/", meaning: "Cắm trại", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Hiking", ipa: "/ˈhaɪ.kɪŋ/", meaning: "Đi bộ đường dài", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Cinema / Movie theater /ˈsɪn.ə.mɑː/", ipa: "/ˈmuː.vi ˌθɪə.tər/", meaning: "Rạp chiếu phim", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Theatre", ipa: "/ˈθɪə.tər/", meaning: "Nhà hát", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Concert", ipa: "/ˈkɒn.sət/", meaning: "Buổi hòa nhạc", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Exhibition", ipa: "/ˌek.sɪˈbɪʃ.ən/", meaning: "Cuộc triển lãm", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Museum", ipa: "/mjuːˈziː.əm/", meaning: "Bảo tàng", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Film / Movie /fɪlm/", ipa: "/ˈmuː.vi/", meaning: "Bộ phim", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Actor", ipa: "/ˈæk.tər/", meaning: "Diễn viên", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Pop music", ipa: "/ˈpɒp ˌmjuː.zɪk/", meaning: "Nhạc Pop", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Rock music", ipa: "/ˈrɒk ˌmjuː.zɪk/", meaning: "Nhạc Rock", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Classical music", ipa: "/ˌklæs.ɪ.kəl ˈmjuː.zɪk/", meaning: "Nhạc cổ điển", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Instrument", ipa: "/ˈɪn.strə.mənt/", meaning: "Nhạc cụ", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Guitar", ipa: "/ɡɪˈtɑːr/", meaning: "Đàn ghi-ta", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Piano", ipa: "/piˈæn.əʊ/", meaning: "Đàn dương cầm", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Drums", ipa: "/drʌmz/", meaning: "Trống", example: "", level: "A2", topic: "Hobbies & Entertainment" },
+  { word: "Football / Soccer /ˈfʊt.bɔːl/", ipa: "/ˈsɒk.ər/", meaning: "Bóng đá", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Basketball", ipa: "/ˈbɑː.skɪt.bɔːl/", meaning: "Bóng rổ", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Volleyball", ipa: "/ˈvɒl.i.bɔːl/", meaning: "Bóng chuyền", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Tennis", ipa: "/ˈten.ɪs/", meaning: "Quần vợt", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Table tennis", ipa: "/ˈteɪ.bəl ˌten.ɪs/", meaning: "Bóng bàn", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Badminton", ipa: "/ˈbæd.mɪn.tən/", meaning: "Cầu lông", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Baseball", ipa: "/ˈbeɪs.bɔːl/", meaning: "Bóng chày", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Golf", ipa: "/ɡɒlf/", meaning: "Chơi golf", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Swimming", ipa: "/ˈswɪm.ɪŋ/", meaning: "Bơi lội", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Running / Jogging /ˈrʌn.ɪŋ/", ipa: "/ˈdʒɒɡ.ɪŋ/", meaning: "Chạy bộ", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Cycling", ipa: "/ˈsaɪ.klɪŋ/", meaning: "Đi xe đạp", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Gymnastics", ipa: "/dʒɪmˈnæs.tɪks/", meaning: "Thể dục dụng cụ", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Skiing", ipa: "/ˈskiː.ɪŋ/", meaning: "Trượt tuyết", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Skating", ipa: "/ˈskeɪ.tɪŋ/", meaning: "Trượt băng/trượt ván", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Surfing", ipa: "/ˈsɜː.fɪŋ/", meaning: "Lướt sóng", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Yoga", ipa: "/ˈjəʊ.ɡə/", meaning: "Tập Yoga", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Karate", ipa: "/kəˈrɑː.ti/", meaning: "Võ Karate", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Ball", ipa: "/bɔːl/", meaning: "Quả bóng", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Racket", ipa: "/ˈræk.ɪt/", meaning: "Vợt (cầu lông, tennis)", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Bat", ipa: "/bæt/", meaning: "Gậy (bóng chày, bóng bàn)", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Golf club", ipa: "/ˈɡɒlf klʌb/", meaning: "Gậy đánh golf", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Net", ipa: "/net/", meaning: "Lưới", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Goal", ipa: "/ɡəʊl/", meaning: "Khung thành, bàn thắng", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Helmet", ipa: "/ˈhel.mət/", meaning: "Mũ bảo hiểm", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Trainers / Sneakers /ˈtreɪ.nəz/", ipa: "/ˈsniː.kəz/", meaning: "Giày thể thao", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Swimsuit", ipa: "/ˈswɪm.suːt/", meaning: "Bộ đồ bơi", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Goggles", ipa: "/ˈɡɒɡ.əlz/", meaning: "Kính bơi", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Skates", ipa: "/skeɪts/", meaning: "Giày trượt", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Skateboard", ipa: "/ˈskeɪt.bɔːd/", meaning: "Ván trượt", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Track", ipa: "/træk/", meaning: "Đường chạy", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Court", ipa: "/kɔːt/", meaning: "Sân (tennis, bóng rổ)", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Pitch / Field /pɪtʃ/", ipa: "/fiːld/", meaning: "Sân bóng đá", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Match / Game /mætʃ/", ipa: "/ɡeɪm/", meaning: "Trận đấu", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Player", ipa: "/ˈpleɪ.ər/", meaning: "Người chơi, vận động viên", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Team", ipa: "/tiːm/", meaning: "Đội thể thao", example: "", level: "A2", topic: "Sports & Sports Equipment" },
+  { word: "Computer", ipa: "/kəmˈpjuː.tər/", meaning: "Máy tính", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Laptop", ipa: "/ˈlæp.tɒp/", meaning: "Máy tính xách tay", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Tablet", ipa: "/ˈtæb.lət/", meaning: "Máy tính bảng", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Smartphone", ipa: "/ˈsmɑːt.fəʊn/", meaning: "Điện thoại thông minh", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Screen", ipa: "/skriːn/", meaning: "Màn hình", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Keyboard", ipa: "/ˈkiː.bɔːd/", meaning: "Bàn phím", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Mouse", ipa: "/maʊs/", meaning: "Chuột máy tính", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Printer", ipa: "/ˈprɪn.tər/", meaning: "Máy in", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Headphones", ipa: "/ˈhed.fəʊnz/", meaning: "Tai nghe chụp", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Earphones", ipa: "/ˈɪə.fəʊnz/", meaning: "Tai nghe nhét tai", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Charger", ipa: "/ˈtʃɑː.dʒər/", meaning: "Cục sạc", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Battery", ipa: "/ˈbæt.ər.i/", meaning: "Pin", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Internet", ipa: "/ˈɪn.tə.net/", meaning: "Mạng internet", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Wi-Fi", ipa: "/ˈwaɪ.faɪ/", meaning: "Mạng không dây Wi-Fi", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Website", ipa: "/ˈweb.saɪt/", meaning: "Trang web", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Email", ipa: "/ˈiː.meɪl/", meaning: "Thư điện tử", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Password", ipa: "/ˈpɑːs.wɜːd/", meaning: "Mật khẩu", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Username", ipa: "/ˈjuː.zə.neɪm/", meaning: "Tên đăng nhập", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "App (Application)", ipa: "/æp/", meaning: "Ứng dụng", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Social media", ipa: "/ˌsəʊ.ʃəl ˈmiː.di.ə/", meaning: "Mạng xã hội", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Message", ipa: "/ˈmes.ɪdʒ/", meaning: "Tin nhắn", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Text message", ipa: "/ˈtekst ˌmes.ɪdʒ/", meaning: "Tin nhắn văn bản", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Online", ipa: "/ˌɒnˈlaɪn/", meaning: "Trực tuyến", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Offline", ipa: "/ˌɒfˈlaɪn/", meaning: "Ngoại tuyến", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Download", ipa: "/ˌdaʊnˈləʊd/", meaning: "Tải xuống", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Upload", ipa: "/ˌʌpˈləʊd/", meaning: "Tải lên", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Search", ipa: "/sɜːtʃ/", meaning: "Tìm kiếm", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Click", ipa: "/klɪk/", meaning: "Nhấp chuột", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "File", ipa: "/faɪl/", meaning: "Tệp tin", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Folder", ipa: "/ˈfəʊl.dər/", meaning: "Thư mục", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Newspaper", ipa: "/ˈnjuːzˌpeɪ.pər/", meaning: "Tờ báo", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Magazine", ipa: "/ˌmæɡ.əˈziːn/", meaning: "Tạp chí", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "News", ipa: "/njuːz/", meaning: "Tin tức", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Television (TV)", ipa: "/ˈtel.ɪ.vɪʒ.ən/", meaning: "Truyền hình", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Radio", ipa: "/ˈreɪ.di.əʊ/", meaning: "Đài đài phát thanh", example: "", level: "A2", topic: "Media & Technology" },
+  { word: "Mountain", ipa: "/ˈmaʊn.tɪn/", meaning: "Ngọn núi", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Hill", ipa: "/hɪl/", meaning: "Ngọn đồi", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Valley", ipa: "/ˈvæl.i/", meaning: "Thung lũng", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "River", ipa: "/ˈrɪv.ər/", meaning: "Dòng sông", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Lake", ipa: "/leɪk/", meaning: "Hồ nước", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Ocean", ipa: "/ˈəʊ.ʃən/", meaning: "Đại dương", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Sea", ipa: "/siː/", meaning: "Biển", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Beach", ipa: "/biːtʃ/", meaning: "Bãi biển", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Coast", ipa: "/kəʊst/", meaning: "Bờ biển", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Island", ipa: "/ˈaɪ.lənd/", meaning: "Hòn đảo", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Forest", ipa: "/ˈfɒr.ɪst/", meaning: "Khu rừng", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Jungle", ipa: "/ˈdʒʌŋ.ɡəl/", meaning: "Rừng nhiệt đới", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Desert", ipa: "/ˈdez.ət/", meaning: "Sa mạc", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Field", ipa: "/fiːld/", meaning: "Cánh đồng", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Grass", ipa: "/ɡrɑːs/", meaning: "Cỏ", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Tree", ipa: "/triː/", meaning: "Cây cối", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Plant", ipa: "/plɑːnt/", meaning: "Thực vật, cây nhỏ", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Flower", ipa: "/ˈflaʊ.ər/", meaning: "Bông hoa", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Leaf / Leaves /liːf/", ipa: "/liːvz/", meaning: "Lá cây", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Rock / Stone /rɒk/", ipa: "/stəʊn/", meaning: "Hòn đá", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Sand", ipa: "/sænd/", meaning: "Cát", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Soil", ipa: "/sɔɪl/", meaning: "Đất trồng", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Waterfall", ipa: "/ˈwɔː.tə.fɔːl/", meaning: "Thác nước", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Cave", ipa: "/keɪv/", meaning: "Hang động", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Country", ipa: "/ˈkʌn.tri/", meaning: "Quốc gia, đất nước", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "City", ipa: "/ˈsɪt.i/", meaning: "Thành phố lớn", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Town", ipa: "/taʊn/", meaning: "Thị trấn", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Village", ipa: "/ˈvɪl.ɪdʒ/", meaning: "Làng quê", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Capital", ipa: "/ˈkæp.ɪ.təl/", meaning: "Thủ đô", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Continent", ipa: "/ˈkɒn.tɪ.nənt/", meaning: "Châu lục", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Earth", ipa: "/ɜːθ/", meaning: "Trái đất", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Sky", ipa: "/skaɪ/", meaning: "Bầu trời", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Sun", ipa: "/sʌn/", meaning: "Mặt trời", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Moon", ipa: "/muːn/", meaning: "Mặt trăng", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Star", ipa: "/stɑːr/", meaning: "Ngôi sao", example: "", level: "A2", topic: "Geography & Nature" },
+  { word: "Weather", ipa: "/ˈweð.ər/", meaning: "Thời tiết", example: "", level: "A2", topic: "Weather" },
+  { word: "Climate", ipa: "/ˈklaɪ.mət/", meaning: "Khí hậu", example: "", level: "A2", topic: "Weather" },
+  { word: "Sun", ipa: "/sʌn/", meaning: "Mặt trời", example: "", level: "A2", topic: "Weather" },
+  { word: "Sunny", ipa: "/ˈsʌn.i/", meaning: "Trời nắng", example: "", level: "A2", topic: "Weather" },
+  { word: "Rain", ipa: "/reɪn/", meaning: "Mưa", example: "", level: "A2", topic: "Weather" },
+  { word: "Rainy", ipa: "/ˈreɪ.ni/", meaning: "Trời mưa", example: "", level: "A2", topic: "Weather" },
+  { word: "Cloud", ipa: "/klaʊd/", meaning: "Mây", example: "", level: "A2", topic: "Weather" },
+  { word: "Cloudy", ipa: "/ˈklaʊ.di/", meaning: "Nhiều mây", example: "", level: "A2", topic: "Weather" },
+  { word: "Wind", ipa: "/wɪnd/", meaning: "Gió", example: "", level: "A2", topic: "Weather" },
+  { word: "Windy", ipa: "/ˈwɪn.di/", meaning: "Nhiều gió", example: "", level: "A2", topic: "Weather" },
+  { word: "Snow", ipa: "/snəʊ/", meaning: "Tuyết", example: "", level: "A2", topic: "Weather" },
+  { word: "Snowy", ipa: "/ˈsnəʊ.i/", meaning: "Có tuyết rơi", example: "", level: "A2", topic: "Weather" },
+  { word: "Fog", ipa: "/fɒɡ/", meaning: "Sương mù", example: "", level: "A2", topic: "Weather" },
+  { word: "Foggy", ipa: "/ˈfɒɡ.i/", meaning: "Có sương mù", example: "", level: "A2", topic: "Weather" },
+  { word: "Storm", ipa: "/stɔːm/", meaning: "Cơn bão", example: "", level: "A2", topic: "Weather" },
+  { word: "Stormy", ipa: "/ˈstɔː.mi/", meaning: "Có bão", example: "", level: "A2", topic: "Weather" },
+  { word: "Thunder", ipa: "/ˈθʌn.dər/", meaning: "Sấm sét", example: "", level: "A2", topic: "Weather" },
+  { word: "Lightning", ipa: "/ˈlaɪt.nɪŋ/", meaning: "Tia chớp", example: "", level: "A2", topic: "Weather" },
+  { word: "Hot", ipa: "/hɒt/", meaning: "Nóng", example: "", level: "A2", topic: "Weather" },
+  { word: "Warm", ipa: "/wɔːm/", meaning: "Ấm áp", example: "", level: "A2", topic: "Weather" },
+  { word: "Cold", ipa: "/kəʊld/", meaning: "Lạnh", example: "", level: "A2", topic: "Weather" },
+  { word: "Cool", ipa: "/kuːl/", meaning: "Mát mẻ", example: "", level: "A2", topic: "Weather" },
+  { word: "Freezing", ipa: "/ˈfriː.zɪŋ/", meaning: "Rất lạnh, đóng băng", example: "", level: "A2", topic: "Weather" },
+  { word: "Dry", ipa: "/draɪ/", meaning: "Khô ráo", example: "", level: "A2", topic: "Weather" },
+  { word: "Wet", ipa: "/wet/", meaning: "Ẩm ướt", example: "", level: "A2", topic: "Weather" },
+  { word: "Humidity", ipa: "/hjuːˈmɪd.ə.ti/", meaning: "Độ ẩm", example: "", level: "A2", topic: "Weather" },
+  { word: "Humid", ipa: "/ˈhjuː.mɪd/", meaning: "Ẩm ướt, nồm", example: "", level: "A2", topic: "Weather" },
+  { word: "Ice", ipa: "/aɪs/", meaning: "Băng, đá", example: "", level: "A2", topic: "Weather" },
+  { word: "Icy", ipa: "/ˈaɪ.si/", meaning: "Phủ đầy băng", example: "", level: "A2", topic: "Weather" },
+  { word: "Rainbow", ipa: "/ˈreɪn.bəʊ/", meaning: "Cầu vồng", example: "", level: "A2", topic: "Weather" },
+  { word: "Temperature", ipa: "/ˈtem.prə.tʃər/", meaning: "Nhiệt độ", example: "", level: "A2", topic: "Weather" },
+  { word: "Degree", ipa: "/dɪˈɡriː/", meaning: "Độ (độ C)", example: "", level: "A2", topic: "Weather" },
+  { word: "Forecast", ipa: "/ˈfɔː.kɑːst/", meaning: "Dự báo thời tiết", example: "", level: "A2", topic: "Weather" },
+  { word: "Shine", ipa: "/ʃaɪn/", meaning: "Tỏa sáng (mặt trời)", example: "", level: "A2", topic: "Weather" },
+  { word: "Breeze", ipa: "/briːz/", meaning: "Cơn gió nhẹ", example: "", level: "A2", topic: "Weather" },
+  { word: "Environment", ipa: "/ɪnˈvaɪ.rən.mənt/", meaning: "Môi trường", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Nature", ipa: "/ˈneɪ.tʃər/", meaning: "Tự nhiên", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Pollution", ipa: "/pəˈluː.ʃən/", meaning: "Sự ô nhiễm", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Air pollution", ipa: "/ˈeə pəˌluː.ʃən/", meaning: "Ô nhiễm không khí", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Water pollution", ipa: "/ˈwɔː.tər pəˌluː.ʃən/", meaning: "Ô nhiễm nguồn nước", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Waste / Trash /weɪst/", ipa: "/træʃ/", meaning: "Rác thải", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Plastic", ipa: "/ˈplæs.tɪk/", meaning: "Nhựa, nilon", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Recycle", ipa: "/ˌriːˈsaɪ.kəl/", meaning: "Tái chế", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Recycling", ipa: "/ˌriːˈsaɪ.klɪŋ/", meaning: "Việc tái chế", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Reuse", ipa: "/ˌriːˈjuːz/", meaning: "Tái sử dụng", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Reduce", ipa: "/rɪˈdjuːs/", meaning: "Cắt giảm", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Protect", ipa: "/prəˈtekt/", meaning: "Bảo vệ", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Save", ipa: "/seɪv/", meaning: "Tiết kiệm, giải cứu", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Energy", ipa: "/ˈen.ə.dʒi/", meaning: "Năng lượng", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Electricity", ipa: "/ɪˌlekˈtrɪs.ə.ti/", meaning: "Điện năng", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Solar energy", ipa: "/ˌsəʊ.lər ˈen.ə.dʒi/", meaning: "Năng lượng mặt trời", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Clean energy", ipa: "/kliːn ˈen.ə.dʒi/", meaning: "Năng lượng sạch", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Global warming", ipa: "/ˌɡləʊ.bəl ˈwɔː.mɪŋ/", meaning: "Sự nóng lên toàn cầu", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Climate change", ipa: "/ˈklaɪ.mət tʃeɪndʒ/", meaning: "Biến đổi khí hậu", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Deforestation", ipa: "/diːˌfɒr.ɪˈsteɪ.ʃən/", meaning: "Nạn phá rừng", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Plant trees", ipa: "/plɑːnt triːz/", meaning: "Trồng cây", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Eco-friendly", ipa: "/ˌiː.kəʊˈfrend.li/", meaning: "Thân thiện với môi trường", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Bin", ipa: "/bɪn/", meaning: "Thùng rác", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Recycling bin", ipa: "/ˌriːˈsaɪ.klɪŋ bɪn/", meaning: "Thùng rác tái chế", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Clean", ipa: "/kliːn/", meaning: "Sạch sẻ", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Dirty", ipa: "/ˈdɜː.ti/", meaning: "Bẩn thỉu", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Harmful", ipa: "/ˈhɑːm.fəl/", meaning: "Có hại", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Safe", ipa: "/seɪf/", meaning: "An toàn", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Wildlife", ipa: "/ˈwaɪld.laɪf/", meaning: "Động vật hoang dã", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Species", ipa: "/ˈspiː.ʃiːz/", meaning: "Loài", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Extinct", ipa: "/ɪkˈstɪŋkt/", meaning: "Tuyệt chủng", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Habitat", ipa: "/ˈhæb.ɪ.tæt/", meaning: "Môi trường sống", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Organic", ipa: "/ɔːˈɡæn.ɪk/", meaning: "Hữu cơ", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Conservation", ipa: "/ˌkɒn.səˈveɪ.ʃən/", meaning: "Bảo tồn", example: "", level: "A2", topic: "Basic Environment" },
+  { word: "Earth", ipa: "/ɜːθ/", meaning: "Trái đất", example: "", level: "A2", topic: "Basic Environment" },
 
   // B1
   {word:"scholarship",ipa:"/ˈskɒləʃɪp/",meaning:"học bổng",example:"She received a university scholarship.",level:"B1",topic:"Education & Careers"},
@@ -2419,11 +3148,6 @@ let quizQuestions = [];
 let quizIndex = 0;
 let quizScore = 0;
 let quizAnswered = false;
-let learnQuestions = [];
-let learnIndex = 0;
-let learnScore = 0;
-let learnSelected = null;
-let learnAnswered = false;
 
 /* MAIN NAVIGATION */
 function switchPanel(panelId){
@@ -2493,9 +3217,9 @@ function renderTopics(){
       $("learnTopicHeading").textContent = topic;
 
       startQuiz();
-      startLearnLesson();
-      switchActivity("learn");
+      switchActivity("flashcards");
       renderFlashcard();
+      renderLearnWords();
     });
 
     container.append(button);
@@ -2538,7 +3262,7 @@ function switchActivity(activity){
   $("testPanel").classList.toggle("active",activity === "test");
 
   if(activity === "flashcards") renderFlashcard();
-  if(activity === "learn") renderLearnQuestion();
+  if(activity === "learn") renderLearnWords();
 }
 
 document.querySelectorAll(".study-tab").forEach(button=>{
@@ -2566,7 +3290,8 @@ function createWordCard(item){
 
   const example = document.createElement("p");
   example.className = "example";
-  example.textContent = '"' + item.example + '"';
+  example.textContent = item.example ? '"' + item.example + '"' : "";
+  if(!item.example) example.hidden = true;
 
   const meta = document.createElement("div");
   meta.className = "word-meta";
@@ -2621,121 +3346,22 @@ function createWordCard(item){
   return card;
 }
 
-/* LEARN — ONE CONTINUOUS LESSON: 12 + 12 + 11 QUESTIONS */
-function startLearnLesson(){
-  const words = getCurrentWords();
-  learnIndex = 0; learnScore = 0; learnSelected = null; learnAnswered = false;
-  learnQuestions = [];
-  if(!words.length){ renderLearnQuestion(); return; }
-  const stages = [
-    {name:"RECOGNITION",count:12,type:"meaning"},
-    {name:"APPLICATION",count:12,type:"context"},
-    {name:"CHALLENGE",count:11,type:"fill"}
-  ];
-  stages.forEach((stage,stageIndex)=>{
-    for(let n=0;n<stage.count;n++){
-      const item = words[(n + stageIndex*7) % words.length];
-      const pool = vocabulary.filter(w=>w.word!==item.word && w.meaning!==item.meaning);
-      const distractors = shuffleArray(pool).slice(0,3);
-      let prompt,options,answer,example="";
-      if(stage.type==="meaning"){
-        prompt = `What does “${item.word}” mean?`;
-        answer = item.meaning;
-        options = shuffleArray([answer,...distractors.map(w=>w.meaning)]);
-      }else if(stage.type==="context"){
-        prompt = "Choose the word that best fits the context.";
-        example = item.example;
-        answer = item.word;
-        options = shuffleArray([answer,...distractors.map(w=>w.word)]);
-      }else{
-        const escaped = item.word.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
-        const blank = item.example.replace(new RegExp(escaped,"i"),"________");
-        prompt = "Complete the sentence with the correct vocabulary.";
-        example = blank===item.example ? item.example : blank;
-        answer = item.word;
-        options = shuffleArray([answer,...distractors.map(w=>w.word)]);
-      }
-      learnQuestions.push({stage:stage.name,stageIndex,type:stage.type,item,prompt,example,options,answer});
-    }
-  });
-  renderLearnQuestion();
-}
+/* LEARN */
+function renderLearnWords(){
+  const container = $("learnWords");
+  container.innerHTML = "";
 
-function renderLearnQuestion(){
-  const area = $("learnQuestionArea");
-  const feedback = $("learnFeedback");
-  const check = $("learnCheckBtn");
-  const next = $("learnNextBtn");
-  const bar = $("learnProgressBar");
-  const count = learnQuestions.length;
-  feedback.textContent=""; feedback.className="learn-feedback";
-  area.innerHTML=""; check.hidden=true; next.hidden=true;
-  if(!count){
-    area.innerHTML='<div class="learn-result"><h3>No vocabulary available yet</h3><p>This topic does not have enough vocabulary content yet.</p></div>';
-    check.hidden=true; $("learnCount").textContent="0 questions"; return;
-  }
-  if(learnIndex>=count){
-    const result=document.createElement("div"); result.className="learn-result";
-    const title=document.createElement("h3"); title.textContent="Lesson completed!";
-    const score=document.createElement("div"); score.className="result-score"; score.textContent=learnScore+" / 35";
-    const detail=document.createElement("p"); detail.textContent=`You answered ${learnScore} out of 35 questions correctly (${Math.round(learnScore/35*100)}%).`;
-    const advice=document.createElement("p"); advice.textContent=learnScore>=30?"Excellent work! Keep using these words in context.":"Good effort! Review your difficult words in Flashcards and try again.";
-    result.append(title,score,detail,advice); area.append(result);
-    $("learnStageLabel").textContent="ALL STAGES COMPLETED";
-    $("learnCount").textContent="35 / 35 questions"; bar.style.width="100%";
-    ["stageOne","stageTwo","stageThree"].forEach(id=>$(id).className="done");
-    check.hidden=true; next.hidden=false; next.textContent="TRY AGAIN ↻";
-    if(window.OopsTracker && typeof window.OopsTracker.recordQuizResult==="function") window.OopsTracker.recordQuizResult(learnScore,35,"Vocabulary Learn");
+  const results = getCurrentWords();
+  $("learnCount").textContent = results.length + " sample words";
+
+  if(!results.length){
+    container.innerHTML =
+      '<div class="empty">Vocabulary for this level and topic is being developed. Please explore another topic or level.</div>';
     return;
   }
-  const q=learnQuestions[learnIndex];
-  const stageStart=q.stageIndex===0?0:q.stageIndex===1?12:24;
-  $("learnTopicHeading").textContent=selectedTopic;
-  $("learnStageLabel").textContent=`STAGE ${q.stageIndex+1} · ${q.stage}`;
-  $("learnCount").textContent=`QUESTION ${learnIndex+1} / 35`;
-  bar.style.width=((learnIndex)/35*100)+"%";
-  ["stageOne","stageTwo","stageThree"].forEach((id,i)=>$(id).className=i<q.stageIndex?"done":i===q.stageIndex?"current":"");
-  const type=document.createElement("p"); type.className="question-type"; type.textContent=q.stage+" · "+(learnIndex+1);
-  const prompt=document.createElement("h3"); prompt.textContent=q.prompt;
-  area.append(type,prompt);
-  if(q.example){const ex=document.createElement("p");ex.className="question-example";ex.textContent=q.example;area.append(ex);}
-  const options=document.createElement("div"); options.className="learn-options";
-  q.options.forEach(option=>{
-    const btn=document.createElement("button");btn.type="button";btn.className="learn-option";btn.textContent=option;
-    btn.addEventListener("click",()=>{
-      if(learnAnswered)return;
-      learnSelected=option;
-      checkLearnAnswer();
-    });
-    options.append(btn);
-  });
-  area.append(options);
-  check.hidden=true; check.disabled=true; next.hidden=true; next.textContent="NEXT QUESTION →";
-}
 
-function checkLearnAnswer(){
-  if(learnAnswered || learnSelected===null)return;
-  const q=learnQuestions[learnIndex]; learnAnswered=true;
-  const correct=learnSelected===q.answer;
-  if(correct)learnScore++;
-  $("learnQuestionArea").querySelectorAll(".learn-option").forEach(btn=>{
-    btn.disabled=true;
-    if(btn.textContent===q.answer)btn.classList.add("correct");
-    else if(btn.textContent===learnSelected)btn.classList.add("incorrect");
-  });
-  const feedback=$("learnFeedback");feedback.className="learn-feedback "+(correct?"good":"bad");
-  feedback.textContent=correct?"✓ Correct! Well done.":`✕ Not quite. Correct answer: ${q.answer}`;
-  $("learnCheckBtn").hidden=true;$("learnNextBtn").hidden=false;
-  $("learnCount").textContent=`QUESTION ${learnIndex+1} / 35 · SCORE ${learnScore}`;
+  results.forEach(item=>container.append(createWordCard(item)));
 }
-
-$("learnCheckBtn").addEventListener("click",checkLearnAnswer);
-$("learnNextBtn").addEventListener("click",()=>{
-  if(learnIndex>=learnQuestions.length){startLearnLesson();return;}
-  if(!learnAnswered)return;
-  learnIndex++;learnSelected=null;learnAnswered=false;renderLearnQuestion();
-});
-$("restartLearn").addEventListener("click",startLearnLesson);
 
 /* FLASHCARDS */
 function renderFlashcard(){
@@ -2770,7 +3396,8 @@ function renderFlashcard(){
 
     const example = document.createElement("p");
     example.className = "example";
-    example.textContent = item.example;
+    example.textContent = item.example || "";
+    if(!item.example) example.hidden = true;
 
     const word = document.createElement("h2");
     word.textContent = item.word;
@@ -2866,7 +3493,7 @@ function startQuiz(){
   }
 
   quizQuestions = shuffleArray([...words, ...words.slice(0,1)]).map((item,index)=>{
-    const types = ["meaning","context","fill"];
+    const types = item.example ? ["meaning","context","fill"] : ["meaning"];
     const type = types[index % types.length];
 
     const otherWords = vocabulary.filter(
@@ -3068,7 +3695,7 @@ function renderWordbook(){
 
 function renderAll(){
   renderTopics();
-  if(learnQuestions.length) renderLearnQuestion();
+  renderLearnWords();
   renderDictionary();
   renderWordbook();
 }
