@@ -20736,6 +20736,12 @@ let learnAnswered = false;
 let currentLearnQuestion = null;
 let recentLearnWords = [];
 let previousLearnType = "";
+let learnRound = [];
+let learnRoundIndex = 0;
+const LEARN_ROUND_SIZE = 35;
+const LEARN_HISTORY_LIMIT = LEARN_ROUND_SIZE * 3;
+let learnQuestionHistory = readStorage("oopsLearnQuestionHistory", {});
+if(!learnQuestionHistory || typeof learnQuestionHistory !== "object" || Array.isArray(learnQuestionHistory)) learnQuestionHistory = {};
 
 /* MAIN NAVIGATION */
 function switchPanel(panelId){
@@ -20802,12 +20808,10 @@ function renderTopics(){
 
       $("studyTopicTitle").textContent = topic;
       $("studyTopicLevel").textContent = selectedLevel + " · Vocabulary";
-      $("learnTopicHeading").textContent = topic;
 
       resetLearnSession();
       switchActivity("flashcards");
       renderFlashcard();
-      renderLearnWords();
     });
 
     container.append(button);
@@ -20947,13 +20951,49 @@ function resetLearnSession(){
   learnQuestionCount=0; learnCorrectCount=0; learnStreak=0; learnAnswered=false;
   currentLearnQuestion=null; recentLearnWords=[]; previousLearnType="";
   learnRoundIndex=0;
-  const words=shuffleArray(getCurrentWords());
-  learnRound=words.slice(0,Math.min(LEARN_ROUND_SIZE,words.length));
-  if(learnRound.length<1){
+  const words=getCurrentWords();
+  if(!words.length){
+    learnRound=[];
     $("learnQuestionPrompt").textContent="No vocabulary is available in this topic yet.";
     $("learnQuizOptions").innerHTML=""; return;
   }
-  // Shuffle the vocabulary selection on every new round.
+  // Keep a rolling history per level/topic so the next three rounds avoid
+  // repeating the same complete question (including its answer choices).
+  const historyKey=selectedLevel+"::"+selectedTopic;
+  const history=Array.isArray(learnQuestionHistory[historyKey])?learnQuestionHistory[historyKey]:[];
+  const used=new Set(history);
+  const generated=[];
+  const maxAttempts=LEARN_ROUND_SIZE*words.length*12;
+  for(let attempt=0;attempt<maxAttempts && generated.length<LEARN_ROUND_SIZE;attempt++){
+    const item=words[Math.floor(Math.random()*words.length)];
+    const q=makeLearnQuestion(item);
+    if(!q) continue;
+    const signature=[q.type,q.prompt,q.context||"",q.options.slice().sort().join("|"),q.answer].join("¦");
+    if(used.has(signature)) continue;
+    used.add(signature);
+    generated.push({...q,historySignature:signature});
+  }
+  // If a small topic has exhausted its distinct combinations, create fresh
+  // option orderings while retaining different word/type combinations.
+  let fallbackAttempts=0;
+  while(generated.length<LEARN_ROUND_SIZE && fallbackAttempts<LEARN_ROUND_SIZE*words.length*30){
+    fallbackAttempts++;
+    const item=words[Math.floor(Math.random()*words.length)];
+    const q=makeLearnQuestion(item);
+    if(!q) continue;
+    const signature=[q.type,q.prompt,q.context||"",q.options.join("|"),q.answer].join("¦");
+    if(used.has(signature)) continue;
+    used.add(signature);
+    generated.push({...q,historySignature:signature});
+  }
+  learnRound=shuffleArray(generated);
+  if(learnRound.length<1){
+    $("learnQuestionPrompt").textContent="No vocabulary questions are available yet.";
+    $("learnQuizOptions").innerHTML=""; return;
+  }
+  // Save the selected questions so subsequent rounds avoid them.
+  learnQuestionHistory[historyKey]=[...history,...learnRound.map(q=>q.historySignature)].slice(-LEARN_HISTORY_LIMIT);
+  try{localStorage.setItem("oopsLearnQuestionHistory",JSON.stringify(learnQuestionHistory));}catch(error){}
   updateLearnScore();
 }
 
@@ -21230,7 +21270,6 @@ function renderWordbook(){
 
 function renderAll(){
   renderTopics();
-  renderLearnWords();
   renderDictionary();
   renderWordbook();
 }
