@@ -427,7 +427,7 @@ body.accessible .learn-shell,body.accessible .learn-question-card{background:#11
           <div class="learn-stage-track" aria-label="Lesson stages"><span id="stageOne" class="current">01 Recognition · 12</span><span id="stageTwo">02 Application · 12</span><span id="stageThree">03 Challenge · 11</span></div>
           <div class="learn-question-card" id="learnQuestionArea"></div>
           <div id="learnFeedback" class="learn-feedback" aria-live="polite"></div>
-          <div class="learn-actions"><button class="primary" id="learnCheckBtn" type="button" disabled>CHECK</button><button class="primary" id="learnNextBtn" type="button" hidden>CONTINUE →</button></div>
+          <div class="learn-actions"><button class="primary" id="learnCheckBtn" type="button" hidden disabled>CHECK</button><button class="primary" id="learnNextBtn" type="button" hidden>NEXT QUESTION →</button></div>
         </div>
       </section>
 
@@ -2669,7 +2669,7 @@ function renderLearnQuestion(){
   const bar = $("learnProgressBar");
   const count = learnQuestions.length;
   feedback.textContent=""; feedback.className="learn-feedback";
-  area.innerHTML=""; check.hidden=false; next.hidden=true;
+  area.innerHTML=""; check.hidden=true; next.hidden=true;
   if(!count){
     area.innerHTML='<div class="learn-result"><h3>No vocabulary available yet</h3><p>This topic does not have enough vocabulary content yet.</p></div>';
     check.hidden=true; $("learnCount").textContent="0 questions"; return;
@@ -2705,13 +2705,12 @@ function renderLearnQuestion(){
     btn.addEventListener("click",()=>{
       if(learnAnswered)return;
       learnSelected=option;
-      options.querySelectorAll("button").forEach(b=>b.classList.toggle("selected",b===btn));
-      $("learnCheckBtn").disabled=false;
+      checkLearnAnswer();
     });
     options.append(btn);
   });
   area.append(options);
-  check.disabled=true; next.hidden=true; next.textContent="CONTINUE →";
+  check.hidden=true; check.disabled=true; next.hidden=true; next.textContent="NEXT QUESTION →";
 }
 
 function checkLearnAnswer(){
