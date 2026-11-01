@@ -137,10 +137,15 @@ main{max-width:1150px;margin:auto;padding:40px 22px}
 }
 .study-tabs{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:10px;
-  margin:22px 0;
+  width:min(100%,760px);
+  margin:22px auto 28px;
+  padding:5px;
+  background:#eeeaff;
+  border-radius:16px;
 }
+.study-tab{min-height:54px;border-radius:12px;font-size:16px;font-weight:750;}
 .study-tab{
   background:#eeeaff;
   color:var(--primary);
@@ -316,10 +321,8 @@ body.large-text{font-size:120%}
   #learnSearch{grid-column:1/-1}
 }
 
-.learn-quiz-controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:18px 0;padding:16px;background:var(--surface, #f7f8fc);border-radius:16px}
-.learn-quiz-controls label{font-weight:700;font-size:14px}
-.learn-quiz-controls select{min-width:150px;padding:10px 12px;border:1px solid var(--border,#ddd);border-radius:10px;background:white;color:inherit}
-.learn-quiz-card{max-width:850px;margin:20px auto;padding:clamp(18px,4vw,30px);border:1px solid var(--border,#e5e7eb);border-radius:20px;background:var(--card,#fff);box-shadow:0 8px 28px rgba(30,40,80,.07)}
+.learn-quiz-controls{display:none}
+.learn-quiz-card{max-width:850px;margin:28px auto;padding:clamp(18px,4vw,30px);border:1px solid var(--border,#e5e7eb);border-radius:20px;background:var(--card,#fff);box-shadow:0 8px 28px rgba(30,40,80,.07)}
 .learn-quiz-topline{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px;font-weight:700}
 #learnDifficultyBadge{padding:5px 10px;border-radius:999px;background:#eef2ff;color:#4f46e5}
 .learn-question-type{margin:24px 0 8px;color:var(--primary);font-size:12px;font-weight:800;letter-spacing:.09em}
@@ -334,7 +337,12 @@ body.large-text{font-size:120%}
 .learn-quiz-option:disabled{cursor:default;opacity:1}
 .learn-answer-feedback{min-height:28px;line-height:1.6;font-weight:600}
 .learn-quiz-footer{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border,#eee);flex-wrap:wrap}
-.learn-quiz-note{font-size:13px;color:var(--muted);text-align:center}
+.learn-quiz-note{display:none}
+.learn-progress-track{height:7px;background:#eeeaff;border-radius:99px;overflow:hidden;margin:18px 0 22px}
+.learn-progress-fill{height:100%;width:0;background:var(--primary);border-radius:99px;transition:width .2s}
+.learn-finish{text-align:center;padding:28px 12px}
+.learn-finish h2{font-size:28px;margin-bottom:8px}
+.learn-finish p{color:var(--muted);font-size:16px}
 @media(max-width:620px){.learn-quiz-options{grid-template-columns:1fr}.learn-quiz-controls{align-items:stretch}.learn-quiz-controls select{flex:1;min-width:120px}}
 
 </style>
@@ -435,44 +443,28 @@ body.large-text{font-size:120%}
       </section>
 
       <section class="activity-panel" id="learnActivityPanel">
-        <h3>Learn</h3>
-        <p>Practise vocabulary through continuously generated questions. Every round is random.</p>
-        <div class="learn-quiz-controls">
-          <label for="learnDifficulty">Difficulty</label>
-          <select id="learnDifficulty">
-            <option value="mixed">Mixed (adaptive)</option>
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-          </select>
-          <label for="learnQuestionType">Question type</label>
-          <select id="learnQuestionType">
-            <option value="mixed">All question types</option>
-            <option value="meaning">Word meaning</option>
-            <option value="definition">Find the word</option>
-            <option value="context">Complete the sentence</option>
-            <option value="usage">Choose the best usage</option>
-            <option value="truefalse">True or false</option>
-          </select>
-          <button class="secondary" id="restartLearn" type="button">↻ New random round</button>
-        </div>
         <div class="learn-quiz-card" aria-live="polite">
+          <div class="learn-progress-track"><div class="learn-progress-fill" id="learnProgressFill"></div></div>
           <div class="learn-quiz-topline">
-            <span id="learnQuestionNumber">Ready</span>
-            <span id="learnDifficultyBadge">Mixed difficulty</span>
+            <span id="learnQuestionNumber">Question 1 / 12</span>
+            <span id="learnDifficultyBadge">EASY</span>
             <span id="learnStreak">Streak: 0</span>
           </div>
-          <p class="learn-question-type" id="learnQuestionTypeLabel">VOCABULARY PRACTICE</p>
-          <h2 id="learnQuestionPrompt">Choose a difficulty and start learning.</h2>
+          <p class="learn-question-type" id="learnQuestionTypeLabel">WORD MEANING</p>
+          <h2 id="learnQuestionPrompt">Loading question…</h2>
           <p class="learn-question-context" id="learnQuestionContext"></p>
           <div class="learn-quiz-options" id="learnQuizOptions"></div>
           <div class="learn-answer-feedback" id="learnAnswerFeedback" role="status" aria-live="polite"></div>
           <div class="learn-quiz-footer">
-            <span id="learnSessionScore">Answered: 0 · Correct: 0</span>
-            <button class="primary" id="learnNextQuestion" type="button">Start learning</button>
+            <span id="learnSessionScore">0 / 12 correct</span>
+            <button class="primary" id="learnNextQuestion" type="button" hidden>Next →</button>
+          </div>
+          <div class="learn-finish" id="learnFinish" hidden>
+            <h2>Round complete!</h2>
+            <p id="learnFinishScore"></p>
+            <button class="primary" id="restartLearn" type="button">↻ New random round</button>
           </div>
         </div>
-        <p class="learn-quiz-note">No fixed question limit. Continue to receive a new random question, with varied formats and difficulty.</p>
       </section>
     </section>
   </section>
@@ -20857,7 +20849,7 @@ function switchActivity(activity){
   $("learnActivityPanel").classList.toggle("active",activity === "learn");
 
   if(activity === "flashcards") renderFlashcard();
-  if(activity === "learn" && !currentLearnQuestion) beginLearnQuestion();
+  if(activity === "learn"){ resetLearnSession(); beginLearnQuestion(); }
 }
 
 document.querySelectorAll(".study-tab").forEach(button=>{
@@ -20952,123 +20944,92 @@ function shuffleArray(array){
 }
 
 function resetLearnSession(){
-  learnQuestionCount=0;
-  learnCorrectCount=0;
-  learnStreak=0;
-  learnAnswered=false;
-  currentLearnQuestion=null;
-  recentLearnWords=[];
-  previousLearnType="";
-  if($("learnQuestionNumber")){
-    $("learnQuestionNumber").textContent="Ready";
-    $("learnQuestionPrompt").textContent="Choose a difficulty and start learning.";
-    $("learnQuestionContext").textContent="";
-    $("learnQuizOptions").innerHTML="";
-    $("learnAnswerFeedback").textContent="";
-    $("learnNextQuestion").textContent="Start learning";
-    updateLearnScore();
+  learnQuestionCount=0; learnCorrectCount=0; learnStreak=0; learnAnswered=false;
+  currentLearnQuestion=null; recentLearnWords=[]; previousLearnType="";
+  learnRoundIndex=0;
+  const words=shuffleArray(getCurrentWords());
+  learnRound=words.slice(0,Math.min(LEARN_ROUND_SIZE,words.length));
+  if(learnRound.length<1){
+    $("learnQuestionPrompt").textContent="No vocabulary is available in this topic yet.";
+    $("learnQuizOptions").innerHTML=""; return;
   }
+  // Shuffle the vocabulary selection on every new round.
+  updateLearnScore();
 }
 
 function updateLearnScore(){
-  $("learnSessionScore").textContent=`Answered: ${learnQuestionCount} · Correct: ${learnCorrectCount}`;
+  const total=learnRound.length||LEARN_ROUND_SIZE;
+  $("learnSessionScore").textContent=`${learnCorrectCount} / ${total} correct`;
   $("learnStreak").textContent=`Streak: ${learnStreak}`;
+  const progress=total?Math.min(100,(learnRoundIndex/total)*100):0;
+  if($("learnProgressFill")) $("learnProgressFill").style.width=progress+"%";
 }
 
 function getLearnDifficulty(item){
-  const chosen=$("learnDifficulty").value;
-  if(chosen!=="mixed") return chosen;
   const status=mastery[item.word]||"learning";
   const roll=Math.random();
-  if(status==="known") return roll<0.25?"easy":roll<0.75?"medium":"hard";
-  return roll<0.5?"easy":roll<0.85?"medium":"hard";
+  if(status==="known") return roll<0.2?"easy":roll<0.65?"medium":"hard";
+  return roll<0.45?"easy":roll<0.85?"medium":"hard";
 }
 
 function chooseLearnWord(words){
-  const unseen=words.filter(item=>!recentLearnWords.includes(item.word));
-  const pool=unseen.length?unseen:words;
-  const item=pool[Math.floor(Math.random()*pool.length)];
-  recentLearnWords.push(item.word);
-  if(recentLearnWords.length>Math.min(8,Math.max(3,Math.floor(words.length/3)))) recentLearnWords.shift();
-  return item;
+  const pool=words && words.length?words:getCurrentWords();
+  return pool[Math.floor(Math.random()*pool.length)];
 }
 
 function getDistractors(item,count=3){
   let pool=getCurrentWords().filter(other=>other.word!==item.word && other.meaning && other.meaning!==item.meaning);
-  if(pool.length<count) pool=vocabulary.filter(other=>other.word!==item.word && other.meaning && other.meaning!==item.meaning && other.level===item.level);
   if(pool.length<count) pool=vocabulary.filter(other=>other.word!==item.word && other.meaning && other.meaning!==item.meaning);
   return shuffleArray(pool).slice(0,count);
 }
 
-function makeLearnQuestion(){
+function makeLearnQuestion(itemOverride){
   const words=getCurrentWords();
   if(!words.length) return null;
-  const item=chooseLearnWord(words);
+  const item=itemOverride||chooseLearnWord(words);
   const difficulty=getLearnDifficulty(item);
-  const selectedType=$("learnQuestionType").value;
-  let types=selectedType==="mixed"?[
-    "meaning","definition","context","usage","truefalse"
-  ]:[selectedType];
-  if(types.length>1 && types.includes(previousLearnType)) types=types.filter(type=>type!==previousLearnType);
-  let type=types[Math.floor(Math.random()*types.length)];
-  previousLearnType=type;
+  let types=["meaning","definition","context","usage","truefalse"];
+  if(types.includes(previousLearnType)) types=types.filter(type=>type!==previousLearnType);
+  let type=types[Math.floor(Math.random()*types.length)]; previousLearnType=type;
   const distractors=getDistractors(item,3);
   let prompt="",context="",options=[],answer="",explanation="";
-
   if(type==="meaning"){
     prompt=`What is the meaning of “${item.word}”?`;
-    options=shuffleArray([item.meaning,...distractors.map(x=>x.meaning)]);
-    answer=item.meaning;
+    options=shuffleArray([item.meaning,...distractors.map(x=>x.meaning)]); answer=item.meaning;
     explanation=`${item.word} means “${item.meaning}”.`;
   }else if(type==="definition"){
-    prompt=`Which word matches this meaning?`;
-    context=item.meaning;
-    options=shuffleArray([item.word,...distractors.map(x=>x.word)]);
-    answer=item.word;
+    prompt="Which word matches this meaning?"; context=item.meaning;
+    options=shuffleArray([item.word,...distractors.map(x=>x.word)]); answer=item.word;
     explanation=`The matching word is ${item.word}. ${item.ipa||""}`;
   }else if(type==="context" && item.example){
     const escaped=item.word.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
     const blank=item.example.replace(new RegExp(escaped,"i"),"________");
-    if(blank===item.example){ type="meaning"; prompt=`What is the meaning of “${item.word}”?`; options=shuffleArray([item.meaning,...distractors.map(x=>x.meaning)]); answer=item.meaning; explanation=`${item.word} means “${item.meaning}”.`; }
-    else{ prompt="Choose the word that best completes the sentence."; context=`“${blank}”`; options=shuffleArray([item.word,...distractors.map(x=>x.word)]); answer=item.word; explanation=`${item.word}: ${item.meaning}`; }
-  }else if(type==="usage"){
-    const usable=words.filter(x=>x.example && x.word!==item.word);
-    const related=usable.slice(0,3);
-    if(!item.example || related.length<1){
-      type="definition"; prompt="Which word matches this meaning?"; context=item.meaning; options=shuffleArray([item.word,...distractors.map(x=>x.word)]); answer=item.word; explanation=`The matching word is ${item.word}.`;
-    }else{
-      prompt=`Which sentence uses “${item.word}” correctly?`;
-      const wrongSentences=shuffleArray(related).slice(0,3).map(x=>x.example);
-      options=shuffleArray([item.example,...wrongSentences]); answer=item.example;
-      explanation=`This is the example sentence for ${item.word}: ${item.meaning}.`;
-    }
+    if(blank!==item.example){prompt="Choose the word that best completes the sentence.";context=`“${blank}”`;options=shuffleArray([item.word,...distractors.map(x=>x.word)]);answer=item.word;explanation=`${item.word}: ${item.meaning}`;}
+    else {type="meaning";prompt=`What is the meaning of “${item.word}”?`;options=shuffleArray([item.meaning,...distractors.map(x=>x.meaning)]);answer=item.meaning;explanation=`${item.word} means “${item.meaning}”.`;}
+  }else if(type==="usage" && item.example){
+    const alternatives=shuffleArray(words.filter(x=>x.example && x.word!==item.word)).slice(0,3);
+    if(alternatives.length){prompt=`Which sentence uses “${item.word}” correctly?`;options=shuffleArray([item.example,...alternatives.map(x=>x.example)]);answer=item.example;explanation=`This example shows ${item.word}: ${item.meaning}.`;}
+    else {type="meaning";prompt=`What is the meaning of “${item.word}”?`;options=shuffleArray([item.meaning,...distractors.map(x=>x.meaning)]);answer=item.meaning;explanation=`${item.word} means “${item.meaning}”.`;}
   }else{
-    const statementIsTrue=Math.random()<0.5;
-    const other=distractors[0];
-    const shownMeaning=statementIsTrue?item.meaning:(other?other.meaning:item.meaning);
-    prompt=`“${item.word}” means “${shownMeaning}”.`;
-    options=["True","False"];
-    answer=statementIsTrue||!other?"True":"False";
-    explanation=`${item.word} means “${item.meaning}”.`;
+    const other=distractors[0]; const truth=!!other && Math.random()<0.5;
+    prompt=`“${item.word}” means “${truth||!other?item.meaning:other.meaning}”.`;
+    options=["True","False"];answer=truth||!other?"True":"False";explanation=`${item.word} means “${item.meaning}”.`;
   }
-
-  // Difficulty changes the cognitive demand and hinting, not the source vocabulary.
-  if(difficulty==="easy") context=context||"Focus on the basic meaning of the word.";
+  if(difficulty==="easy" && !context) context="Choose the basic meaning.";
   if(difficulty==="medium" && type==="meaning") prompt=`Choose the most accurate meaning of “${item.word}”.`;
-  if(difficulty==="hard" && type==="meaning") prompt=`Which definition best captures the meaning of “${item.word}” in this vocabulary set?`;
+  if(difficulty==="hard" && type==="meaning") prompt=`Which definition best captures “${item.word}”?`;
   return {item,type,difficulty,prompt,context,options,answer,explanation};
 }
 
 function beginLearnQuestion(){
-  const question=makeLearnQuestion();
-  if(!question){
-    $("learnQuestionPrompt").textContent="No vocabulary is available in this topic yet.";
-    $("learnQuizOptions").innerHTML="";
-    return;
-  }
-  currentLearnQuestion=question;
-  learnAnswered=false;
-  $("learnQuestionNumber").textContent=`Question ${learnQuestionCount+1}`;
+  if(!learnRound.length) resetLearnSession();
+  if(!learnRound.length) return;
+  if(learnRoundIndex>=learnRound.length){finishLearnRound();return;}
+  const item=learnRound[learnRoundIndex];
+  const question=makeLearnQuestion(item);
+  if(!question) return;
+  currentLearnQuestion=question; learnAnswered=false;
+  $("learnQuestionNumber").textContent=`Question ${learnRoundIndex+1} / ${learnRound.length}`;
   $("learnDifficultyBadge").textContent=question.difficulty.toUpperCase();
   $("learnQuestionTypeLabel").textContent=question.type.replace("truefalse","TRUE OR FALSE").replace("context","SENTENCE COMPLETION").replace("definition","WORD FROM MEANING").replace("meaning","WORD MEANING").replace("usage","CORRECT USAGE").toUpperCase();
   $("learnQuestionPrompt").textContent=question.prompt;
@@ -21076,58 +21037,45 @@ function beginLearnQuestion(){
   $("learnAnswerFeedback").textContent="";
   $("learnQuizOptions").innerHTML="";
   $("learnNextQuestion").hidden=true;
+  $("learnFinish").hidden=true;
   question.options.forEach(option=>{
-    const button=document.createElement("button");
-    button.type="button";
-    button.className="learn-quiz-option";
-    button.textContent=option;
-    button.addEventListener("click",()=>answerLearnQuestion(option,button));
-    $("learnQuizOptions").append(button);
+    const button=document.createElement("button"); button.type="button"; button.className="learn-quiz-option"; button.textContent=option;
+    button.addEventListener("click",()=>answerLearnQuestion(option,button)); $("learnQuizOptions").append(button);
   });
   updateLearnScore();
+}
+
+function finishLearnRound(){
+  $("learnQuestionNumber").textContent="Completed";
+  $("learnDifficultyBadge").textContent="RESULT";
+  $("learnQuestionTypeLabel").textContent="YOUR LEARNING SUMMARY";
+  $("learnQuestionPrompt").textContent="Great work! You have completed this round.";
+  $("learnQuestionContext").textContent="";
+  $("learnQuizOptions").innerHTML="";
+  $("learnAnswerFeedback").textContent="";
+  $("learnNextQuestion").hidden=true;
+  $("learnFinishScore").textContent=`You answered ${learnCorrectCount} out of ${learnRound.length} questions correctly.`;
+  $("learnFinish").hidden=false;
+  $("learnProgressFill").style.width="100%";
 }
 
 function answerLearnQuestion(option,button){
   if(learnAnswered||!currentLearnQuestion) return;
-  learnAnswered=true;
-  const q=currentLearnQuestion;
-  const correct=option===q.answer;
+  learnAnswered=true; const q=currentLearnQuestion; const correct=option===q.answer;
   learnQuestionCount++;
-  if(correct){
-    learnCorrectCount++;
-    learnStreak++;
-    mastery[q.item.word]="known";
-    button.classList.add("correct");
-    $("learnAnswerFeedback").textContent=`Correct! ${q.explanation}`;
-  }else{
-    learnStreak=0;
-    mastery[q.item.word]="learning";
-    button.classList.add("wrong");
-    $("learnAnswerFeedback").textContent=`Not quite. Correct answer: ${q.answer}. ${q.explanation}`;
-  }
+  if(correct){learnCorrectCount++;learnStreak++;mastery[q.item.word]="known";button.classList.add("correct");$("learnAnswerFeedback").textContent=`Correct! ${q.explanation}`;}
+  else{learnStreak=0;mastery[q.item.word]="learning";button.classList.add("wrong");$("learnAnswerFeedback").textContent=`Not quite. Correct answer: ${q.answer}. ${q.explanation}`;}
   localStorage.setItem("oopsVocabMastery",JSON.stringify(mastery));
-  $("learnQuizOptions").querySelectorAll("button").forEach(other=>{
-    other.disabled=true;
-    if(other.textContent===q.answer) other.classList.add("correct");
-  });
+  $("learnQuizOptions").querySelectorAll("button").forEach(other=>{other.disabled=true;if(other.textContent===q.answer)other.classList.add("correct");});
+  learnRoundIndex++; updateLearnScore();
   $("learnNextQuestion").hidden=false;
-  $("learnNextQuestion").textContent="Next random question →";
-  updateLearnScore();
+  $("learnNextQuestion").textContent=learnRoundIndex>=learnRound.length?"See results →":"Next question →";
 }
 
 $("learnNextQuestion").addEventListener("click",()=>{
-  beginLearnQuestion();
+  if(learnRoundIndex>=learnRound.length) finishLearnRound(); else beginLearnQuestion();
 });
-$("restartLearn").addEventListener("click",()=>{
-  resetLearnSession();
-  beginLearnQuestion();
-});
-$("learnDifficulty").addEventListener("change",()=>{
-  if(currentActivity==="learn") beginLearnQuestion();
-});
-$("learnQuestionType").addEventListener("change",()=>{
-  if(currentActivity==="learn") beginLearnQuestion();
-});
+$("restartLearn").addEventListener("click",()=>{resetLearnSession();beginLearnQuestion();});
 
 /* FLASHCARDS */
 function renderFlashcard(){
