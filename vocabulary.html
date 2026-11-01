@@ -406,14 +406,35 @@ body.large-text{font-size:120%}
       </section>
 
       <section class="activity-panel" id="learnActivityPanel">
-        <h3>Learn</h3>
-        <p>Study the words, meanings, pronunciation and examples.</p>
-        <div class="stage-heading">
-          <h3 id="learnTopicHeading">Vocabulary</h3>
-          <p id="learnCount" aria-live="polite"></p>
-        </div>
-        <div class="word-grid" id="learnWords"></div>
-      </section>
+  <h3>Learn</h3>
+  <p>Practice vocabulary step by step, from meaning to real-life usage.</p>
+
+  <div class="stage-heading">
+    <h3 id="learnTopicHeading">Vocabulary Practice</h3>
+    <p id="learnCount" aria-live="polite"></p>
+  </div>
+
+  <div class="learn-levels" role="group" aria-label="Learning levels">
+    <button type="button" class="learn-level-btn active" data-learn-level="1">
+      Level 1 · Recognition
+    </button>
+    <button type="button" class="learn-level-btn" data-learn-level="2">
+      Level 2 · Application
+    </button>
+    <button type="button" class="learn-level-btn" data-learn-level="3">
+      Level 3 · Challenge
+    </button>
+  </div>
+
+  <div id="learnProgress" aria-live="polite"></div>
+  <div id="learnQuestionArea"></div>
+  <div id="learnFeedback" aria-live="polite"></div>
+
+  <div class="learn-controls">
+    <button type="button" id="learnCheckBtn">Check Answer</button>
+    <button type="button" id="learnNextBtn" hidden>Next Question →</button>
+  </div>
+</section>
 
       <section class="activity-panel" id="testPanel">
         <h3>Vocabulary Test</h3>
@@ -2601,21 +2622,298 @@ function createWordCard(item){
 }
 
 /* LEARN */
+/* LEARN — PROGRESSIVE VOCABULARY PRACTICE */
+
+let learnLevel = 1;
+let learnQuestions = [];
+let learnIndex = 0;
+let learnScore = 0;
+let learnAnswered = false;
+let learnSelectedAnswer = "";
+
+function makeLearnQuestions(){
+  const words = getCurrentWords();
+  const questions = [];
+
+  if(!words.length) return questions;
+
+  const escapeRegExp = text =>
+    text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  words.forEach((item,index)=>{
+    const otherWords = shuffleArray(
+      words.filter(word=>word.word !== item.word)
+    );
+
+    const distractors = otherWords.slice(0,3);
+
+    if(learnLevel === 1){
+      questions.push({
+        type:"choice",
+        item,
+        prompt:`What does "${item.word}" mean?`,
+        options:shuffleArray([
+          item.meaning,
+          ...distractors.map(word=>word.meaning)
+        ]),
+        answer:item.meaning,
+        explanation:`"${item.word}" means "${item.meaning}".`
+      });
+    }
+
+    if(learnLevel === 2){
+      const blank = item.example.replace(
+        new RegExp(escapeRegExp(item.word),"i"),
+        "________"
+      );
+
+      questions.push({
+        type:"choice",
+        item,
+        prompt:`Choose the correct word to complete the sentence:\n\n${blank}`,
+        options:shuffleArray([
+          item.word,
+          ...distractors.map(word=>word.word)
+        ]),
+        answer:item.word,
+        explanation:`${item.word}: ${item.meaning}. Example: ${item.example}`
+      });
+    }
+
+    if(learnLevel === 3){
+      const blank = item.example.replace(
+        new RegExp(escapeRegExp(item.word),"i"),
+        "________"
+      );
+
+      questions.push({
+        type:"input",
+        item,
+        prompt:`Complete the sentence with the correct vocabulary:\n\n${blank}`,
+        answer:item.word,
+        explanation:`The correct word is "${item.word}" — ${item.meaning}.`
+      });
+    }
+  });
+
+  return shuffleArray(questions);
+}
+
+function startLearn(){
+  learnQuestions = makeLearnQuestions();
+  learnIndex = 0;
+  learnScore = 0;
+  learnAnswered = false;
+  learnSelectedAnswer = "";
+  renderLearnWords();
+}
+
 function renderLearnWords(){
-  const container = $("learnWords");
-  container.innerHTML = "";
+  const area = $("learnQuestionArea");
+  const feedback = $("learnFeedback");
+  const checkBtn = $("learnCheckBtn");
+  const nextBtn = $("learnNextBtn");
+  const progress = $("learnProgress");
 
-  const results = getCurrentWords();
-  $("learnCount").textContent = results.length + " sample words";
+  $("learnTopicHeading").textContent = selectedTopic || "Vocabulary";
 
-  if(!results.length){
-    container.innerHTML =
-      '<div class="empty">Vocabulary for this level and topic is being developed. Please explore another topic or level.</div>';
+  document.querySelectorAll("[data-learn-level]").forEach(button=>{
+    const active = Number(button.dataset.learnLevel) === learnLevel;
+    button.classList.toggle("active",active);
+    button.setAttribute("aria-pressed",String(active));
+  });
+
+  feedback.textContent = "";
+  area.innerHTML = "";
+  checkBtn.hidden = false;
+  nextBtn.hidden = true;
+  learnAnswered = false;
+  learnSelectedAnswer = "";
+
+  if(!learnQuestions.length){
+    progress.textContent = "No vocabulary available.";
+    area.textContent = "This topic is being developed.";
+    checkBtn.hidden = true;
     return;
   }
 
-  results.forEach(item=>container.append(createWordCard(item)));
+  if(learnIndex >= learnQuestions.length){
+    progress.textContent = "Practice completed";
+    area.innerHTML = "";
+
+    const result = document.createElement("div");
+    result.className = "quiz-box";
+
+    const heading = document.createElement("h2");
+    heading.textContent = "Level completed!";
+
+    const score = document.createElement("p");
+    score.textContent =
+      `Your score: ${learnScore} / ${learnQuestions.length}`;
+
+    const message = document.createElement("p");
+    message.textContent =
+      learnScore === learnQuestions.length
+        ? "Excellent! You answered every question correctly."
+        : "Good effort! Review the words you found difficult.";
+
+    result.append(heading,score,message);
+    area.append(result);
+
+    checkBtn.hidden = true;
+    nextBtn.hidden = false;
+    nextBtn.textContent = "Try Again";
+    $("learnCount").textContent = "Completed";
+    return;
+  }
+
+  const question = learnQuestions[learnIndex];
+
+  progress.textContent =
+    `Question ${learnIndex+1} / ${learnQuestions.length}`;
+
+  $("learnCount").textContent =
+    `Score: ${learnScore}`;
+
+  const box = document.createElement("div");
+  box.className = "quiz-box";
+
+  const type = document.createElement("p");
+  type.className = "phonetic";
+  type.textContent =
+    learnLevel === 1 ? "LEVEL 1 · RECOGNITION" :
+    learnLevel === 2 ? "LEVEL 2 · APPLICATION" :
+    "LEVEL 3 · CHALLENGE";
+
+  const prompt = document.createElement("h2");
+  prompt.textContent = question.prompt;
+
+  box.append(type,prompt);
+
+  if(question.type === "choice"){
+    const options = document.createElement("div");
+    options.className = "quiz-options";
+
+    question.options.forEach(option=>{
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "quiz-option";
+      button.textContent = option;
+
+      button.addEventListener("click",()=>{
+        if(learnAnswered) return;
+
+        learnSelectedAnswer = option;
+
+        options.querySelectorAll("button").forEach(item=>{
+          item.classList.remove("active");
+        });
+
+        button.classList.add("active");
+      });
+
+      options.append(button);
+    });
+
+    box.append(options);
+  }else{
+    const input = document.createElement("input");
+    input.type = "text";
+    input.id = "learnAnswerInput";
+    input.placeholder = "Type your answer here...";
+    input.setAttribute("aria-label","Your answer");
+
+    box.append(input);
+  }
+
+  area.append(box);
 }
+
+function checkLearnAnswer(){
+  if(learnAnswered) return;
+
+  const question = learnQuestions[learnIndex];
+  if(!question) return;
+
+  let answer = learnSelectedAnswer;
+
+  if(question.type === "input"){
+    answer = $("learnAnswerInput").value.trim();
+  }
+
+  if(!answer){
+    $("learnFeedback").textContent =
+      "Please choose or enter an answer first.";
+    return;
+  }
+
+  learnAnswered = true;
+
+  const correct =
+    answer.toLowerCase() === question.answer.toLowerCase();
+
+  if(correct) learnScore++;
+
+  $("learnFeedback").textContent =
+    (correct ? "✓ Correct! " : "✗ Not quite. ") +
+    question.explanation;
+
+  if(
+    window.OopsTracker &&
+    typeof window.OopsTracker.recordActivity === "function"
+  ){
+    window.OopsTracker.recordActivity("vocabulary",{
+      activityId:"learn-" + question.item.word.toLowerCase(),
+      label:question.item.word
+    });
+  }
+
+  if(question.type === "choice"){
+    $("learnQuestionArea")
+      .querySelectorAll(".quiz-option")
+      .forEach(button=>{
+        button.disabled = true;
+
+        if(button.textContent === question.answer){
+          button.classList.add("correct");
+        }else if(button.textContent === answer){
+          button.classList.add("wrong");
+        }
+      });
+  }else{
+    $("learnAnswerInput").disabled = true;
+  }
+
+  $("learnCheckBtn").hidden = true;
+  $("learnNextBtn").hidden = false;
+  $("learnNextBtn").textContent = "Next Question →";
+}
+
+function nextLearnQuestion(){
+  if(learnIndex >= learnQuestions.length){
+    startLearn();
+    return;
+  }
+
+  if(!learnAnswered){
+    $("learnFeedback").textContent =
+      "Please check your answer first.";
+    return;
+  }
+
+  learnIndex++;
+  renderLearnWords();
+}
+
+document.querySelectorAll("[data-learn-level]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    learnLevel = Number(button.dataset.learnLevel);
+    startLearn();
+  });
+});
+
+$("learnCheckBtn").addEventListener("click",checkLearnAnswer);
+$("learnNextBtn").addEventListener("click",nextLearnQuestion);
 
 /* FLASHCARDS */
 function renderFlashcard(){
