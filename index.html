@@ -292,6 +292,120 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 }
+  /* ===== OOPS! VOCABULARY LEARN ===== */
+
+#learnProgress {
+  width: min(780px, 92%);
+  margin: 28px auto 16px;
+  color: #6957e8;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+#learnQuestionArea {
+  width: min(780px, 92%);
+  margin: 0 auto;
+}
+
+#learnQuestionArea .quiz-box {
+  width: 100%;
+  padding: 36px;
+  background: #fff;
+  border: 1px solid #eee8fa;
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(70, 50, 120, .07);
+}
+
+#learnQuestionArea .phonetic {
+  margin-bottom: 22px;
+  color: #8b62d9;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .7px;
+}
+
+#learnQuestionArea h2 {
+  margin-bottom: 26px;
+  color: #24243a;
+  font-size: 26px;
+  line-height: 1.4;
+}
+
+#learnQuestionArea button {
+  display: block;
+  width: 100%;
+  min-height: 58px;
+  margin: 12px 0;
+  padding: 15px 20px;
+  border: 1px solid #e6dcf7;
+  border-radius: 13px;
+  background: #f5f0ff;
+  color: #302844;
+  font-size: 17px;
+  text-align: left;
+  transition: .2s ease;
+}
+
+#learnQuestionArea button:hover {
+  background: #eee5ff;
+  border-color: #a98add;
+}
+
+#learnQuestionArea button.selected {
+  background: #e8dcff;
+  border: 2px solid #7954d8;
+  color: #50328f;
+  font-weight: 700;
+}
+
+#learnQuestionArea button:focus-visible {
+  outline: 3px solid #ff9800;
+  outline-offset: 3px;
+}
+
+#learnFeedback {
+  width: min(780px, 92%);
+  margin: 16px auto;
+  line-height: 1.7;
+}
+
+.learn-controls {
+  width: min(780px, 92%);
+  margin: 20px auto 45px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.learn-controls button {
+  min-height: 48px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: var(--primary);
+  color: white;
+}
+
+@media (max-width: 600px) {
+  #learnQuestionArea .quiz-box {
+    padding: 24px 18px;
+  }
+
+  #learnQuestionArea h2 {
+    font-size: 22px;
+  }
+
+  #learnQuestionArea button {
+    font-size: 15px;
+  }
+
+  .learn-controls {
+    justify-content: stretch;
+  }
+
+  .learn-controls button {
+    flex: 1;
+  }
+}
 </style>
 </head>
 <body>
