@@ -217,6 +217,33 @@ main{max-width:1150px;margin:auto;padding:40px 22px}
 .learn-pagination button:disabled{opacity:.45;cursor:not-allowed}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
 .actions button{font-size:13px}
+
+.dictionary-shell{max-width:980px;margin:24px auto;background:#fff;border:1px solid var(--border);border-radius:22px;padding:clamp(18px,3vw,30px);box-shadow:0 12px 35px rgba(54,35,90,.06)}
+.dictionary-mode{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#f0eaff;padding:5px;border-radius:14px;margin-bottom:18px}
+.dictionary-mode-btn{min-height:48px;border:0;border-radius:10px;background:transparent;color:var(--primary);font-weight:750}
+.dictionary-mode-btn.active{background:var(--primary);color:#fff}
+.dictionary-search-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px}
+.dictionary-search-form input{min-width:0;font-size:17px}
+.dictionary-search-form button{min-width:120px}
+.dictionary-hint,.dictionary-status{color:var(--muted);font-size:14px;margin:12px 0}
+.dictionary-status{padding:13px 15px;background:#f7f6fb;border-radius:12px}
+.dictionary-result{margin-top:22px}
+.dictionary-word-head{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;flex-wrap:wrap}
+.dictionary-word-head h2{font-size:34px;margin:0 0 6px}
+.dictionary-pronunciations{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+.dictionary-pron-card{background:#f7f5ff;border:1px solid var(--border);border-radius:14px;padding:15px}
+.dictionary-pron-card strong{display:block;margin-bottom:8px}
+.dictionary-pron-card button,.dictionary-audio-btn{background:#eeeaff;color:var(--primary);padding:8px 12px;margin-top:8px}
+.dictionary-sense{border-top:1px solid var(--border);padding:18px 0}
+.dictionary-sense h3{margin:0 0 8px;font-size:18px;color:var(--primary)}
+.dictionary-definition{margin:7px 0}
+.dictionary-translation{color:#4d3a75;margin:6px 0}
+.dictionary-example{margin:8px 0 4px;padding:11px 14px;background:#f7f6fb;border-radius:10px;font-style:italic}
+.dictionary-extra{margin-top:18px;padding-top:15px;border-top:1px solid var(--border)}
+.dictionary-save{background:#eeeaff;color:var(--primary)}
+.dictionary-source{font-size:12px;color:var(--muted);margin-top:18px}
+@media(max-width:600px){.dictionary-pronunciations{grid-template-columns:1fr}.dictionary-search-form{grid-template-columns:1fr}.dictionary-search-form button{width:100%}.dictionary-mode-btn{font-size:13px}}
+
 .search-row{
   display:grid;
   grid-template-columns:2fr 1fr;
@@ -469,28 +496,25 @@ body.large-text{font-size:120%}
     </section>
   </section>
 
-  <!-- DICTIONARY -->
+  <!-- DICTIONARY: BILINGUAL LOOKUP -->
   <section class="panel" id="dictionaryPanel">
     <div class="section-heading">
       <h2>Dictionary</h2>
-      <p>Search for an English word or Vietnamese meaning.</p>
+      <p>Look up words and expressions in either language.</p>
     </div>
-
-    <div class="search-row">
-      <input id="dictionarySearch" type="search"
-        placeholder="Search English or Vietnamese..."
-        aria-label="Search dictionary">
-      <select id="dictionaryLevel" aria-label="Filter by level">
-        <option value="all">All levels</option>
-        <option>A1</option><option>A2</option>
-        <option>B1</option><option>B2</option>
-        <option>C1</option><option>C2</option>
-      </select>
+    <div class="dictionary-shell">
+      <div class="dictionary-mode" role="group" aria-label="Translation direction">
+        <button class="dictionary-mode-btn active" type="button" data-direction="en-vi" aria-pressed="true">English → Vietnamese</button>
+        <button class="dictionary-mode-btn" type="button" data-direction="vi-en" aria-pressed="false">Vietnamese → English</button>
+      </div>
+      <form id="dictionaryForm" class="dictionary-search-form">
+        <input id="dictionarySearch" type="search" autocomplete="off" placeholder="Enter an English word..." aria-label="Dictionary search" required>
+        <button class="primary" id="dictionarySubmit" type="submit">Search</button>
+      </form>
+      <p class="dictionary-hint" id="dictionaryHint">Search any English word, not only words in the Oops! vocabulary lists.</p>
+      <div id="dictionaryStatus" class="dictionary-status" role="status" aria-live="polite">Enter a word to begin.</div>
+      <div id="dictionaryResult" class="dictionary-result" hidden></div>
     </div>
-
-    <div class="note">Search by English word or Vietnamese meaning.</div>
-    <p class="result-count" id="dictionaryCount" aria-live="polite"></p>
-    <section class="word-grid" id="dictionaryWords"></section>
   </section>
 
   <!-- MY WORDBOOK -->
@@ -21225,32 +21249,161 @@ $("markKnown").addEventListener("click",()=>saveMastery("known"));
 $("markLearning").addEventListener("click",()=>saveMastery("learning"));
 
 
-/* DICTIONARY */
-function renderDictionary(){
-  const query = $("dictionarySearch").value.trim().toLowerCase();
-  const selected = $("dictionaryLevel").value;
+/* DICTIONARY — bilingual lookup using open dictionary and translation services */
+let dictionaryDirection = "en-vi";
+let lastDictionaryEntry = null;
+const dictionaryAudio = { uk: "", us: "" };
 
-  const results = vocabulary.filter(item=>{
-    const matches =
-      item.word.toLowerCase().includes(query) ||
-      item.meaning.toLowerCase().includes(query);
-    const matchesLevel = selected === "all" || item.level === selected;
-    return matches && matchesLevel;
+function setDictionaryDirection(direction){
+  dictionaryDirection = direction;
+  document.querySelectorAll(".dictionary-mode-btn").forEach(button=>{
+    const active = button.dataset.direction === direction;
+    button.classList.toggle("active",active);
+    button.setAttribute("aria-pressed",String(active));
   });
-
-  $("dictionaryCount").textContent = results.length + " words found";
-
-  const container = $("dictionaryWords");
-  container.innerHTML = "";
-
-  if(!results.length){
-    container.innerHTML =
-      '<div class="empty">No words found. Try another search.</div>';
-    return;
-  }
-
-  results.forEach(item=>container.append(createWordCard(item)));
+  $("dictionarySearch").placeholder = direction === "en-vi" ? "Enter an English word..." : "Nhập từ hoặc cụm từ tiếng Việt...";
+  $("dictionaryHint").textContent = direction === "en-vi"
+    ? "Search any English word, not only words in the Oops! vocabulary lists."
+    : "Nhập từ/cụm từ tiếng Việt để tìm cách diễn đạt tương ứng bằng tiếng Anh.";
+  $("dictionarySearch").value = "";
+  $("dictionaryResult").hidden = true;
+  $("dictionaryStatus").textContent = direction === "en-vi" ? "Enter an English word to begin." : "Nhập từ tiếng Việt để bắt đầu.";
 }
+
+document.querySelectorAll(".dictionary-mode-btn").forEach(button=>{
+  button.addEventListener("click",()=>setDictionaryDirection(button.dataset.direction));
+});
+
+async function translateDictionaryText(text, from, to){
+  const params = new URLSearchParams({q:text,langpair:from+"|"+to});
+  const response = await fetch("https://api.mymemory.translated.net/get?"+params.toString());
+  if(!response.ok) throw new Error("Translation service unavailable");
+  const data = await response.json();
+  if(Number(data.responseStatus) !== 200) throw new Error(data.responseDetails || "Translation unavailable");
+  return data.responseData?.translatedText || "";
+}
+
+function safeText(tag,text,className){
+  const node=document.createElement(tag);
+  if(className) node.className=className;
+  node.textContent=text || "";
+  return node;
+}
+
+function playDictionaryAudio(url, word, accent){
+  if(url){
+    const audio=new Audio(url);
+    audio.play().catch(()=>speakDictionaryWord(word,accent));
+  }else speakDictionaryWord(word,accent);
+}
+
+function speakDictionaryWord(word,accent){
+  if(!("speechSynthesis" in window)){ $("dictionaryStatus").textContent="Audio playback is not supported in this browser."; return; }
+  speechSynthesis.cancel();
+  const utterance=new SpeechSynthesisUtterance(word);
+  utterance.lang=accent === "uk" ? "en-GB" : "en-US";
+  const voices=speechSynthesis.getVoices();
+  const voice=voices.find(v=>v.lang.toLowerCase().startsWith(utterance.lang.toLowerCase()));
+  if(voice) utterance.voice=voice;
+  speechSynthesis.speak(utterance);
+}
+
+function renderDictionaryEntry(entries, query, vietnameseMeaning=""){
+  const result=$("dictionaryResult");
+  result.innerHTML="";
+  result.hidden=false;
+  const first=entries[0];
+  const word=first.word || query;
+  const head=document.createElement("div"); head.className="dictionary-word-head";
+  const titleWrap=document.createElement("div");
+  titleWrap.append(safeText("h2",word));
+  if(vietnameseMeaning) titleWrap.append(safeText("p",vietnameseMeaning,"dictionary-translation"));
+  const save=document.createElement("button"); save.type="button"; save.className="dictionary-save";
+  const savedNow=saved.includes(word);
+  save.textContent=savedNow ? "★ Saved to My Wordbook" : "☆ Save word";
+  save.addEventListener("click",()=>{
+    if(!saved.includes(word)) saved.push(word); else saved=saved.filter(x=>x!==word);
+    localStorage.setItem("oopsWordbook",JSON.stringify(saved));
+    save.textContent=saved.includes(word) ? "★ Saved to My Wordbook" : "☆ Save word";
+    renderWordbook();
+  });
+  head.append(titleWrap,save); result.append(head);
+
+  const phonetics=[];
+  entries.forEach(entry=>(entry.phonetics||[]).forEach(ph=>{
+    if(ph.text || ph.audio) phonetics.push(ph);
+  }));
+  const uk=phonetics.find(ph=>/\.uk\./i.test(ph.audio||"") || /_uk\b|uk_/i.test(ph.audio||"")) || phonetics.find(ph=>ph.audio && /gb|uk/i.test(ph.audio));
+  const us=phonetics.find(ph=>/\.us\./i.test(ph.audio||"") || /_us\b|us_/i.test(ph.audio||"")) || phonetics.find(ph=>ph.audio && /us/i.test(ph.audio));
+  const allText=phonetics.filter(ph=>ph.text);
+  const pron=document.createElement("div"); pron.className="dictionary-pronunciations";
+  [
+    {label:"UK · British English",item:uk || allText[0],accent:"uk"},
+    {label:"US · American English",item:us || allText.find(x=>x!==allText[0]) || allText[0],accent:"us"}
+  ].forEach(item=>{
+    const card=document.createElement("div"); card.className="dictionary-pron-card";
+    card.append(safeText("strong",item.label));
+    card.append(safeText("div",item.item?.text || "IPA not available"));
+    const audio=document.createElement("button"); audio.type="button"; audio.className="dictionary-audio-btn"; audio.textContent="▶ Listen";
+    audio.disabled=!item.item?.audio && !word;
+    audio.addEventListener("click",()=>playDictionaryAudio(item.item?.audio,word,item.accent));
+    card.append(audio); pron.append(card);
+  });
+  result.append(pron);
+
+  entries.forEach(entry=>(entry.meanings||[]).forEach(meaning=>{
+    const section=document.createElement("section"); section.className="dictionary-sense";
+    section.append(safeText("h3",meaning.partOfSpeech || "Meaning"));
+    (meaning.definitions||[]).forEach(def=>{
+      section.append(safeText("p",def.definition,"dictionary-definition"));
+      if(def.example) section.append(safeText("p","“"+def.example+"”","dictionary-example"));
+      if(def.synonyms?.length) section.append(safeText("p","Synonyms: "+def.synonyms.slice(0,8).join(", "),"dictionary-extra"));
+      if(def.antonyms?.length) section.append(safeText("p","Antonyms: "+def.antonyms.slice(0,8).join(", "),"dictionary-extra"));
+    });
+    result.append(section);
+  }));
+  const source=document.createElement("p"); source.className="dictionary-source";
+  source.textContent="Definitions, examples and pronunciation data are supplied by an open dictionary source. Some entries may not include every field.";
+  result.append(source);
+  lastDictionaryEntry={word,entries,vietnameseMeaning};
+}
+
+async function searchDictionary(event){
+  event?.preventDefault();
+  const query=$("dictionarySearch").value.trim();
+  if(!query) return;
+  const status=$("dictionaryStatus");
+  const result=$("dictionaryResult");
+  result.hidden=true; result.innerHTML="";
+  status.textContent="Searching…";
+  $("dictionarySubmit").disabled=true;
+  try{
+    let english=query;
+    let vietnameseMeaning="";
+    if(dictionaryDirection === "vi-en"){
+      english=await translateDictionaryText(query,"vi","en");
+      if(!english) throw new Error("Could not find an English translation for this phrase.");
+    }
+    const url="https://api.dictionaryapi.dev/api/v2/entries/en/"+encodeURIComponent(english.trim());
+    const response=await fetch(url);
+    if(!response.ok){
+      if(dictionaryDirection === "en-vi") throw new Error("No dictionary entry found for this word. Try checking the spelling or searching a single word.");
+      status.textContent="Possible English translations: "+english+". A full dictionary entry is not available for this translation.";
+      return;
+    }
+    const entries=await response.json();
+    if(dictionaryDirection === "en-vi"){
+      try{ vietnameseMeaning=await translateDictionaryText(english,"en","vi"); }
+      catch(e){ vietnameseMeaning="Vietnamese translation is temporarily unavailable."; }
+    }else vietnameseMeaning="English translation: "+english;
+    renderDictionaryEntry(entries,english,vietnameseMeaning);
+    status.textContent="Results for: "+query;
+  }catch(error){
+    status.textContent=error.message || "Something went wrong. Please try again.";
+  }finally{$("dictionarySubmit").disabled=false;}
+}
+
+$("dictionaryForm").addEventListener("submit",searchDictionary);
 
 /* WORDBOOK */
 function renderWordbook(){
@@ -21258,15 +21411,22 @@ function renderWordbook(){
   container.innerHTML = "";
 
   const results = vocabulary.filter(item=>saved.includes(item.word));
-  $("wordbookCount").textContent = results.length + " saved words";
+  const extraSaved = saved.filter(word=>!vocabulary.some(item=>item.word===word));
+  $("wordbookCount").textContent = saved.length + " saved words";
 
-  if(!results.length){
-    container.innerHTML =
-      '<div class="empty">Your wordbook is empty. Save a word to see it here.</div>';
+  if(!saved.length){
+    container.innerHTML = '<div class="empty">Your wordbook is empty. Save a word to see it here.</div>';
     return;
   }
-
   results.forEach(item=>container.append(createWordCard(item)));
+  extraSaved.forEach(word=>{
+    const card=document.createElement("article"); card.className="word-card";
+    card.append(safeText("h3",word));
+    card.append(safeText("p","Look up this word in Dictionary to view its full entry.","word-meta"));
+    const remove=document.createElement("button"); remove.type="button"; remove.className="secondary"; remove.textContent="Remove";
+    remove.addEventListener("click",()=>{saved=saved.filter(x=>x!==word);localStorage.setItem("oopsWordbook",JSON.stringify(saved));renderWordbook();});
+    card.append(remove); container.append(card);
+  });
 }
 
 function renderAll(){
