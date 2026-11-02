@@ -21436,7 +21436,7 @@ function renderAll(){
 }
 
 $("dictionarySearch").addEventListener("input",renderDictionary);
-$("dictionaryLevel").addEventListener("change",renderDictionary);
+// Removed obsolete level-filter listener: the bilingual Dictionary has no level selector.
 
 /* INITIAL DISPLAY */
 renderAll();
