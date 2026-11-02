@@ -21065,9 +21065,10 @@ function beginLearnQuestion(){
   if(!learnRound.length) resetLearnSession();
   if(!learnRound.length) return;
   if(learnRoundIndex>=learnRound.length){finishLearnRound();return;}
-  const item=learnRound[learnRoundIndex];
-  const question=makeLearnQuestion(item);
-  if(!question) return;
+  // Questions are fully generated in resetLearnSession(); use the stored
+  // question object directly instead of generating a second time from it.
+  const question=learnRound[learnRoundIndex];
+  if(!question || !question.item) return;
   currentLearnQuestion=question; learnAnswered=false;
   $("learnQuestionNumber").textContent=`Question ${learnRoundIndex+1} / ${learnRound.length}`;
   $("learnDifficultyBadge").textContent=question.difficulty.toUpperCase();
