@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,468 +7,490 @@
 
 <style>
 :root {
-  --primary: #6957e8;
-  --bg: #f7f7fc;
-  --text: #24243a;
-  --card: #ffffff;
-  --muted: #77778d;
+  --primary: #39b9ad;
+  --primary-dark: #0b3d3b;
+  --bg: #f7f7f0;
+  --text: #163d3b;
+  --card: #fffef9;
+  --muted: #71817e;
+  --line: #dce7e1;
+  --soft: #eaf4ef;
+  --header: rgba(247,247,240,.96);
+  --shadow: 0 12px 35px rgba(15,55,51,.07);
 }
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
   font-family: Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
+  transition: background .2s ease, color .2s ease;
 }
-
-/* Navigation */
+body.dark-mode {
+  --bg: #111d1b;
+  --text: #e6f0ec;
+  --card: #1d2c29;
+  --muted: #a9bbb5;
+  --line: #30443f;
+  --soft: #243b36;
+  --header: rgba(17,29,27,.97);
+  --shadow: 0 12px 35px rgba(0,0,0,.18);
+  --primary-dark: #0b3d3b;
+}
+a { color: inherit; }
 .site-header {
-  display: flex;
-  justify-content: space-between;
+  min-height: 82px;
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr) auto;
   align-items: center;
-  gap: 24px;
-  padding: 14px 6%;
-  background: var(--card);
+  gap: 28px;
+  padding: 12px clamp(20px,4.5vw,76px);
+  background: var(--header);
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 1px solid #eceaf5;
-  box-shadow: 0 4px 18px rgba(40,30,90,.04);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(14px);
 }
-
 .logo {
-  font-size: 29px;
-  font-weight: 800;
-  color: var(--primary);
+  font-size: 31px;
+  line-height: 1;
+  font-weight: 900;
+  color: var(--primary-dark);
   text-decoration: none;
-  letter-spacing: -1px;
+  letter-spacing: -1.7px;
+  white-space: nowrap;
 }
-
+.dark-mode .logo { color: #e5f5ef; }
+.logo span { color: var(--primary); }
 .main-nav {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 7px;
-  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(2px, .55vw, 10px);
+  min-width: 0;
 }
-
 .nav-link {
+  position: relative;
   text-decoration: none;
-  color: var(--text);
+  color: var(--muted);
   font-size: 14px;
-  font-weight: 600;
-  padding: 10px 15px;
-  border-radius: 12px;
-  transition: background .2s, color .2s;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  background: #eeeaff;
-  color: var(--primary);
-}
-
-.profile-link {
-  border: 1px solid #eeeaf7;
-}
-
-button, .btn {
-  border: none;
-  border-radius: 12px;
-  padding: 11px 17px;
-  cursor: pointer;
   font-weight: 700;
-}
-
-.primary {
-  background: var(--primary);
-  color: white;
-}
-
-.secondary {
-  background: #eeeaff;
-  color: var(--primary);
-}
-
-.mode-button {
-  margin-left: 5px;
+  padding: 13px 11px;
   white-space: nowrap;
+  transition: color .2s ease;
 }
-
+.nav-link::after {
+  content: "";
+  position: absolute;
+  height: 3px;
+  left: 12px;
+  right: 12px;
+  bottom: 3px;
+  border-radius: 4px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform .2s ease;
+}
+.nav-link:hover, .nav-link.active { color: var(--text); }
+.nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+.header-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.tool-button, .account-trigger {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition: border-color .2s, background .2s, transform .2s;
+}
+.tool-button:hover, .account-trigger:hover { border-color: var(--primary); transform: translateY(-1px); }
+.theme-button { width: 48px; font-size: 21px; }
+.language-button { padding: 0 15px; gap: 9px; min-width: 84px; }
+.language-button .lang-option { color: var(--muted); }
+.language-button .lang-option.active { color: var(--text); }
+.language-button .separator { color: #aab7b1; }
+.accessible-button {
+  padding: 0 17px;
+  min-width: 145px;
+  margin-right: clamp(5px,1.5vw,24px);
+  font-size: 13px;
+}
+.account-wrap { position: relative; }
+.account-trigger { padding: 4px 12px 4px 5px; gap: 9px; min-width: 58px; }
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: grid; place-items: center;
+  color: #fff; background: var(--primary-dark);
+  border: 2px solid var(--primary);
+  font-size: 14px; font-weight: 800;
+}
+.account-name { max-width: 105px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
+.account-chevron { color: var(--muted); font-size: 12px; margin-left: 2px; }
+.account-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 220px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  z-index: 120;
+}
+.account-menu.open { display: block; }
+.account-menu a {
+  display: block; padding: 11px 12px; border-radius: 10px;
+  text-decoration: none; color: var(--text); font-size: 14px; font-weight: 700;
+}
+.account-menu a:hover { background: var(--soft); }
+.account-menu .menu-caption {
+  padding: 8px 12px 10px; color: var(--muted); font-size: 11px;
+  font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+}
+button, .btn {
+  border: none; border-radius: 12px; padding: 11px 17px;
+  cursor: pointer; font-weight: 700;
+}
+.primary { background: var(--primary-dark); color: white; }
+.secondary { background: var(--soft); color: var(--text); }
 .hero {
   padding: 85px 8%;
-  background: linear-gradient(
-    120deg,
-    color-mix(in srgb, var(--primary) 14%, white),
-    color-mix(in srgb, var(--primary) 5%, white)
-  );
+  background: var(--primary-dark);
+  color: #fff;
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 35px;
   align-items: center;
+  margin: 28px auto 0;
+  width: min(94%, 1660px);
+  border-radius: 42px;
+  overflow: hidden;
 }
-
-.hero h1 {
-  font-size: clamp(38px,5vw,62px);
-  line-height: 1.12;
-  margin: 15px 0;
-}
-
-.hero h1 span {
-  color: var(--primary);
-}
-
-.hero p {
-  color: var(--muted);
-  max-width: 530px;
-  margin-bottom: 25px;
-}
-
+.hero h1 { font-size: clamp(38px,5vw,62px); line-height: 1.12; margin: 15px 0; letter-spacing: -1.5px; }
+.hero h1 span { color: #43c7b6; }
+.hero p { color: #d5e8e2; max-width: 530px; margin-bottom: 25px; }
 .hero-art {
-  background: white;
-  border-radius: 28px;
-  padding: 35px;
-  text-align: center;
-  box-shadow: 0 15px 40px #6957e81c;
+  background: #eaf4e9; color: var(--primary-dark);
+  border-radius: 28px; padding: 35px; text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,.12);
 }
-
-.hero-art strong {
-  display: block;
-  font-size: 65px;
-  color: var(--primary);
-}
-
-section {
-  padding: 65px 8%;
-}
-
-.section-heading {
-  margin-bottom: 28px;
-}
-
-.section-heading h2 {
-  font-size: 30px;
-}
-
-.section-heading p {
-  color: var(--muted);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 20px;
-}
-
+.hero-art strong { display: block; font-size: 65px; color: var(--primary-dark); }
+section { padding: 65px 8%; }
+.section-heading { margin-bottom: 28px; }
+.section-heading h2 { font-size: 30px; }
+.section-heading p { color: var(--muted); }
+.grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
 .card {
-  background: var(--card);
-  padding: 25px;
-  border-radius: 20px;
-  border: 1px solid #eeeeF5;
-  transition: .2s;
+  background: var(--card); padding: 25px; border-radius: 20px;
+  border: 1px solid var(--line); box-shadow: var(--shadow); transition: .2s;
 }
-
-.card:hover {
-  transform: translateY(-4px);
-}
-
-.card .symbol {
-  font-size: 30px;
-  margin-bottom: 12px;
-}
-
-.card h3 {
-  margin-bottom: 8px;
-}
-
-.card p {
-  color: var(--muted);
-  font-size: 14px;
-  margin-bottom: 18px;
-}
-
-.card a {
-  color: var(--primary);
-  text-decoration: none;
-  font-weight: 700;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 15px;
-  margin-top: 25px;
-}
-
-.stat {
-  background: white;
-  padding: 20px;
-  border-radius: 16px;
-}
-
-.stat strong {
-  font-size: 25px;
-  color: var(--primary);
-  display: block;
-}
-
-.quests {
-  background: #eeeaff;
-}
-
-footer {
-  padding: 30px 8%;
-  text-align: center;
-  color: var(--muted);
-}
-
-/* Accessible Mode */
+.card:hover { transform: translateY(-4px); }
+.card .symbol { font-size: 30px; margin-bottom: 12px; }
+.card h3 { margin-bottom: 8px; }
+.card p { color: var(--muted); font-size: 14px; margin-bottom: 18px; }
+.card a { color: var(--primary-dark); text-decoration: none; font-weight: 700; }
+.dark-mode .card a { color: #62d7c8; }
+.stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 15px; margin-top: 25px; }
+.stat { background: var(--card); padding: 20px; border-radius: 16px; }
+.stat strong { font-size: 25px; color: var(--primary); display: block; }
+.quests { background: var(--soft); }
+footer { padding: 30px 8%; text-align: center; color: var(--muted); }
 body.accessible {
-  --bg: #000;
-  --text: #fff;
-  --card: #111;
-  --muted: #eee;
-  --primary: #ffeb3b;
+  --bg: #000; --text: #fff; --card: #111; --muted: #eee;
+  --primary: #ffeb3b; --primary-dark: #000; --line: #fff; --soft: #181818;
+  --header: #000;
 }
+body.accessible .logo, body.accessible .nav-link,
+body.accessible .card a { color: #ffeb3b; }
+body.accessible .hero { background: #111; border: 2px solid #ffeb3b; }
+body.accessible .hero-art, body.accessible .stat { background: #111; color: #fff; }
+body.accessible .hero-art strong { color: #ffeb3b; }
+body.accessible .card, body.accessible .account-menu { border: 2px solid #ffeb3b; }
+body.large-text { font-size: 120%; }
+a:focus-visible, button:focus-visible { outline: 3px solid #ff9800; outline-offset: 4px; }
 
-body.accessible a {
-  color: #ffeb3b;
+/* Vocabulary Learn styles retained */
+#learnProgress { width: min(780px,92%); margin: 28px auto 16px; color: var(--primary); font-size: 15px; font-weight: 700; }
+#learnQuestionArea { width: min(780px,92%); margin: 0 auto; }
+#learnQuestionArea .quiz-box { width: 100%; padding: 36px; background: var(--card); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); }
+#learnQuestionArea .phonetic { margin-bottom: 22px; color: var(--primary); font-size: 14px; font-weight: 800; letter-spacing: .7px; }
+#learnQuestionArea h2 { margin-bottom: 26px; color: var(--text); font-size: 26px; line-height: 1.4; }
+#learnQuestionArea button { display: block; width: 100%; min-height: 58px; margin: 12px 0; padding: 15px 20px; border: 1px solid var(--line); border-radius: 13px; background: var(--soft); color: var(--text); font-size: 17px; text-align: left; transition: .2s ease; }
+#learnQuestionArea button:hover { border-color: var(--primary); }
+#learnQuestionArea button.selected { background: var(--soft); border: 2px solid var(--primary); font-weight: 700; }
+#learnQuestionArea button:focus-visible { outline: 3px solid #ff9800; outline-offset: 3px; }
+#learnFeedback { width: min(780px,92%); margin: 16px auto; line-height: 1.7; }
+.learn-controls { width: min(780px,92%); margin: 20px auto 45px; display: flex; justify-content: flex-end; gap: 12px; }
+.learn-controls button { min-height: 48px; padding: 12px 24px; border-radius: 12px; background: var(--primary-dark); color: white; }
+@media(max-width:1100px) {
+  .site-header { grid-template-columns: auto 1fr; gap: 12px; }
+  .main-nav { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; overflow-x: auto; padding-bottom: 4px; }
+  .header-tools { grid-column: 2; grid-row: 1; }
+  .accessible-button { margin-right: 0; }
 }
-
-body.accessible .hero {
-  background: #111;
-}
-
-body.accessible .hero-art,
-body.accessible .stat {
-  background: #111;
-}
-
-body.accessible .quests {
-  background: #181818;
-}
-
-body.accessible button {
-  border: 2px solid #ffeb3b;
-}
-
-body.large-text {
-  font-size: 120%;
-}
-
-a:focus-visible,
-button:focus-visible {
-  outline: 3px solid #ff9800;
-  outline-offset: 4px;
-}
-
-@media(max-width:850px) {
-  .site-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .main-nav {
-    justify-content: flex-start;
-    width: 100%;
-  }
-}
-
 @media(max-width:800px) {
-  .hero {
-    grid-template-columns: 1fr;
-    padding: 55px 7%;
-  }
-
-  .grid,
-  .stats {
-    grid-template-columns: 1fr;
-  }
+  .hero { grid-template-columns: 1fr; padding: 55px 7%; border-radius: 28px; }
+  .grid, .stats { grid-template-columns: 1fr; }
+  section { padding: 45px 7%; }
 }
-  /* ===== OOPS! VOCABULARY LEARN ===== */
-
-#learnProgress {
-  width: min(780px, 92%);
-  margin: 28px auto 16px;
-  color: #6957e8;
-  font-size: 15px;
-  font-weight: 700;
-}
-
-#learnQuestionArea {
-  width: min(780px, 92%);
-  margin: 0 auto;
+@media(max-width:560px) {
+  .site-header { padding: 12px 16px; }
+  .logo { font-size: 27px; }
+  .header-tools { gap: 6px; }
+  .accessible-button { min-width: 0; padding: 0 10px; font-size: 11px; }
+  .theme-button { width: 40px; min-height: 40px; }
+  .language-button { min-width: 72px; padding: 0 9px; min-height: 40px; gap: 6px; font-size: 12px; }
+  .account-trigger { min-height: 40px; padding-right: 8px; }
+  .account-name { display: none; }
+  .nav-link { padding: 10px 9px; font-size: 13px; }
+  #learnQuestionArea .quiz-box { padding: 24px 18px; }
+  #learnQuestionArea h2 { font-size: 22px; }
+  #learnQuestionArea button { font-size: 15px; }
+  .learn-controls { justify-content: stretch; }
+  .learn-controls button { flex: 1; }
 }
 
-#learnQuestionArea .quiz-box {
-  width: 100%;
-  padding: 36px;
-  background: #fff;
-  border: 1px solid #eee8fa;
-  border-radius: 22px;
-  box-shadow: 0 10px 30px rgba(70, 50, 120, .07);
+/* ===== HOME VISUAL REFINEMENT ===== */
+:root {
+  --primary: #39b9ad;
+  --primary-dark: #073d3b;
+  --bg: #f7f7f1;
+  --text: #123d3b;
+  --card: #fffef9;
+  --muted: #71817d;
+  --line: #dce6df;
+  --soft: #eaf3ee;
+  --header: rgba(247,247,241,.97);
+  --gold: #f6bd2f;
+  --shadow: 0 14px 38px rgba(7,61,59,.07);
+}
+body { background:var(--bg); color:var(--text); }
+body.dark-mode {
+  color-scheme:dark;
+  --bg:#101b1a;
+  --text:#eaf4f0;
+  --card:#192725;
+  --muted:#afc0ba;
+  --line:#304541;
+  --soft:#223733;
+  --header:rgba(16,27,26,.97);
+  --shadow:0 14px 38px rgba(0,0,0,.24);
+}
+.site-header { min-height:82px; padding:12px clamp(22px,4.8vw,86px); gap:22px; }
+.logo { color:var(--primary-dark); font-size:34px; letter-spacing:-2px; }
+.logo span { color:var(--primary); }
+.dark-mode .logo { color:#f3f7f3; }
+.main-nav { justify-content:center; gap:clamp(1px,.65vw,12px); }
+.nav-link { padding:15px 12px; font-size:14px; }
+.nav-link:hover,.nav-link.active { color:var(--primary-dark); }
+.dark-mode .nav-link:hover,.dark-mode .nav-link.active { color:#f2f8f5; }
+.nav-link::after { bottom:2px; height:4px; }
+.header-tools { gap:10px; }
+.tool-button,.account-trigger { background:var(--card); border-color:var(--line); color:var(--text); }
+.accessible-button { border-radius:999px; min-height:46px; padding:0 19px; }
+.theme-button { width:48px; min-height:48px; font-size:22px; }
+.language-button { min-height:48px; }
+.account-trigger { min-height:48px; padding:5px 12px 5px 6px; }
+.avatar { width:36px;height:36px;background:var(--primary-dark);border-color:var(--primary); }
+.hero {
+  width:min(94%,1660px); min-height:690px; margin:34px auto 0;
+  padding:76px clamp(42px,5vw,88px); grid-template-columns:minmax(0,1.18fr) minmax(340px,.82fr);
+  gap:44px; border-radius:48px; background:#073d3b; color:#fff; position:relative;
+}
+.hero::before,.hero::after { content:"";position:absolute;border:1px solid rgba(57,185,173,.22);border-radius:50%;pointer-events:none; }
+.hero::before { width:490px;height:490px;right:8%;top:-305px; }
+.hero::after { width:290px;height:290px;left:-220px;bottom:-230px; }
+.hero-copy,.hero-visual { position:relative;z-index:1; }
+.hero-eyebrow { display:flex;align-items:center;gap:12px;color:#9ce8dc;font-size:13px;font-weight:800;letter-spacing:1.5px;margin-bottom:24px; }
+.hero-eyebrow::before { content:"";width:30px;height:2px;background:var(--gold); }
+.hero h1 { max-width:720px;font-size:clamp(48px,5.3vw,78px);line-height:1.08;letter-spacing:-2.8px;margin:0 0 28px;font-weight:850; }
+.hero h1 span { color:#43c7b6; }
+.hero .hero-description { max-width:600px;color:#e0efeb;font-size:18px;line-height:1.85;margin:0 0 30px; }
+.hero-actions { display:flex;flex-wrap:wrap;gap:14px;margin-bottom:42px; }
+.hero-actions .btn { display:inline-flex;align-items:center;justify-content:center;min-height:58px;padding:0 26px;border-radius:999px;text-decoration:none;font-size:15px; }
+.hero-actions .primary { background:var(--gold);color:#123d3b; }
+.hero-actions .primary:hover { background:#ffd15a; }
+.hero-actions .hero-secondary { background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.35);color:#fff; }
+.hero-stats { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:600px;border-top:1px solid rgba(255,255,255,.22);padding-top:26px; }
+.hero-stat { padding:0 22px;border-right:1px solid rgba(255,255,255,.2); }
+.hero-stat:first-child { padding-left:0; }
+.hero-stat:last-child { border:0; }
+.hero-stat strong { display:block;font-size:34px;line-height:1.2;color:#fff;margin-bottom:8px; }
+.hero-stat span { color:#d5e8e2;font-size:13px;font-weight:700; }
+.hero-visual { min-height:390px;display:grid;place-items:center; }
+.orbit { width:min(100%,440px);aspect-ratio:1;border:2px dashed rgba(210,239,229,.24);border-radius:50%;display:grid;place-items:center;position:relative; }
+.orbit::before { content:"";position:absolute;width:12px;height:12px;background:var(--gold);border-radius:50%;top:22%;left:10%;box-shadow:0 0 0 9px rgba(246,189,47,.12); }
+.orbit::after { content:"";position:absolute;width:14px;height:14px;background:#43c7b6;border-radius:50%;right:2%;bottom:36%;box-shadow:0 0 0 9px rgba(67,199,182,.13); }
+.learning-note { width:min(76%,310px);min-height:220px;background:#e9f4e9;border:7px solid #fffef7;border-radius:28px;padding:28px 24px;color:#073d3b;box-shadow:0 22px 35px rgba(0,0,0,.18);transform:rotate(-4deg);position:relative;z-index:1; }
+.learning-note small { display:block;font-size:11px;font-weight:900;letter-spacing:1.1px;color:#5e8179;margin-bottom:18px; }
+.learning-note strong { display:block;font-size:30px;line-height:1.2;margin-bottom:14px; }
+.learning-note span { font-size:13px;font-weight:700;color:#53756e; }
+.note-tag { position:absolute;right:-24px;top:-25px;background:var(--gold);color:white;border-radius:19px;padding:12px 15px;font-size:25px;font-weight:800;transform:rotate(9deg);box-shadow:0 8px 18px #0002; }
+.note-spark { position:absolute;left:7%;bottom:23%;background:#43c7b6;color:white;border-radius:18px;padding:13px 17px;font-size:27px;transform:rotate(-10deg);z-index:2; }
+.note-pencil { position:absolute;right:8%;bottom:20%;background:#fffef7;color:#fffef7;border-radius:18px;width:56px;height:56px;transform:rotate(8deg);z-index:2; }
+section#learning { max-width:1500px;margin:0 auto;padding:82px 6% 90px; }
+.section-heading { margin-bottom:30px; }
+.section-heading h2 { font-size:32px;letter-spacing:-.7px;color:var(--text); }
+.section-heading p { margin-top:6px;color:var(--muted);font-size:16px; }
+.grid { grid-template-columns:repeat(4,minmax(0,1fr));gap:18px; }
+.card { border-radius:22px;padding:25px 23px;background:var(--card);border-color:var(--line);box-shadow:var(--shadow); }
+.card:hover { transform:translateY(-3px);border-color:rgba(57,185,173,.65); }
+.card .symbol { width:48px;height:48px;display:grid;place-items:center;border-radius:15px;background:var(--soft);font-size:24px;margin-bottom:18px; }
+.card h3 { font-size:19px;color:var(--text); }
+.card p { color:var(--muted);font-size:14px;line-height:1.7;min-height:72px; }
+.card a { color:#087d73;font-size:14px; }
+.dark-mode .card a { color:#62d7c8; }
+.dark-mode .hero { background:#073d3b;color:#fff; }
+.dark-mode .hero .hero-description { color:#e0efeb; }
+.dark-mode .learning-note { background:#e9f4e9;color:#073d3b; }
+.dark-mode .hero-stat strong { color:#fff; }
+.dark-mode .hero-stat span { color:#d5e8e2; }
+.dark-mode .section-heading h2,.dark-mode .card h3 { color:var(--text); }
+footer { border-top:1px solid var(--line); }
+body.accessible { color-scheme:dark; }
+body.accessible .site-header,body.accessible .card,body.accessible .account-menu,body.accessible .tool-button { background:#000;color:#fff;border-color:#ffeb3b; }
+body.accessible .hero { background:#000;border:2px solid #ffeb3b; }
+body.accessible .hero h1 span,body.accessible .nav-link.active,body.accessible .nav-link:hover,body.accessible .card a { color:#ffeb3b; }
+body.accessible .hero .hero-description,body.accessible .hero-stat span { color:#fff; }
+body.accessible .learning-note { background:#111;color:#fff;border-color:#ffeb3b; }
+body.accessible .learning-note small,body.accessible .learning-note span { color:#fff; }
+body.accessible .hero-actions .primary { background:#ffeb3b;color:#000; }
+@media(max-width:1200px) {
+ .site-header { grid-template-columns:auto 1fr; }
+ .main-nav { grid-column:1/-1;grid-row:2;justify-content:flex-start;overflow-x:auto; }
+ .header-tools { grid-column:2;grid-row:1; }
+ .hero { min-height:620px; }
+ .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:800px) {
+ .hero { grid-template-columns:1fr;padding:55px 7%;border-radius:30px; }
+ .hero-visual { min-height:320px; }
+ .orbit { max-width:330px; }
+ .learning-note { min-height:190px; }
+ .learning-note strong { font-size:25px; }
+ section#learning { padding:55px 7%; }
+}
+@media(max-width:560px) {
+ .site-header { padding:12px 15px; }
+ .header-tools { gap:5px; }
+ .accessible-button { min-width:0;padding:0 9px;font-size:10px; }
+ .account-name { display:none; }
+ .hero { width:94%;padding:42px 23px;margin-top:18px; }
+ .hero h1 { font-size:44px;letter-spacing:-1.7px; }
+ .hero .hero-description { font-size:15px; }
+ .hero-actions .btn { min-height:51px;padding:0 18px;font-size:13px; }
+ .hero-stats { gap:0; }
+ .hero-stat { padding:0 10px; }
+ .hero-stat strong { font-size:25px; }
+ .hero-stat span { font-size:10px; }
+ .grid { grid-template-columns:1fr; }
 }
 
-#learnQuestionArea .phonetic {
-  margin-bottom: 22px;
-  color: #8b62d9;
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: .7px;
-}
-
-#learnQuestionArea h2 {
-  margin-bottom: 26px;
-  color: #24243a;
-  font-size: 26px;
-  line-height: 1.4;
-}
-
-#learnQuestionArea button {
-  display: block;
-  width: 100%;
-  min-height: 58px;
-  margin: 12px 0;
-  padding: 15px 20px;
-  border: 1px solid #e6dcf7;
-  border-radius: 13px;
-  background: #f5f0ff;
-  color: #302844;
-  font-size: 17px;
-  text-align: left;
-  transition: .2s ease;
-}
-
-#learnQuestionArea button:hover {
-  background: #eee5ff;
-  border-color: #a98add;
-}
-
-#learnQuestionArea button.selected {
-  background: #e8dcff;
-  border: 2px solid #7954d8;
-  color: #50328f;
-  font-weight: 700;
-}
-
-#learnQuestionArea button:focus-visible {
-  outline: 3px solid #ff9800;
-  outline-offset: 3px;
-}
-
-#learnFeedback {
-  width: min(780px, 92%);
-  margin: 16px auto;
-  line-height: 1.7;
-}
-
-.learn-controls {
-  width: min(780px, 92%);
-  margin: 20px auto 45px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-}
-
-.learn-controls button {
-  min-height: 48px;
-  padding: 12px 24px;
-  border-radius: 12px;
-  background: var(--primary);
-  color: white;
-}
-
-@media (max-width: 600px) {
-  #learnQuestionArea .quiz-box {
-    padding: 24px 18px;
-  }
-
-  #learnQuestionArea h2 {
-    font-size: 22px;
-  }
-
-  #learnQuestionArea button {
-    font-size: 15px;
-  }
-
-  .learn-controls {
-    justify-content: stretch;
-  }
-
-  .learn-controls button {
-    flex: 1;
-  }
-}
 </style>
 </head>
 <body>
 <header class="site-header">
-  <a class="logo" href="index.html" aria-label="Oops! Home">Oops!</a>
+  <a class="logo" href="index.html" aria-label="Oops! Home">Oops<span>!</span></a>
 
   <nav class="main-nav" aria-label="Main navigation">
-    <a class="nav-link active" href="index.html">Home</a>
-    <a class="nav-link" href="learning-hub.html">Learning Hub</a>
-    <a class="nav-link" href="daily-quests.html">Daily Test</a>
-    <a class="nav-link" href="progress.html">Lộ trình</a>
-    <a class="nav-link" href="roadmap.html">Tiến độ</a>
-    <a class="nav-link profile-link" href="profile.html">👤 Profile</a>
-    <button class="mode-button secondary" id="modeBtn"
-      type="button" aria-pressed="false">
-      Accessible Mode
-    </button>
+    <a class="nav-link active" href="index.html" data-en="Home" data-vi="Trang chủ">Home</a>
+    <a class="nav-link" href="error-fix.html" data-en="Error Fix" data-vi="Sửa lỗi">Error Fix</a>
+    <a class="nav-link" href="grammar.html" data-en="Grammar" data-vi="Ngữ pháp">Grammar</a>
+    <a class="nav-link" href="vocabulary.html" data-en="Vocabulary" data-vi="Từ vựng">Vocabulary</a>
+    <a class="nav-link" href="ielts.html" data-en="IELTS" data-vi="IELTS">IELTS</a>
+    <a class="nav-link" href="roadmap.html" data-en="Roadmap" data-vi="Lộ trình">Roadmap</a>
+    <a class="nav-link" href="profile.html" data-en="Profile" data-vi="Hồ sơ">Profile</a>
   </nav>
+
+  <div class="header-tools">
+    <button class="tool-button accessible-button" id="modeBtn" type="button" aria-pressed="false" data-en="Accessible Mode" data-vi="Chế độ tiếp cận">Accessible Mode</button>
+    <button class="tool-button theme-button" id="themeBtn" type="button" aria-label="Switch to dark mode" title="Switch theme">☾</button>
+    <button class="tool-button language-button" id="langBtn" type="button" aria-label="Switch language">
+      <span class="lang-option active" id="langVi">VI</span><span class="separator">·</span><span class="lang-option" id="langEn">EN</span>
+    </button>
+    <div class="account-wrap">
+      <button class="account-trigger" id="accountBtn" type="button" aria-expanded="false" aria-haspopup="true">
+        <span class="avatar" id="accountAvatar" aria-hidden="true">O</span>
+        <span class="account-name" id="accountName">Profile</span>
+        <span class="account-chevron" aria-hidden="true">⌄</span>
+      </button>
+      <div class="account-menu" id="accountMenu">
+        <div class="menu-caption" data-en="Your account" data-vi="Tài khoản">Your account</div>
+        <a href="profile.html" data-en="View profile →" data-vi="Xem hồ sơ →">View profile →</a>
+      </div>
+    </div>
+  </div>
 </header>
 
 <main>
 <section class="hero" id="home">
-  <div>
-    <p><strong>YOUR PERSONAL ENGLISH LEARNING SPACE</strong></p>
-    <h1>Make mistakes.<br><span>Make progress.</span></h1>
-    <p>Discover your weaknesses, improve your English and turn every mistake into an opportunity to grow.</p>
-    <a class="btn primary" href="#learning">Start learning →</a>
+  <div class="hero-copy">
+    <div class="hero-eyebrow" data-en="YOUR ENGLISH LEARNING SPACE" data-vi="KHÔNG GIAN HỌC TIẾNG ANH CỦA BẠN">YOUR ENGLISH LEARNING SPACE</div>
+    <h1 data-en="Learn from every<br><span>little mistake.</span>" data-vi="Học từ mỗi<br><span>lỗi sai nhỏ.</span>">Learn from every<br><span>little mistake.</span></h1>
+    <p class="hero-description" data-en="Build your English step by step. Practise, discover what needs work, and turn every mistake into real progress." data-vi="Cải thiện tiếng Anh từng bước. Luyện tập, nhận ra điểm cần cải thiện và biến mỗi lỗi sai thành tiến bộ thực sự.">Build your English step by step. Practise, discover what needs work, and turn every mistake into real progress.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="roadmap.html" data-en="Find my learning path →" data-vi="Tìm lộ trình học →">Find my learning path →</a>
+      <a class="btn hero-secondary" href="error-fix.html" data-en="Try Error Fix" data-vi="Thử Sửa lỗi">Try Error Fix</a>
+    </div>
+    <div class="hero-stats" aria-label="Oops! learning overview">
+      <div class="hero-stat"><strong>A1–C2</strong><span data-en="CEFR learning levels" data-vi="Trình độ CEFR">CEFR learning levels</span></div>
+      <div class="hero-stat"><strong>4</strong><span data-en="English skills" data-vi="Kỹ năng tiếng Anh">English skills</span></div>
+      <div class="hero-stat"><strong>∞</strong><span data-en="Ways to improve" data-vi="Cách để tiến bộ">Ways to improve</span></div>
+    </div>
   </div>
-  <div class="hero-art">
-    <strong>Oops!</strong>
-    <h3>Every mistake matters.</h3>
-    <p>Your journey to better English starts here.</p>
+  <div class="hero-visual" aria-hidden="true">
+    <div class="orbit">
+      <div class="learning-note">
+        <small data-en="TODAY'S LITTLE WIN" data-vi="TIẾN BỘ NHỎ HÔM NAY">TODAY'S LITTLE WIN</small>
+        <strong data-en="One step<br>better!" data-vi="Tốt hơn<br>một bước!">One step<br>better!</strong>
+        <span>Learn • Practise • Grow</span>
+        <div class="note-tag">Aa</div>
+      </div>
+      <div class="note-spark">✦</div><div class="note-pencil"></div>
+    </div>
   </div>
 </section>
 
 <section id="learning">
   <div class="section-heading">
-    <h2>Your Learning Hub</h2>
-    <p>Choose your learning path and start improving today.</p>
+    <h2 data-en="Your Learning Hub" data-vi="Không gian học tập">Your Learning Hub</h2>
+    <p data-en="Choose your learning path and start improving today." data-vi="Chọn nội dung học và bắt đầu tiến bộ ngay hôm nay.">Choose your learning path and start improving today.</p>
   </div>
   <div class="grid">
     <article class="card">
-      <div class="symbol">✍️</div>
-      <h3>Error Fix</h3>
-      <p>Identify English mistakes, understand why they happen and learn how to correct them.</p>
-      <a href="error-fix.html">Explore Error Fix →</a>
+      <div class="symbol">✍️</div><h3 data-en="Error Fix" data-vi="Sửa lỗi">Error Fix</h3>
+      <p data-en="Identify English mistakes, understand why they happen and learn how to correct them." data-vi="Nhận diện lỗi sai tiếng Anh, hiểu nguyên nhân và học cách sửa đúng.">Identify English mistakes, understand why they happen and learn how to correct them.</p>
+      <a href="error-fix.html" data-en="Explore Error Fix →" data-vi="Khám phá Sửa lỗi →">Explore Error Fix →</a>
     </article>
     <article class="card">
-      <div class="symbol">📚</div>
-      <h3>Vocabulary</h3>
-      <p>Build your vocabulary through topics, levels and personalized word lists.</p>
-      <a href="vocabulary.html">Explore Vocabulary →</a>
+      <div class="symbol">📚</div><h3 data-en="Vocabulary" data-vi="Từ vựng">Vocabulary</h3>
+      <p data-en="Build your vocabulary through topics, levels and personalized word lists." data-vi="Mở rộng vốn từ theo chủ đề, trình độ và danh sách từ cá nhân.">Build your vocabulary through topics, levels and personalized word lists.</p>
+      <a href="vocabulary.html" data-en="Explore Vocabulary →" data-vi="Khám phá Từ vựng →">Explore Vocabulary →</a>
     </article>
     <article class="card">
-      <div class="symbol">🧩</div>
-      <h3>Grammar</h3>
-      <p>Understand grammar rules and practise with exercises from A1 to C2.</p>
-      <a href="grammar.html">Explore Grammar →</a>
+      <div class="symbol">🧩</div><h3 data-en="Grammar" data-vi="Ngữ pháp">Grammar</h3>
+      <p data-en="Understand grammar rules and practise with exercises from A1 to C2." data-vi="Nắm vững ngữ pháp và luyện tập qua các bài học từ A1 đến C2.">Understand grammar rules and practise with exercises from A1 to C2.</p>
+      <a href="grammar.html" data-en="Explore Grammar →" data-vi="Khám phá Ngữ pháp →">Explore Grammar →</a>
     </article>
     <article class="card">
-      <div class="symbol">🎯</div>
-      <h3>IELTS Practice</h3>
-      <p>Develop your four English skills with structured practice activities.</p>
-      <a href="ielts.html">Explore IELTS →</a>
+      <div class="symbol">🎯</div><h3 data-en="IELTS Practice" data-vi="Luyện IELTS">IELTS Practice</h3>
+      <p data-en="Develop your four English skills with structured practice activities." data-vi="Phát triển bốn kỹ năng tiếng Anh với các hoạt động luyện tập có hệ thống.">Develop your four English skills with structured practice activities.</p>
+      <a href="ielts.html" data-en="Explore IELTS →" data-vi="Khám phá IELTS →">Explore IELTS →</a>
     </article>
   </div>
 </section>
@@ -480,9 +501,84 @@ button:focus-visible {
   <p>An inclusive English-learning platform for every learner.</p>
 </footer>
 
+<script>
+/* Navigation controls: theme, language and account menu */
+(() => {
+  const body = document.body;
+  const themeBtn = document.getElementById('themeBtn');
+  const langBtn = document.getElementById('langBtn');
+  const accountBtn = document.getElementById('accountBtn');
+  const accountMenu = document.getElementById('accountMenu');
+
+  const savedTheme = localStorage.getItem('oopsTheme');
+  if (savedTheme === 'dark') body.classList.add('dark-mode');
+  updateThemeButton();
+
+  function updateThemeButton() {
+    const dark = body.classList.contains('dark-mode');
+    themeBtn.textContent = dark ? '☀' : '☾';
+    themeBtn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    themeBtn.title = dark ? 'Light mode' : 'Dark mode';
+  }
+
+  themeBtn.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    localStorage.setItem('oopsTheme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+    updateThemeButton();
+  });
+
+  function applyLanguage(language) {
+    document.documentElement.lang = language;
+    document.querySelectorAll('[data-en][data-vi]').forEach(element => {
+      const value = element.dataset[language];
+      if (value !== undefined) element.innerHTML = value;
+    });
+    document.getElementById('langVi').classList.toggle('active', language === 'vi');
+    document.getElementById('langEn').classList.toggle('active', language === 'en');
+    localStorage.setItem('oopsLanguage', language);
+  }
+
+  const savedLanguage = localStorage.getItem('oopsLanguage') || 'en';
+  applyLanguage(savedLanguage);
+  langBtn.addEventListener('click', () => {
+    const current = localStorage.getItem('oopsLanguage') || 'en';
+    applyLanguage(current === 'en' ? 'vi' : 'en');
+  });
+
+  // Use a real saved profile name when available; never show a fabricated username.
+  const storedName = localStorage.getItem('oopsProfileName') ||
+                     localStorage.getItem('profileName') ||
+                     localStorage.getItem('userName');
+  const accountName = document.getElementById('accountName');
+  const accountAvatar = document.getElementById('accountAvatar');
+  if (storedName && storedName.trim()) {
+    accountName.textContent = storedName.trim();
+    accountAvatar.textContent = storedName.trim().charAt(0).toUpperCase();
+  } else {
+    accountName.textContent = 'Profile';
+    accountAvatar.textContent = 'O';
+  }
+
+  accountBtn.addEventListener('click', () => {
+    const isOpen = accountMenu.classList.toggle('open');
+    accountBtn.setAttribute('aria-expanded', String(isOpen));
+  });
+  document.addEventListener('click', event => {
+    if (!event.target.closest('.account-wrap')) {
+      accountMenu.classList.remove('open');
+      accountBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      accountMenu.classList.remove('open');
+      accountBtn.setAttribute('aria-expanded', 'false');
+      accountBtn.focus();
+    }
+  });
+})();
+</script>
+
 <script src="accessibility.js"></script>
-  <script src="settings.js"></script>
-</body>
-</html>
 </body>
 </html>
