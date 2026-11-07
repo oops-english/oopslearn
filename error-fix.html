@@ -61,7 +61,7 @@ main{width:min(94%,1250px);margin:0 auto;padding:34px 0 70px}
 .panel h2{font-family:"Lexend","Be Vietnam Pro",sans-serif;font-size:25px;line-height:1.3;color:var(--text);margin:0 0 8px;letter-spacing:-.5px}
 .intro{font-size:16px;color:var(--muted);margin:0 0 25px}
 label{display:block;font-size:15px;font-weight:800;margin-bottom:10px}
-textarea{display:block;width:100%;min-height:155px;resize:vertical;border:1.5px solid var(--line);border-radius:16px;padding:17px 18px;background:var(--card);color:var(--text);font:inherit;outline:none}
+textarea{display:block;width:100%;min-height:240px;resize:vertical;border:1.5px solid var(--line);border-radius:16px;padding:17px 18px;background:var(--card);color:var(--text);font:inherit;outline:none}
 textarea::placeholder{color:var(--muted)}
 textarea:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(57,185,173,.16)}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
@@ -152,17 +152,17 @@ body.large-text{font-size:120%}
       <section class="panel">
         <h2 data-en="English Error Detective" data-vi="Thám tử lỗi sai tiếng Anh">English Error Detective</h2>
         <p class="intro" data-en="Enter a sentence below. Oops! will compare it with a set of common English grammar patterns." data-vi="Nhập một câu tiếng Anh bên dưới. Oops! sẽ đối chiếu câu với bộ quy tắc về các lỗi ngữ pháp thường gặp.">Enter a sentence below. Oops! will compare it with a set of common English grammar patterns.</p>
-        <label for="sentence" data-en="Your English sentence" data-vi="Câu tiếng Anh của bạn">Your English sentence</label>
-        <textarea id="sentence" placeholder="Example: She go to school every day." aria-describedby="checkerNote"></textarea>
+        <label for="sentence" data-en="Your English text" data-vi="Văn bản tiếng Anh của bạn">Your English text</label>
+        <textarea id="sentence" placeholder="Paste one sentence, several sentences, a paragraph or a full essay here..." aria-describedby="checkerNote"></textarea>
         <div class="actions">
-          <button class="btn primary" id="checkBtn" type="button" data-en="Check my sentence →" data-vi="Kiểm tra câu →">Check my sentence →</button>
+          <button class="btn primary" id="checkBtn" type="button" data-en="Check my writing →" data-vi="Phân tích văn bản →">Check my writing →</button>
           <button class="btn secondary" id="clearBtn" type="button" data-en="Clear" data-vi="Xóa">Clear</button>
         </div>
-        <p class="helper" id="checkerNote" data-en="Current version: sample-based checking. A sentence not flagged by these rules is not necessarily error-free." data-vi="Phiên bản hiện tại: kiểm tra bằng quy tắc mẫu. Câu không bị phát hiện lỗi chưa chắc đã hoàn toàn chính xác.">Current version: sample-based checking. A sentence not flagged by these rules is not necessarily error-free.</p>
+        <p class="helper" id="checkerNote" data-en="You can paste multiple sentences or a full text. This free version checks selected common patterns; it does not identify every possible error." data-vi="Bạn có thể dán nhiều câu hoặc cả bài viết. Phiên bản miễn phí này kiểm tra một số dạng lỗi phổ biến, chưa thể phát hiện mọi lỗi.">You can paste multiple sentences or a full text. This free version checks selected common patterns; it does not identify every possible error.</p>
         <section class="result" id="result" aria-live="polite" aria-atomic="true">
           <h3 data-en="Your result" data-vi="Kết quả kiểm tra">Your result</h3>
           <p class="status" id="status"></p><div class="corrected" id="corrected"></div>
-          <div class="explanation"><strong data-en="Why?" data-vi="Vì sao?">Why?</strong><p id="reason"></p><strong data-en="More examples" data-vi="Ví dụ thêm">More examples</strong><p id="example"></p></div>
+          <div class="explanation"><strong data-en="Sentence-by-sentence analysis" data-vi="Phân tích từng câu">Sentence-by-sentence analysis</strong><div id="sentenceAnalysis"></div><strong data-en="Overall feedback" data-vi="Nhận xét tổng thể">Overall feedback</strong><p id="reason"></p><strong data-en="Practice examples" data-vi="Ví dụ luyện tập">Practice examples</strong><p id="example"></p></div>
         </section>
       </section>
       <div class="tip" data-en="Learning tip: read the explanation, then rewrite the corrected sentence in your own words. Understanding the rule matters more than simply seeing the answer." data-vi="Mẹo học tập: đọc phần giải thích, sau đó tự viết lại câu đã sửa. Hiểu quy tắc quan trọng hơn việc chỉ nhìn đáp án.">Learning tip: read the explanation, then rewrite the corrected sentence in your own words. Understanding the rule matters more than simply seeing the answer.</div>
@@ -196,20 +196,44 @@ let history=[];
 try{const saved=JSON.parse(localStorage.getItem("oopsErrorHistory")||"[]");history=Array.isArray(saved)?saved.slice(0,10):[]}catch{}
 function renderHistory(){
  const box=$("history");box.replaceChildren();
- if(!history.length){const empty=document.createElement("div");empty.className="empty";empty.textContent=document.documentElement.lang==="vi"?"Chưa có lượt kiểm tra nào. Hãy thử câu đầu tiên!":"No checks yet. Try your first sentence!";box.append(empty);return;}
- history.forEach(item=>{const div=document.createElement("div");div.className="history-item";const a=document.createElement("p");a.textContent=(document.documentElement.lang==="vi"?"Câu gốc: ":"Original: ")+item.input;const b=document.createElement("p");b.textContent=(document.documentElement.lang==="vi"?"Kết quả: ":"Result: ")+item.output;const c=document.createElement("div");c.className="date";c.textContent=item.date||"";div.append(a,b,c);box.append(div);});
+ if(!history.length){const empty=document.createElement("div");empty.className="empty";empty.textContent=document.documentElement.lang==="vi"?"Chưa có lượt kiểm tra nào. Hãy thử văn bản đầu tiên!":"No checks yet. Try your first text!";box.append(empty);return;}
+ history.forEach(item=>{const div=document.createElement("div");div.className="history-item";const a=document.createElement("p");a.textContent=(document.documentElement.lang==="vi"?"Văn bản: ":"Text: ")+item.input;const b=document.createElement("p");b.textContent=(document.documentElement.lang==="vi"?"Kết quả: ":"Result: ")+item.output;const c=document.createElement("div");c.className="date";c.textContent=item.date||"";div.append(a,b,c);box.append(div);});
 }
-function saveHistory(input,output){history.unshift({input,output,date:new Date().toLocaleString()});history=history.slice(0,10);try{localStorage.setItem("oopsErrorHistory",JSON.stringify(history))}catch{}renderHistory();}
+function saveHistory(input,output){history.unshift({input:input.slice(0,500),output:output.slice(0,500),date:new Date().toLocaleString()});history=history.slice(0,10);try{localStorage.setItem("oopsErrorHistory",JSON.stringify(history))}catch{}renderHistory();}
+function analyseText(input){
+ const sentences=input.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[input];
+ const results=[];let fixedText="";
+ sentences.forEach(raw=>{
+  const original=raw.trim();if(!original){fixedText+=raw;return;}
+  let corrected=original;const issues=[];
+  rules.forEach(rule=>{rule.pattern.lastIndex=0;if(rule.pattern.test(corrected)){rule.pattern.lastIndex=0;corrected=corrected.replace(rule.pattern,rule.replace);issues.push({reason:rule.reason,example:rule.example});}rule.pattern.lastIndex=0;});
+  results.push({original,corrected,issues});fixedText+=raw.replace(raw.trim(),corrected);
+ });
+ return {results,fixedText};
+}
 $("checkBtn").addEventListener("click",()=>{
  const input=$("sentence").value.trim();
- if(!input){$("sentence").focus();alert(document.documentElement.lang==="vi"?"Vui lòng nhập một câu tiếng Anh trước.":"Please enter an English sentence first.");return;}
- let output=input;const reasons=[],examples=[];
- rules.forEach(rule=>{rule.pattern.lastIndex=0;if(rule.pattern.test(output)){rule.pattern.lastIndex=0;output=output.replace(rule.pattern,rule.replace);reasons.push(rule.reason);examples.push(rule.example);}rule.pattern.lastIndex=0;});
- $("result").style.display="block";$("corrected").textContent=output;
- $("status").textContent=reasons.length?(document.documentElement.lang==="vi"?"Đã phát hiện lỗi có khả năng xuất hiện.":"Potential error(s) detected."):(document.documentElement.lang==="vi"?"Không tìm thấy lỗi khớp với bộ quy tắc mẫu hiện tại.":"No matching errors found in the current sample rules.");
- $("reason").textContent=reasons.length?reasons.join(" "):(document.documentElement.lang==="vi"?"Câu này không khớp với quy tắc mẫu hiện tại. Điều đó không đảm bảo câu hoàn toàn chính xác.":"This sentence did not match the current sample rules. That does not guarantee it is completely correct.");
- $("example").textContent=examples.length?examples.join(" | "):(document.documentElement.lang==="vi"?"Hãy tiếp tục luyện tập và mở rộng vốn tiếng Anh.":"Keep practising and expanding your English knowledge.");
- saveHistory(input,output);if(window.OopsTracker&&typeof window.OopsTracker.recordStudyDay==="function")window.OopsTracker.recordStudyDay();$("result").scrollIntoView({behavior:"smooth",block:"nearest"});
+ if(!input){$("sentence").focus();alert(document.documentElement.lang==="vi"?"Vui lòng nhập văn bản tiếng Anh trước.":"Please enter some English text first.");return;}
+ const analysis=analyseText(input),items=analysis.results;
+ $("result").style.display="block";$("corrected").textContent=analysis.fixedText;
+ const details=$("sentenceAnalysis");details.replaceChildren();
+ let issueCount=0;const examples=[];
+ items.forEach((item,index)=>{
+  issueCount+=item.issues.length;
+  const article=document.createElement("div");article.style.cssText="padding:13px 0;border-bottom:1px solid var(--line)";
+  const heading=document.createElement("strong");heading.textContent=(document.documentElement.lang==="vi"?"Câu ":"Sentence ")+(index+1)+(item.issues.length?" · "+(document.documentElement.lang==="vi"?"Cần xem lại":"Review suggested"):" · "+(document.documentElement.lang==="vi"?"Không phát hiện lỗi mẫu":"No sample error found"));
+  const original=document.createElement("p");original.style.margin="6px 0";original.textContent=(document.documentElement.lang==="vi"?"Bản gốc: ":"Original: ")+item.original;
+  const corrected=document.createElement("p");corrected.style.margin="6px 0";corrected.style.color="var(--primary)";corrected.style.fontWeight="700";corrected.textContent=(document.documentElement.lang==="vi"?"Đề xuất: ":"Suggested: ")+item.corrected;
+  article.append(heading,original,corrected);
+  item.issues.forEach(issue=>{const explanation=document.createElement("p");explanation.style.cssText="font-size:14px;margin:6px 0;color:var(--muted)";explanation.textContent=(document.documentElement.lang==="vi"?"Giải thích: ":"Explanation: ")+issue.reason;article.append(explanation);examples.push(issue.example);});
+  details.append(article);
+ });
+ $("status").textContent=(document.documentElement.lang==="vi"?"Đã phân tích ":"Analysed ")+items.length+(document.documentElement.lang==="vi"?" câu · phát hiện ":" sentences · found ")+issueCount+(document.documentElement.lang==="vi"?" lỗi khớp quy tắc mẫu.":" matches to the sample rules.");
+ $("reason").textContent=issueCount?(document.documentElement.lang==="vi"?"Hãy xem phần phân tích từng câu để hiểu các lỗi được nhận diện.":"Review the sentence-by-sentence analysis to understand the detected issues."):(document.documentElement.lang==="vi"?"Không tìm thấy lỗi khớp với các quy tắc mẫu hiện có. Điều này không đảm bảo văn bản hoàn toàn chính xác.":"No matches were found in the current sample rules. This does not guarantee the text is completely error-free.");
+ $("example").textContent=examples.length?[...new Set(examples)].join(" | "):(document.documentElement.lang==="vi"?"Chưa có ví dụ bổ sung cho văn bản này.":"No additional examples for this text.");
+ saveHistory(input,analysis.fixedText);
+ if(window.OopsTracker&&typeof window.OopsTracker.recordStudyDay==="function")window.OopsTracker.recordStudyDay();
+ $("result").scrollIntoView({behavior:"smooth",block:"nearest"});
 });
 $("clearBtn").addEventListener("click",()=>{$("sentence").value="";$("result").style.display="none";$("sentence").focus();});
 $("clearHistory").addEventListener("click",()=>{if(confirm(document.documentElement.lang==="vi"?"Bạn có chắc muốn xóa toàn bộ lịch sử kiểm tra?":"Clear all saved error history?")){history=[];localStorage.removeItem("oopsErrorHistory");renderHistory();}});
