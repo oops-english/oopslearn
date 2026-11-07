@@ -23,6 +23,19 @@ body.accessible{font-size:112%}body.accessible :focus-visible{outline:4px solid 
 @media(max-width:1050px){.nav-wrap{flex-wrap:wrap;gap:10px}.nav-links{order:3;flex-basis:100%;justify-content:flex-start;overflow-x:auto}.nav-tools{margin-left:auto}}
 @media(max-width:720px){main{padding:24px 14px 45px}.nav-wrap{padding:11px 14px}.hero{padding:29px 23px}.layout{grid-template-columns:1fr}.history-panel{position:static}.panel{padding:20px}.profile-name{display:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+/* Dark mode: keep the hero banner dark for readable text */
+body.dark-mode .hero {
+  background: #0B3D3B;
+  color: #FFFDF7;
+}
+
+body.dark-mode .hero .eyebrow {
+  color: #A9E9D9;
+}
+
+body.dark-mode .hero p {
+  color: #D8E8E2;
+}
 </style>
 </head>
 <body>
