@@ -6,88 +6,229 @@
 <meta name="description" content="Practise English error correction with Oops!">
 <title>Error Fix | Oops!</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
-:root{--bg:#F7F6EF;--surface:#FFFDF7;--surface2:#EEF5F0;--text:#183B39;--muted:#71817D;--teal:#0B3D3B;--mint:#39B9AD;--mintsoft:#DDF3EC;--yellow:#F4BD32;--line:#E5E9E1;--shadow:0 12px 34px rgba(15,57,53,.07)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 'DM Sans',sans-serif}
-button,textarea{font:inherit}a{color:inherit}.site-header{position:sticky;top:0;z-index:10;background:rgba(255,253,247,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.nav-wrap{max-width:1280px;margin:auto;padding:13px 26px;display:flex;align-items:center;gap:20px}.logo{font:800 27px Manrope,sans-serif;color:var(--teal);text-decoration:none;letter-spacing:-1.5px;white-space:nowrap}.logo span{color:var(--mint)}
-.nav-links{display:flex;align-items:center;justify-content:center;gap:3px;flex:1}.nav-links a{padding:8px 10px;border-radius:999px;text-decoration:none;color:#526763;font-size:13px;font-weight:700;white-space:nowrap}.nav-links a:hover,.nav-links a.active{background:var(--mintsoft);color:var(--teal)}
-.nav-tools{display:flex;align-items:center;gap:7px}.tool{height:37px;min-width:37px;padding:0 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--teal);font-weight:700;cursor:pointer}.profile{display:flex;align-items:center;gap:7px;text-decoration:none;font-size:13px;font-weight:700;white-space:nowrap}.avatar{width:33px;height:33px;border-radius:50%;display:grid;place-items:center;background:var(--teal);color:white}
-main{max-width:1050px;margin:auto;padding:40px 23px 65px}.hero{background:var(--teal);color:#fffdf7;border-radius:27px;padding:40px 43px;margin-bottom:23px;position:relative;overflow:hidden;box-shadow:var(--shadow)}.hero:after{content:"";position:absolute;width:230px;height:230px;border:1px solid #ffffff25;border-radius:50%;right:-55px;top:-95px;box-shadow:0 0 0 28px #ffffff09,0 0 0 58px #ffffff08}.eyebrow{color:#A9E9D9;font-size:12px;font-weight:800;letter-spacing:1.4px}.hero h1{font:800 clamp(34px,5vw,48px)/1.15 Manrope,sans-serif;letter-spacing:-1.6px;margin:13px 0}.hero p{max-width:650px;color:#D8E8E2;margin:0 0 17px}.hero-note{display:inline-block;padding:7px 13px;border:1px solid #ffffff35;border-radius:99px;background:#ffffff15;font-size:13px;font-weight:700}
-.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,.75fr);gap:19px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:21px;padding:25px;box-shadow:var(--shadow);margin-bottom:19px}.panel h2{font:800 21px Manrope,sans-serif;color:var(--teal);margin:0 0 7px}.intro{font-size:14px;color:var(--muted);margin:0 0 20px}label{display:block;font-size:14px;font-weight:800;margin-bottom:8px}
-textarea{display:block;width:100%;min-height:145px;resize:vertical;border:1.5px solid #D8E1DA;border-radius:14px;padding:15px;background:#fffefa;color:var(--text);outline:none}textarea:focus{border-color:var(--mint);box-shadow:0 0 0 4px #39b9ad24}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.btn{border:0;border-radius:99px;padding:11px 18px;font-weight:800;cursor:pointer}.primary{background:var(--mint);color:#073b38}.primary:hover{background:#59cdbE}.secondary{background:var(--surface2);color:var(--teal);border:1px solid #dDE9E1}.helper{font-size:12px;color:var(--muted);margin:12px 0 0}
-.result{display:none;margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#fffefa}.result h3{font:800 17px Manrope;margin:0 0 10px}.status{font-size:14px;font-weight:800}.corrected{padding:14px 16px;border-left:4px solid #187a58;border-radius:11px;background:#e5f5ec;color:#174e39;font-size:17px;font-weight:700;overflow-wrap:anywhere}.explanation{padding:14px;background:var(--surface2);border-radius:12px;margin-top:11px}.explanation strong{font-size:13px;color:var(--teal)}.explanation p{font-size:14px;margin:4px 0 12px}.explanation p:last-child{margin-bottom:0}
-.history-panel{position:sticky;top:90px}.history-item{padding:12px 0;border-bottom:1px solid var(--line);font-size:13px;overflow-wrap:anywhere}.history-item p{margin:3px 0}.date{font-size:11px;color:var(--muted)}.empty{padding:15px;background:var(--surface2);border-radius:12px;color:var(--muted);font-size:13px}.tip{padding:15px 17px;background:#fff5d9;border:1px solid #f4e5b7;border-radius:15px;color:#66501c;font-size:13px}footer{text-align:center;padding:24px;color:var(--muted);font-size:12px}
-:focus-visible{outline:3px solid var(--yellow);outline-offset:4px}body.dark-mode{--bg:#102725;--surface:#183330;--surface2:#21413d;--text:#f0f5ee;--muted:#b4c5be;--teal:#d7f1e9;--mint:#69d7c7;--mintsoft:#254c46;--line:#31504a;--shadow:0 12px 34px #0003}body.dark-mode .site-header{background:#183330f2}body.dark-mode .nav-links a{color:#c8d9d2}body.dark-mode .logo,body.dark-mode .panel h2,body.dark-mode .tool,body.dark-mode .explanation strong{color:#d7f1e9}body.dark-mode textarea,body.dark-mode .result{background:#102725;color:#f0f5ee;border-color:#49635c}body.dark-mode .corrected{background:#1d493a;color:#ddf9e8}body.dark-mode .tip{background:#493e20;border-color:#6a5a2a;color:#fff0bd}
-body.accessible{font-size:112%}body.accessible :focus-visible{outline:4px solid #f4bd32;outline-offset:4px}body.accessible .hero{border:3px solid white}
-@media(max-width:1050px){.nav-wrap{flex-wrap:wrap;gap:10px}.nav-links{order:3;flex-basis:100%;justify-content:flex-start;overflow-x:auto}.nav-tools{margin-left:auto}}
-@media(max-width:720px){main{padding:24px 14px 45px}.nav-wrap{padding:11px 14px}.hero{padding:29px 23px}.layout{grid-template-columns:1fr}.history-panel{position:static}.panel{padding:20px}.profile-name{display:none}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
-/* Dark mode: keep the hero banner dark for readable text */
-body.dark-mode .hero {
-  background: #0B3D3B;
-  color: #FFFDF7;
+:root {
+  --primary:#39b9ad; --primary-dark:#073d3b; --bg:#f7f7f1;
+  --text:#123d3b; --card:#fffef9; --muted:#71817d;
+  --line:#dce6df; --soft:#eaf3ee; --header:rgba(247,247,241,.97);
+  --gold:#f6bd2f; --shadow:0 14px 38px rgba(7,61,59,.07);
 }
-
-body.dark-mode .hero .eyebrow {
-  color: #A9E9D9;
-}
-
-body.dark-mode .hero p {
-  color: #D8E8E2;
-}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .2s ease,color .2s ease}
+body.dark-mode{color-scheme:dark;--bg:#101b1a;--text:#eaf4f0;--card:#192725;--muted:#afc0ba;--line:#304541;--soft:#223733;--header:rgba(16,27,26,.97);--shadow:0 14px 38px rgba(0,0,0,.24)}
+a{color:inherit}
+.site-header{min-height:82px;padding:12px clamp(22px,4.8vw,86px);display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:22px;background:var(--header);position:sticky;top:0;z-index:100;border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}
+.logo{font-size:34px;line-height:1;font-weight:900;color:var(--primary-dark);text-decoration:none;letter-spacing:-2px;white-space:nowrap}
+.logo span{color:var(--primary)}
+.dark-mode .logo{color:#f3f7f3}
+.main-nav{display:flex;align-items:center;justify-content:center;gap:clamp(1px,.65vw,12px);min-width:0}
+.nav-link{position:relative;text-decoration:none;color:var(--muted);font-size:14px;font-weight:700;padding:15px 12px;white-space:nowrap;transition:color .2s ease}
+.nav-link:after{content:"";position:absolute;height:4px;left:12px;right:12px;bottom:2px;border-radius:4px;background:var(--primary);transform:scaleX(0);transform-origin:center;transition:transform .2s ease}
+.nav-link:hover,.nav-link.active{color:var(--primary-dark)}
+.dark-mode .nav-link:hover,.dark-mode .nav-link.active{color:#f2f8f5}
+.nav-link:hover:after,.nav-link.active:after{transform:scaleX(1)}
+.header-tools{display:flex;align-items:center;justify-content:flex-end;gap:10px}
+.tool-button,.account-trigger{min-height:48px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font:inherit;font-weight:700;transition:border-color .2s,background .2s,transform .2s}
+.tool-button:hover,.account-trigger:hover{border-color:var(--primary);transform:translateY(-1px)}
+.theme-button{width:48px;font-size:22px}
+.language-button{padding:0 15px;gap:9px;min-width:84px}
+.language-button .lang-option{color:var(--muted)}
+.language-button .lang-option.active{color:var(--text)}
+.language-button .separator{color:#aab7b1}
+.account-wrap{position:relative}
+.account-trigger{padding:5px 12px 5px 6px;gap:9px;min-width:58px}
+.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;background:var(--primary-dark);border:2px solid var(--primary);font-size:14px;font-weight:800}
+.account-name{max-width:105px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}
+.account-chevron{color:var(--muted);font-size:12px;margin-left:2px}
+.account-menu{display:none;position:absolute;top:calc(100% + 12px);right:0;width:220px;padding:10px;border:1px solid var(--line);border-radius:17px;background:var(--card);box-shadow:var(--shadow);z-index:120}
+.account-menu.open{display:block}
+.account-menu a{display:block;padding:11px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-size:14px;font-weight:700}
+.account-menu a:hover{background:var(--soft)}
+.account-menu .menu-caption{padding:8px 12px 10px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+main{width:min(94%,1250px);margin:0 auto;padding:34px 0 70px}
+.hero{background:#073d3b;color:#fff;border-radius:38px;padding:58px clamp(28px,4vw,58px);margin-bottom:28px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.hero:after{content:"";position:absolute;width:290px;height:290px;border:1px solid rgba(57,185,173,.22);border-radius:50%;right:-75px;top:-125px;box-shadow:0 0 0 36px rgba(57,185,173,.07),0 0 0 72px rgba(57,185,173,.05);pointer-events:none}
+.hero-content{position:relative;z-index:1}
+.eyebrow{color:#9ce8dc;font-size:13px;font-weight:800;letter-spacing:1.5px}
+.hero h1{max-width:1000px;font-size:clamp(38px,5vw,62px);line-height:1.12;margin:18px 0;letter-spacing:-1.8px;font-weight:850}
+.hero p{max-width:800px;color:#e0efeb;font-size:18px;line-height:1.85;margin:0 0 22px}
+.hero-note{display:inline-block;padding:10px 17px;border:1px solid rgba(255,255,255,.25);border-radius:999px;background:rgba(255,255,255,.07);font-size:14px;font-weight:700}
+.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.8fr);gap:22px;align-items:start}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+.panel h2{font-size:25px;line-height:1.3;color:var(--text);margin:0 0 8px;letter-spacing:-.5px}
+.intro{font-size:16px;color:var(--muted);margin:0 0 25px}
+label{display:block;font-size:15px;font-weight:800;margin-bottom:10px}
+textarea{display:block;width:100%;min-height:155px;resize:vertical;border:1.5px solid var(--line);border-radius:16px;padding:17px 18px;background:var(--card);color:var(--text);font:inherit;outline:none}
+textarea::placeholder{color:var(--muted)}
+textarea:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(57,185,173,.16)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.btn{border:0;border-radius:999px;padding:13px 21px;font:inherit;font-weight:800;cursor:pointer;transition:transform .2s,filter .2s}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.04)}
+.primary{background:var(--primary-dark);color:#fff}
+.secondary{background:var(--soft);color:var(--text);border:1px solid var(--line)}
+.helper{font-size:13px;color:var(--muted);margin:14px 0 0}
+.result{display:none;margin-top:22px;padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--soft)}
+.result h3{font-size:19px;margin:0 0 12px}
+.status{font-size:15px;font-weight:800}
+.corrected{padding:15px 17px;border-left:4px solid #187a58;border-radius:12px;background:#e5f5ec;color:#174e39;font-size:18px;font-weight:700;overflow-wrap:anywhere}
+.explanation{padding:16px;background:var(--card);border-radius:14px;margin-top:13px}
+.explanation strong{font-size:14px;color:var(--text)}
+.explanation p{font-size:15px;margin:5px 0 13px}
+.explanation p:last-child{margin-bottom:0}
+.history-panel{position:sticky;top:105px}
+.history-item{padding:14px 0;border-bottom:1px solid var(--line);font-size:14px;overflow-wrap:anywhere}
+.history-item p{margin:3px 0}
+.date{font-size:12px;color:var(--muted)}
+.empty{padding:17px;background:var(--soft);border-radius:14px;color:var(--muted);font-size:14px}
+.tip{padding:18px 20px;background:#fff5d9;border:1px solid #f4e5b7;border-radius:17px;color:#66501c;font-size:14px}
+footer{padding:28px 8%;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+:focus-visible{outline:3px solid #f6bd2f;outline-offset:4px}
+body.dark-mode .hero{background:#073d3b;color:#fff}
+body.dark-mode .hero p{color:#e0efeb}
+body.dark-mode .corrected{background:#1d493a;color:#ddf9e8}
+body.dark-mode .tip{background:#493e20;border-color:#6a5a2a;color:#fff0bd}
+body.accessible{--bg:#000;--text:#fff;--card:#111;--muted:#eee;--primary:#ffeb3b;--primary-dark:#000;--line:#fff;--soft:#181818;--header:#000;color-scheme:dark}
+body.accessible .logo,body.accessible .nav-link,body.accessible .account-menu a{color:#ffeb3b}
+body.accessible .site-header,body.accessible .panel,body.accessible .account-menu,body.accessible .tool-button,body.accessible textarea{background:#000;color:#fff;border:2px solid #ffeb3b}
+body.accessible .hero{background:#111;border:2px solid #ffeb3b}
+body.accessible .hero p,body.accessible .intro,body.accessible .helper,body.accessible .date{color:#fff}
+body.accessible .eyebrow,body.accessible .hero-note{color:#ffeb3b}
+body.accessible .hero-note{border-color:#ffeb3b}
+body.accessible .corrected{background:#111;color:#fff;border-color:#ffeb3b}
+body.accessible .result,body.accessible .explanation,body.accessible .empty,body.accessible .tip{background:#111;color:#fff;border:1px solid #ffeb3b}
+body.accessible .panel h2,body.accessible .explanation strong{color:#ffeb3b}
+body.accessible .primary,body.accessible .secondary{background:#ffeb3b;color:#000;border:2px solid #ffeb3b}
+body.large-text{font-size:120%}
+@media(max-width:1200px){.site-header{grid-template-columns:auto 1fr;gap:12px}.main-nav{grid-column:1/-1;grid-row:2;justify-content:flex-start;overflow-x:auto;padding-bottom:4px}.header-tools{grid-column:2;grid-row:1}.layout{grid-template-columns:minmax(0,1.4fr) minmax(250px,.8fr)}}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.history-panel{position:static}.hero{padding:45px 30px;border-radius:28px}.panel{padding:23px}}
+@media(max-width:560px){.site-header{padding:12px 15px}.logo{font-size:27px}.header-tools{gap:5px}.theme-button{width:40px;min-height:40px}.language-button{min-width:72px;padding:0 9px;min-height:40px;gap:6px;font-size:12px}.account-trigger{min-height:40px;padding-right:8px}.account-name{display:none}.nav-link{padding:10px 9px;font-size:13px}main{padding-top:20px}.hero{width:100%;padding:37px 23px;margin-bottom:20px}.hero h1{font-size:clamp(34px,9vw,44px)}.hero p{font-size:15px}.panel{padding:20px}.panel h2{font-size:22px}.actions .btn{flex:1}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
 </style>
 </head>
 <body>
-<header class="site-header"><div class="nav-wrap">
-<a class="logo" href="index.html" aria-label="Oops! Home">Oops<span>!</span></a>
-<nav class="nav-links" aria-label="Main navigation">
-<a href="index.html" data-en="Home" data-vi="Trang chủ">Home</a><a href="error-fix.html" class="active" aria-current="page">Error Fix</a><a href="grammar.html" data-en="Grammar" data-vi="Ngữ pháp">Grammar</a><a href="vocabulary.html" data-en="Vocabulary" data-vi="Từ vựng">Vocabulary</a><a href="ielts.html">IELTS</a><a href="roadmap.html" data-en="Roadmap" data-vi="Lộ trình">Roadmap</a><a href="profile.html" data-en="Profile" data-vi="Hồ sơ">Profile</a>
-</nav>
-<div class="nav-tools"><button class="tool" id="themeBtn" type="button" aria-label="Switch colour theme" title="Light / Dark">☾</button><button class="tool" id="langBtn" type="button" aria-label="Change language">VI</button><a class="profile" href="profile.html" aria-label="Open profile"><span class="avatar" id="profileAvatar">O</span><span class="profile-name" id="profileName">Profile</span></a><button class="tool" id="modeBtn" type="button" aria-pressed="false" aria-label="Toggle accessible mode" title="Accessible Mode">A</button></div>
-</div></header>
+<header class="site-header">
+  <a class="logo" href="index.html" aria-label="Oops! Home">Oops<span>!</span></a>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a class="nav-link" href="index.html" data-en="Home" data-vi="Trang chủ">Home</a>
+    <a class="nav-link active" href="error-fix.html" aria-current="page" data-en="Error Fix" data-vi="Sửa lỗi">Error Fix</a>
+    <a class="nav-link" href="grammar.html" data-en="Grammar" data-vi="Ngữ pháp">Grammar</a>
+    <a class="nav-link" href="vocabulary.html" data-en="Vocabulary" data-vi="Từ vựng">Vocabulary</a>
+    <a class="nav-link" href="ielts.html" data-en="IELTS" data-vi="IELTS">IELTS</a>
+    <a class="nav-link" href="roadmap.html" data-en="Roadmap" data-vi="Lộ trình">Roadmap</a>
+    <a class="nav-link" href="profile.html" data-en="Profile" data-vi="Hồ sơ">Profile</a>
+  </nav>
+  <div class="header-tools">
+    <button class="tool-button theme-button" id="themeBtn" type="button" aria-label="Switch to dark mode" title="Switch theme">☾</button>
+    <button class="tool-button language-button" id="langBtn" type="button" aria-label="Switch language">
+      <span class="lang-option active" id="langEn">EN</span><span class="separator">·</span><span class="lang-option" id="langVi">VI</span>
+    </button>
+    <div class="account-wrap">
+      <button class="account-trigger" id="accountBtn" type="button" aria-expanded="false" aria-haspopup="true">
+        <span class="avatar" id="accountAvatar" aria-hidden="true">O</span>
+        <span class="account-name" id="accountName">Profile</span>
+        <span class="account-chevron" aria-hidden="true">⌄</span>
+      </button>
+      <div class="account-menu" id="accountMenu">
+        <div class="menu-caption" data-en="Your account" data-vi="Tài khoản">Your account</div>
+        <a href="profile.html" data-en="View profile →" data-vi="Xem hồ sơ →">View profile →</a>
+      </div>
+    </div>
+  </div>
+</header>
 <main>
-<section class="hero"><span class="eyebrow" data-en="LEARN THROUGH YOUR MISTAKES" data-vi="HỌC TỪ NHỮNG LỖI SAI">LEARN THROUGH YOUR MISTAKES</span><h1 data-en="Find the error. Understand the why." data-vi="Tìm lỗi sai. Hiểu rõ nguyên nhân.">Find the error. Understand the why.</h1><p data-en="Practise correcting English sentences, discover the grammar behind each mistake, and make steady progress one sentence at a time." data-vi="Luyện sửa câu tiếng Anh, khám phá kiến thức ngữ pháp đằng sau mỗi lỗi sai và tiến bộ qua từng câu.">Practise correcting English sentences, discover the grammar behind each mistake, and make steady progress one sentence at a time.</p><span class="hero-note" data-en="Small mistakes. Meaningful progress." data-vi="Lỗi sai nhỏ. Tiến bộ lớn.">Small mistakes. Meaningful progress.</span></section>
-<div class="layout"><div>
-<section class="panel"><h2 data-en="English Error Detective" data-vi="Thám tử lỗi sai tiếng Anh">English Error Detective</h2><p class="intro" data-en="Enter a sentence below. Oops! will compare it with a set of common English grammar patterns." data-vi="Nhập một câu tiếng Anh bên dưới. Oops! sẽ đối chiếu câu với bộ quy tắc về các lỗi ngữ pháp thường gặp.">Enter a sentence below. Oops! will compare it with a set of common English grammar patterns.</p>
-<label for="sentence" data-en="Your English sentence" data-vi="Câu tiếng Anh của bạn">Your English sentence</label><textarea id="sentence" placeholder="Example: She go to school every day." aria-describedby="checkerNote"></textarea>
-<div class="actions"><button class="btn primary" id="checkBtn" type="button" data-en="Check my sentence →" data-vi="Kiểm tra câu →">Check my sentence →</button><button class="btn secondary" id="clearBtn" type="button" data-en="Clear" data-vi="Xóa">Clear</button></div>
-<p class="helper" id="checkerNote" data-en="Current version: sample-based checking. A sentence not flagged by these rules is not necessarily error-free." data-vi="Phiên bản hiện tại: kiểm tra bằng quy tắc mẫu. Câu không bị phát hiện lỗi chưa chắc đã hoàn toàn chính xác.">Current version: sample-based checking. A sentence not flagged by these rules is not necessarily error-free.</p>
-<section class="result" id="result" aria-live="polite" aria-atomic="true"><h3 data-en="Your result" data-vi="Kết quả kiểm tra">Your result</h3><p class="status" id="status"></p><div class="corrected" id="corrected"></div><div class="explanation"><strong data-en="Why?" data-vi="Vì sao?">Why?</strong><p id="reason"></p><strong data-en="More examples" data-vi="Ví dụ thêm">More examples</strong><p id="example"></p></div></section>
-</section><div class="tip" data-en="Learning tip: read the explanation, then rewrite the corrected sentence in your own words. Understanding the rule matters more than simply seeing the answer." data-vi="Mẹo học tập: đọc phần giải thích, sau đó tự viết lại câu đã sửa. Hiểu quy tắc quan trọng hơn việc chỉ nhìn đáp án.">Learning tip: read the explanation, then rewrite the corrected sentence in your own words. Understanding the rule matters more than simply seeing the answer.</div>
-</div>
-<aside class="panel history-panel"><h2 data-en="Your Error History" data-vi="Lịch sử kiểm tra">Your Error History</h2><p class="intro" data-en="Your 10 most recent checks are saved in this browser." data-vi="10 lượt kiểm tra gần nhất được lưu trên trình duyệt này.">Your 10 most recent checks are saved in this browser.</p><div id="history" aria-live="polite"></div><button class="btn secondary" id="clearHistory" type="button" data-en="Clear history" data-vi="Xóa lịch sử">Clear history</button></aside>
-</div></main>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="eyebrow" data-en="LEARN THROUGH YOUR MISTAKES" data-vi="HỌC TỪ NHỮNG LỖI SAI">LEARN THROUGH YOUR MISTAKES</div>
+      <h1 data-en="Find the error. Understand the why." data-vi="Tìm lỗi sai. Hiểu rõ nguyên nhân.">Find the error. Understand the why.</h1>
+      <p data-en="Practise correcting English sentences, discover the grammar behind each mistake, and make steady progress one sentence at a time." data-vi="Luyện sửa câu tiếng Anh, khám phá kiến thức ngữ pháp đằng sau mỗi lỗi sai và tiến bộ qua từng câu.">Practise correcting English sentences, discover the grammar behind each mistake, and make steady progress one sentence at a time.</p>
+      <span class="hero-note" data-en="Small mistakes. Meaningful progress." data-vi="Lỗi sai nhỏ. Tiến bộ lớn.">Small mistakes. Meaningful progress.</span>
+    </div>
+  </section>
+  <div class="layout">
+    <div>
+      <section class="panel">
+        <h2 data-en="English Error Detective" data-vi="Thám tử lỗi sai tiếng Anh">English Error Detective</h2>
+        <p class="intro" data-en="Enter a sentence below. Oops! will compare it with a set of common English grammar patterns." data-vi="Nhập một câu tiếng Anh bên dưới. Oops! sẽ đối chiếu câu với bộ quy tắc về các lỗi ngữ pháp thường gặp.">Enter a sentence below. Oops! will compare it with a set of common English grammar patterns.</p>
+        <label for="sentence" data-en="Your English sentence" data-vi="Câu tiếng Anh của bạn">Your English sentence</label>
+        <textarea id="sentence" placeholder="Example: She go to school every day." aria-describedby="checkerNote"></textarea>
+        <div class="actions">
+          <button class="btn primary" id="checkBtn" type="button" data-en="Check my sentence →" data-vi="Kiểm tra câu →">Check my sentence →</button>
+          <button class="btn secondary" id="clearBtn" type="button" data-en="Clear" data-vi="Xóa">Clear</button>
+        </div>
+        <p class="helper" id="checkerNote" data-en="Current version: sample-based checking. A sentence not flagged by these rules is not necessarily error-free." data-vi="Phiên bản hiện tại: kiểm tra bằng quy tắc mẫu. Câu không bị phát hiện lỗi chưa chắc đã hoàn toàn chính xác.">Current version: sample-based checking. A sentence not flagged by these rules is not necessarily error-free.</p>
+        <section class="result" id="result" aria-live="polite" aria-atomic="true">
+          <h3 data-en="Your result" data-vi="Kết quả kiểm tra">Your result</h3>
+          <p class="status" id="status"></p><div class="corrected" id="corrected"></div>
+          <div class="explanation"><strong data-en="Why?" data-vi="Vì sao?">Why?</strong><p id="reason"></p><strong data-en="More examples" data-vi="Ví dụ thêm">More examples</strong><p id="example"></p></div>
+        </section>
+      </section>
+      <div class="tip" data-en="Learning tip: read the explanation, then rewrite the corrected sentence in your own words. Understanding the rule matters more than simply seeing the answer." data-vi="Mẹo học tập: đọc phần giải thích, sau đó tự viết lại câu đã sửa. Hiểu quy tắc quan trọng hơn việc chỉ nhìn đáp án.">Learning tip: read the explanation, then rewrite the corrected sentence in your own words. Understanding the rule matters more than simply seeing the answer.</div>
+    </div>
+    <aside class="panel history-panel">
+      <h2 data-en="Your Error History" data-vi="Lịch sử kiểm tra">Your Error History</h2>
+      <p class="intro" data-en="Your 10 most recent checks are saved in this browser." data-vi="10 lượt kiểm tra gần nhất được lưu trên trình duyệt này.">Your 10 most recent checks are saved in this browser.</p>
+      <div id="history" aria-live="polite"></div>
+      <button class="btn secondary" id="clearHistory" type="button" data-en="Clear history" data-vi="Xóa lịch sử">Clear history</button>
+    </aside>
+  </div>
+</main>
 <footer>Oops! — Make mistakes. Make progress.</footer>
 <script src="tracker.js"></script>
 <script>
 "use strict";
 const rules=[
-{pattern:/\bshe go\b/gi,replace:"she goes",reason:"In the Present Simple, verbs take -s or -es with he, she and it.",example:"She studies English every day."},
-{pattern:/\bhe go\b/gi,replace:"he goes",reason:"Use the third-person singular form of the verb with he.",example:"He goes to school by bus."},
-{pattern:/\bit go\b/gi,replace:"it goes",reason:"In the Present Simple, it requires the verb form ending in -s or -es.",example:"It goes well."},
-{pattern:/\bi am agree\b/gi,replace:"I agree",reason:"Agree is a main verb, not an adjective. Do not add am before it.",example:"I agree with your opinion."},
-{pattern:/\bmore better\b/gi,replace:"better",reason:"Better is already the comparative form of good. Do not use more with it.",example:"This solution is better."},
-{pattern:/\bdidn't went\b/gi,replace:"didn't go",reason:"After did not, use the base form of the verb.",example:"I didn't go to school yesterday."},
-{pattern:/\bhe don't\b/gi,replace:"he doesn't",reason:"Use doesn't with he, she and it in the Present Simple negative.",example:"He doesn't like coffee."},
-{pattern:/\bshe don't\b/gi,replace:"she doesn't",reason:"Use doesn't with he, she and it in the Present Simple negative.",example:"She doesn't play tennis."},
-{pattern:/\ban university\b/gi,replace:"a university",reason:"University begins with a /juː/ consonant sound, so use a.",example:"She studies at a university."},
-{pattern:/\bdiscuss about\b/gi,replace:"discuss",reason:"Discuss is a transitive verb and does not need about before its object.",example:"We discussed the problem."}
+ {pattern:/\bshe go\b/gi,replace:"she goes",reason:"In the Present Simple, verbs take -s or -es with he, she and it.",example:"She studies English every day."},
+ {pattern:/\bhe go\b/gi,replace:"he goes",reason:"Use the third-person singular form of the verb with he.",example:"He goes to school by bus."},
+ {pattern:/\bit go\b/gi,replace:"it goes",reason:"In the Present Simple, it requires the verb form ending in -s or -es.",example:"It goes well."},
+ {pattern:/\bi am agree\b/gi,replace:"I agree",reason:"Agree is a main verb, not an adjective. Do not add am before it.",example:"I agree with your opinion."},
+ {pattern:/\bmore better\b/gi,replace:"better",reason:"Better is already the comparative form of good. Do not use more with it.",example:"This solution is better."},
+ {pattern:/\bdidn't went\b/gi,replace:"didn't go",reason:"After did not, use the base form of the verb.",example:"I didn't go to school yesterday."},
+ {pattern:/\bhe don't\b/gi,replace:"he doesn't",reason:"Use doesn't with he, she and it in the Present Simple negative.",example:"He doesn't like coffee."},
+ {pattern:/\bshe don't\b/gi,replace:"she doesn't",reason:"Use doesn't with he, she and it in the Present Simple negative.",example:"She doesn't play tennis."},
+ {pattern:/\ban university\b/gi,replace:"a university",reason:"University begins with a /juː/ consonant sound, so use a.",example:"She studies at a university."},
+ {pattern:/\bdiscuss about\b/gi,replace:"discuss",reason:"Discuss is a transitive verb and does not need about before its object.",example:"We discussed the problem."}
 ];
-const $=id=>document.getElementById(id);let history=[];
+const $=id=>document.getElementById(id);
+let history=[];
 try{const saved=JSON.parse(localStorage.getItem("oopsErrorHistory")||"[]");history=Array.isArray(saved)?saved.slice(0,10):[]}catch{}
-function renderHistory(){const box=$("history");box.replaceChildren();if(!history.length){const empty=document.createElement("div");empty.className="empty";empty.textContent=document.documentElement.lang==="vi"?"Chưa có lượt kiểm tra nào. Hãy thử câu đầu tiên!":"No checks yet. Try your first sentence!";box.append(empty);return;}history.forEach(item=>{const div=document.createElement("div");div.className="history-item";const a=document.createElement("p");a.textContent=(document.documentElement.lang==="vi"?"Câu gốc: ":"Original: ")+item.input;const b=document.createElement("p");b.textContent=(document.documentElement.lang==="vi"?"Kết quả: ":"Result: ")+item.output;const c=document.createElement("div");c.className="date";c.textContent=item.date||"";div.append(a,b,c);box.append(div);});}
+function renderHistory(){
+ const box=$("history");box.replaceChildren();
+ if(!history.length){const empty=document.createElement("div");empty.className="empty";empty.textContent=document.documentElement.lang==="vi"?"Chưa có lượt kiểm tra nào. Hãy thử câu đầu tiên!":"No checks yet. Try your first sentence!";box.append(empty);return;}
+ history.forEach(item=>{const div=document.createElement("div");div.className="history-item";const a=document.createElement("p");a.textContent=(document.documentElement.lang==="vi"?"Câu gốc: ":"Original: ")+item.input;const b=document.createElement("p");b.textContent=(document.documentElement.lang==="vi"?"Kết quả: ":"Result: ")+item.output;const c=document.createElement("div");c.className="date";c.textContent=item.date||"";div.append(a,b,c);box.append(div);});
+}
 function saveHistory(input,output){history.unshift({input,output,date:new Date().toLocaleString()});history=history.slice(0,10);try{localStorage.setItem("oopsErrorHistory",JSON.stringify(history))}catch{}renderHistory();}
-$("checkBtn").addEventListener("click",()=>{const input=$("sentence").value.trim();if(!input){$("sentence").focus();alert(document.documentElement.lang==="vi"?"Vui lòng nhập một câu tiếng Anh trước.":"Please enter an English sentence first.");return;}let output=input;const reasons=[],examples=[];rules.forEach(rule=>{rule.pattern.lastIndex=0;if(rule.pattern.test(output)){rule.pattern.lastIndex=0;output=output.replace(rule.pattern,rule.replace);reasons.push(rule.reason);examples.push(rule.example);}rule.pattern.lastIndex=0;});$("result").style.display="block";$("corrected").textContent=output;$("status").textContent=reasons.length?(document.documentElement.lang==="vi"?"Đã phát hiện lỗi có khả năng xuất hiện.":"Potential error(s) detected."):(document.documentElement.lang==="vi"?"Không tìm thấy lỗi khớp với bộ quy tắc mẫu hiện tại.":"No matching errors found in the current sample rules.");$("reason").textContent=reasons.length?reasons.join(" "):(document.documentElement.lang==="vi"?"Câu này không khớp với quy tắc mẫu hiện tại. Điều đó không đảm bảo câu hoàn toàn chính xác.":"This sentence did not match the current sample rules. That does not guarantee it is completely correct.");$("example").textContent=examples.length?examples.join(" | "):(document.documentElement.lang==="vi"?"Hãy tiếp tục luyện tập và mở rộng vốn tiếng Anh.":"Keep practising and expanding your English knowledge.");saveHistory(input,output);if(window.OopsTracker&&typeof window.OopsTracker.recordStudyDay==="function")window.OopsTracker.recordStudyDay();$("result").scrollIntoView({behavior:"smooth",block:"nearest"});});
+$("checkBtn").addEventListener("click",()=>{
+ const input=$("sentence").value.trim();
+ if(!input){$("sentence").focus();alert(document.documentElement.lang==="vi"?"Vui lòng nhập một câu tiếng Anh trước.":"Please enter an English sentence first.");return;}
+ let output=input;const reasons=[],examples=[];
+ rules.forEach(rule=>{rule.pattern.lastIndex=0;if(rule.pattern.test(output)){rule.pattern.lastIndex=0;output=output.replace(rule.pattern,rule.replace);reasons.push(rule.reason);examples.push(rule.example);}rule.pattern.lastIndex=0;});
+ $("result").style.display="block";$("corrected").textContent=output;
+ $("status").textContent=reasons.length?(document.documentElement.lang==="vi"?"Đã phát hiện lỗi có khả năng xuất hiện.":"Potential error(s) detected."):(document.documentElement.lang==="vi"?"Không tìm thấy lỗi khớp với bộ quy tắc mẫu hiện tại.":"No matching errors found in the current sample rules.");
+ $("reason").textContent=reasons.length?reasons.join(" "):(document.documentElement.lang==="vi"?"Câu này không khớp với quy tắc mẫu hiện tại. Điều đó không đảm bảo câu hoàn toàn chính xác.":"This sentence did not match the current sample rules. That does not guarantee it is completely correct.");
+ $("example").textContent=examples.length?examples.join(" | "):(document.documentElement.lang==="vi"?"Hãy tiếp tục luyện tập và mở rộng vốn tiếng Anh.":"Keep practising and expanding your English knowledge.");
+ saveHistory(input,output);if(window.OopsTracker&&typeof window.OopsTracker.recordStudyDay==="function")window.OopsTracker.recordStudyDay();$("result").scrollIntoView({behavior:"smooth",block:"nearest"});
+});
 $("clearBtn").addEventListener("click",()=>{$("sentence").value="";$("result").style.display="none";$("sentence").focus();});
 $("clearHistory").addEventListener("click",()=>{if(confirm(document.documentElement.lang==="vi"?"Bạn có chắc muốn xóa toàn bộ lịch sử kiểm tra?":"Clear all saved error history?")){history=[];localStorage.removeItem("oopsErrorHistory");renderHistory();}});
 function setTheme(theme){document.body.classList.toggle("dark-mode",theme==="dark");$("themeBtn").textContent=theme==="dark"?"☀":"☾";$("themeBtn").setAttribute("aria-label",theme==="dark"?"Switch to light mode":"Switch to dark mode");try{localStorage.setItem("oopsTheme",theme)}catch{}}
-function setLanguage(lang){const vi=lang==="vi";document.documentElement.lang=vi?"vi":"en";document.querySelectorAll("[data-en][data-vi]").forEach(el=>el.textContent=vi?el.dataset.vi:el.dataset.en);$("langBtn").textContent=vi?"EN":"VI";try{localStorage.setItem("oopsLanguage",lang)}catch{}renderHistory();}
-let initialTheme="light",initialLang="en";try{initialTheme=localStorage.getItem("oopsTheme")==="dark"?"dark":"light";initialLang=localStorage.getItem("oopsLanguage")==="vi"?"vi":"en";}catch{}
+function setLanguage(lang){
+ const vi=lang==="vi";document.documentElement.lang=vi?"vi":"en";
+ document.querySelectorAll("[data-en][data-vi]").forEach(el=>{el.innerHTML=vi?el.dataset.vi:el.dataset.en;});
+ $("langVi").classList.toggle("active",vi);$("langEn").classList.toggle("active",!vi);
+ try{localStorage.setItem("oopsLanguage",lang)}catch{}renderHistory();
+}
+let initialTheme="light",initialLang="en";
+try{initialTheme=localStorage.getItem("oopsTheme")==="dark"?"dark":"light";initialLang=localStorage.getItem("oopsLanguage")==="vi"?"vi":"en"}catch{}
 setTheme(initialTheme);setLanguage(initialLang);
-let name="Profile";try{name=localStorage.getItem("oopsProfileName")||localStorage.getItem("profileName")||localStorage.getItem("userName")||"Profile"}catch{}$("profileName").textContent=name;$("profileAvatar").textContent=name==="Profile"?"O":name.trim().charAt(0).toUpperCase();
-$("themeBtn").addEventListener("click",()=>setTheme(document.body.classList.contains("dark-mode")?"light":"dark"));$("langBtn").addEventListener("click",()=>setLanguage(document.documentElement.lang==="vi"?"en":"vi"));
+let name="Profile";try{name=localStorage.getItem("oopsProfileName")||localStorage.getItem("profileName")||localStorage.getItem("userName")||"Profile"}catch{}
+$("accountName").textContent=name;$("accountAvatar").textContent=name==="Profile"?"O":name.trim().charAt(0).toUpperCase();
+$("themeBtn").addEventListener("click",()=>setTheme(document.body.classList.contains("dark-mode")?"light":"dark"));
+$("langBtn").addEventListener("click",()=>setLanguage(document.documentElement.lang==="vi"?"en":"vi"));
+$("accountBtn").addEventListener("click",()=>{const open=$("accountMenu").classList.toggle("open");$("accountBtn").setAttribute("aria-expanded",String(open));});
+document.addEventListener("click",event=>{if(!event.target.closest(".account-wrap")){$("accountMenu").classList.remove("open");$("accountBtn").setAttribute("aria-expanded","false");}});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"){$("accountMenu").classList.remove("open");$("accountBtn").setAttribute("aria-expanded","false");$("accountBtn").focus();}});
 renderHistory();
 </script>
 <script src="accessibility.js"></script>
-</body></html>
+</body>
+</html>
