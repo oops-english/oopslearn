@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Practise English error correction with Oops!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <title>Error Fix | Oops!</title>
 <style>
 :root {
@@ -14,21 +17,21 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .2s ease,color .2s ease}
+body{margin:0;font-family:"Be Vietnam Pro",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .2s ease,color .2s ease}
 body.dark-mode{color-scheme:dark;--bg:#101b1a;--text:#eaf4f0;--card:#192725;--muted:#afc0ba;--line:#304541;--soft:#223733;--header:rgba(16,27,26,.97);--shadow:0 14px 38px rgba(0,0,0,.24)}
 a{color:inherit}
 .site-header{min-height:82px;padding:12px clamp(22px,4.8vw,86px);display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:22px;background:var(--header);position:sticky;top:0;z-index:100;border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}
-.logo{font-size:34px;line-height:1;font-weight:900;color:var(--primary-dark);text-decoration:none;letter-spacing:-2px;white-space:nowrap}
+.logo{font-family:"Lexend","Be Vietnam Pro",sans-serif;font-size:34px;line-height:1;font-weight:900;color:var(--primary-dark);text-decoration:none;letter-spacing:-2px;white-space:nowrap}
 .logo span{color:var(--primary)}
 .dark-mode .logo{color:#f3f7f3}
 .main-nav{display:flex;align-items:center;justify-content:center;gap:clamp(1px,.65vw,12px);min-width:0}
-.nav-link{position:relative;text-decoration:none;color:var(--muted);font-size:14px;font-weight:700;padding:15px 12px;white-space:nowrap;transition:color .2s ease}
+.nav-link{font-family:"Lexend","Be Vietnam Pro",sans-serif;position:relative;text-decoration:none;color:var(--muted);font-size:14px;font-weight:700;padding:15px 12px;white-space:nowrap;transition:color .2s ease}
 .nav-link:after{content:"";position:absolute;height:4px;left:12px;right:12px;bottom:2px;border-radius:4px;background:var(--primary);transform:scaleX(0);transform-origin:center;transition:transform .2s ease}
 .nav-link:hover,.nav-link.active{color:var(--primary-dark)}
 .dark-mode .nav-link:hover,.dark-mode .nav-link.active{color:#f2f8f5}
 .nav-link:hover:after,.nav-link.active:after{transform:scaleX(1)}
 .header-tools{display:flex;align-items:center;justify-content:flex-end;gap:10px}
-.tool-button,.account-trigger{min-height:48px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font:inherit;font-weight:700;transition:border-color .2s,background .2s,transform .2s}
+.tool-button,.account-trigger{min-height:48px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font:inherit;font-family:"Lexend","Be Vietnam Pro",sans-serif;font-weight:700;transition:border-color .2s,background .2s,transform .2s}
 .tool-button:hover,.account-trigger:hover{border-color:var(--primary);transform:translateY(-1px)}
 .theme-button{width:48px;font-size:22px}
 .language-button{padding:0 15px;gap:9px;min-width:84px}
@@ -50,12 +53,12 @@ main{width:min(94%,1250px);margin:0 auto;padding:34px 0 70px}
 .hero:after{content:"";position:absolute;width:290px;height:290px;border:1px solid rgba(57,185,173,.22);border-radius:50%;right:-75px;top:-125px;box-shadow:0 0 0 36px rgba(57,185,173,.07),0 0 0 72px rgba(57,185,173,.05);pointer-events:none}
 .hero-content{position:relative;z-index:1}
 .eyebrow{color:#9ce8dc;font-size:13px;font-weight:800;letter-spacing:1.5px}
-.hero h1{max-width:1000px;font-size:clamp(38px,5vw,62px);line-height:1.12;margin:18px 0;letter-spacing:-1.8px;font-weight:850}
+.hero h1{font-family:"Lexend","Be Vietnam Pro",sans-serif;max-width:1000px;font-size:clamp(38px,5vw,62px);line-height:1.12;margin:18px 0;letter-spacing:-1.8px;font-weight:850}
 .hero p{max-width:800px;color:#e0efeb;font-size:18px;line-height:1.85;margin:0 0 22px}
 .hero-note{display:inline-block;padding:10px 17px;border:1px solid rgba(255,255,255,.25);border-radius:999px;background:rgba(255,255,255,.07);font-size:14px;font-weight:700}
 .layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.8fr);gap:22px;align-items:start}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
-.panel h2{font-size:25px;line-height:1.3;color:var(--text);margin:0 0 8px;letter-spacing:-.5px}
+.panel h2{font-family:"Lexend","Be Vietnam Pro",sans-serif;font-size:25px;line-height:1.3;color:var(--text);margin:0 0 8px;letter-spacing:-.5px}
 .intro{font-size:16px;color:var(--muted);margin:0 0 25px}
 label{display:block;font-size:15px;font-weight:800;margin-bottom:10px}
 textarea{display:block;width:100%;min-height:155px;resize:vertical;border:1.5px solid var(--line);border-radius:16px;padding:17px 18px;background:var(--card);color:var(--text);font:inherit;outline:none}
