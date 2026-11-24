@@ -20,11 +20,6 @@
     "--primary",
     settings.primaryColor
   );
-
-  document.documentElement.style.setProperty(
-    "--bg",
-    settings.primaryColor + "12"
-  );
 }
 
     // Apply the background image across the website
