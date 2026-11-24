@@ -5,42 +5,426 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grammar Lab | Oops!</title>
+
 <style>
-:root{--primary:#6957e8;--bg:#f7f7fc;--text:#26243a;--card:#fff;--muted:#77778d}
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
-header{background:var(--card);padding:17px 7%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;border-bottom:1px solid #eee}
-.logo{font-size:26px;font-weight:800;color:var(--primary);text-decoration:none}
-header a:not(.logo){color:var(--text);text-decoration:none}
-button,select{font:inherit}
-button{cursor:pointer;border:0;border-radius:10px;padding:11px 16px;font-weight:700}
-.primary{background:var(--primary);color:white}
-.secondary{background:#eeeaff;color:var(--primary)}
-main{max-width:1100px;margin:auto;padding:40px 22px}
-.hero{padding:35px;background:linear-gradient(120deg,#eeeaff,#fff0f6);border-radius:22px;margin-bottom:30px}
-.hero h1{font-size:36px;margin:0}
-.hero p{color:var(--muted)}
-.filters{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
-select{padding:12px;border:1px solid #ddd;border-radius:10px;background:white;min-width:180px}
-.lesson-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.lesson{background:var(--card);padding:24px;border-radius:18px;border:1px solid #eee}
-.level{color:var(--primary);font-size:13px;font-weight:bold}
-.lesson h3{margin:7px 0}
-.formula{background:#f2efff;padding:13px;border-radius:10px;margin:12px 0;font-weight:bold}
-.lesson p{margin:9px 0}
-.muted{color:var(--muted);font-size:14px}
-.quiz{margin-top:45px;background:var(--card);padding:25px;border-radius:18px}
-.option{display:block;width:100%;text-align:left;margin:9px 0;background:#f1efff;color:#29243c}
-#feedback{font-weight:bold;margin-top:15px}
-body.accessible{--bg:#000;--text:#fff;--card:#111;--muted:#eee;--primary:#ffeb3b}
-body.accessible .hero{background:#171717}
-body.accessible .formula,body.accessible .option{background:#333;color:#fff}
-body.accessible select{background:#111;color:white;border:2px solid white}
-body.large-text{font-size:120%}
-:focus-visible{outline:3px solid #ff9800;outline-offset:4px}
-footer{text-align:center;padding:30px;color:var(--muted)}
-@media(max-width:650px){.lesson-grid{grid-template-columns:1fr}.hero h1{font-size:29px}}
+:root {
+  --primary: #39b9ad;
+  --primary-dark: #073d3b;
+  --bg: #f7f7f1;
+  --text: #123d3b;
+  --card: #fffef9;
+  --muted: #71817d;
+  --line: #dce6df;
+  --soft: #eaf3ee;
+  --gold: #f6bd2f;
+  --shadow: 0 12px 35px rgba(7,61,59,.06);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+body {
+  margin: 0;
+  font-family: "Be Vietnam Pro", "Segoe UI", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .logo {
+  font-family: "Lexend", "Be Vietnam Pro", "Segoe UI", sans-serif;
+}
+
+header {
+  min-height: 76px;
+  padding: 12px clamp(20px, 4.5vw, 76px);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(247,247,241,.96);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 5px 22px rgba(7,61,59,.04);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.logo {
+  justify-self: start;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -1.8px;
+  color: var(--primary-dark);
+  text-decoration: none;
+}
+
+header a:not(.logo) {
+  justify-self: center;
+  color: var(--primary-dark);
+  text-decoration: none;
+  font-weight: 700;
+  transition: color .2s ease;
+}
+
+header a:not(.logo):hover {
+  color: #159b8e;
+}
+
+header button {
+  justify-self: end;
+  min-height: 46px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+}
+
+button, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  transition: background .2s ease,
+              color .2s ease,
+              transform .2s ease,
+              box-shadow .2s ease;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+.primary {
+  background: var(--primary-dark);
+  color: white;
+}
+
+.primary:hover {
+  background: #0c5751;
+  box-shadow: 0 5px 14px rgba(7,61,59,.13);
+}
+
+.secondary {
+  background: #eaf3ee;
+  color: var(--primary-dark);
+}
+
+.secondary:hover {
+  background: #dcece5;
+}
+
+main {
+  width: min(1100px, 92%);
+  margin: auto;
+  padding: 48px 0 70px;
+}
+
+.hero {
+  padding: clamp(30px, 5vw, 48px);
+  background: linear-gradient(120deg, #e7f2ec, #fff8e9);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  margin-bottom: 42px;
+}
+
+.hero h1 {
+  font-size: clamp(29px, 4vw, 42px);
+  line-height: 1.2;
+  letter-spacing: -1px;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  color: var(--muted);
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+
+.hero strong {
+  color: var(--primary-dark);
+}
+
+main > h2 {
+  font-size: 27px;
+  margin-bottom: 8px;
+}
+
+main > p {
+  color: var(--muted);
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 22px 0 26px;
+}
+
+select {
+  min-height: 48px;
+  min-width: 190px;
+  padding: 0 15px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--text);
+  outline: none;
+  cursor: pointer;
+}
+
+select:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.lesson-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.lesson {
+  min-width: 0;
+  background: var(--card);
+  padding: 25px;
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.lesson:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 35px rgba(7,61,59,.09);
+}
+
+.level {
+  color: #087d73;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.lesson h3 {
+  font-size: 19px;
+  margin: 8px 0 13px;
+}
+
+.formula {
+  background: var(--soft);
+  color: var(--primary-dark);
+  padding: 15px;
+  border-radius: 12px;
+  margin: 12px 0;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.lesson p {
+  margin: 10px 0;
+  overflow-wrap: anywhere;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.quiz {
+  margin-top: 48px;
+  background: var(--card);
+  padding: clamp(22px, 4vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.quiz h2 {
+  font-size: 25px;
+  margin-bottom: 8px;
+}
+
+.quiz h3 {
+  margin: 22px 0;
+  font-size: 19px;
+}
+
+.option {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  text-align: left;
+  margin: 10px 0;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: var(--soft);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.option:hover {
+  border-color: var(--primary);
+  background: #e1f1e9;
+}
+
+#feedback {
+  font-weight: 700;
+  margin-top: 16px;
+  line-height: 1.7;
+}
+
+#next {
+  margin-top: 18px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 12px;
+}
+
+footer {
+  text-align: center;
+  padding: 28px 20px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+}
+
+/* Accessible Mode */
+body.accessible {
+  --bg: #000;
+  --text: #fff;
+  --card: #111;
+  --muted: #eee;
+  --primary: #ffeb3b;
+  --primary-dark: #000;
+  --line: #ffeb3b;
+  --soft: #181818;
+  color-scheme: dark;
+}
+
+body.accessible header {
+  background: #000;
+  border-color: #ffeb3b;
+}
+
+body.accessible .logo,
+body.accessible header a:not(.logo) {
+  color: #ffeb3b;
+}
+
+body.accessible .hero,
+body.accessible .lesson,
+body.accessible .quiz {
+  background: #111;
+  border: 2px solid #ffeb3b;
+}
+
+body.accessible .hero strong,
+body.accessible .level {
+  color: #ffeb3b;
+}
+
+body.accessible .formula,
+body.accessible .option,
+body.accessible select {
+  background: #181818;
+  color: #fff;
+  border: 1px solid #ffeb3b;
+}
+
+body.accessible .primary,
+body.accessible .secondary {
+  background: #ffeb3b;
+  color: #000;
+}
+
+body.large-text {
+  font-size: 120%;
+}
+
+:focus-visible {
+  outline: 3px solid #ff9800;
+  outline-offset: 4px;
+}
+
+/* Responsive */
+@media (max-width: 760px) {
+  header {
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    padding: 12px 18px;
+  }
+
+  header a:not(.logo) {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  header button {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 0 13px;
+    font-size: 13px;
+  }
+
+  main {
+    width: 92%;
+    padding-top: 28px;
+  }
+
+  .lesson-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 25px 21px;
+    border-radius: 20px;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  select {
+    width: 100%;
+  }
+
+  .lesson {
+    padding: 20px;
+  }
+
+  .quiz {
+    padding: 21px 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
 </style>
+
 </head>
 <body>
 <header>
