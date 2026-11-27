@@ -1,205 +1,130 @@
-
-/* Oops! — Unified visual theme */
+/* Oops! — fixed single-theme system, matched to the original Home design */
 :root {
-  --primary: #39b9ad;
-  --primary-dark: #073d3b;
-  --bg: #f7f7f1;
-  --text: #123d3b;
-  --card: #fffef9;
-  --muted: #71817d;
-  --line: #dce6df;
-  --soft: #eaf3ee;
-  --gold: #f6bd2f;
-}
-
-body:not(.accessible) {
-  background-color: var(--bg) !important;
-  color: var(--text) !important;
-  font-family: "Be Vietnam Pro", Arial, sans-serif;
-}
-
-body:not(.accessible) header {
-  background: rgba(255, 254, 249, .97) !important;
-  color: var(--text) !important;
-  border-bottom: 1px solid var(--line) !important;
-}
-
-body:not(.accessible) .logo,
-body:not(.accessible) h1,
-body:not(.accessible) h2,
-body:not(.accessible) h3 {
-  color: var(--primary-dark);
-}
-
-body:not(.accessible) .hero,
-body:not(.accessible) .intro {
-  background: linear-gradient(120deg, #e7f2ec, #fff8e9) !important;
-  color: var(--text);
-}
-
-body:not(.accessible) .card,
-body:not(.accessible) .panel,
-body:not(.accessible) .practice,
-body:not(.accessible) .profile-card,
-body:not(.accessible) .settings-card,
-body:not(.accessible) .dictionary-shell {
-  background: var(--card) !important;
-  color: var(--text) !important;
-  border: 1px solid var(--line) !important;
-}
-
-body:not(.accessible) button.primary,
-body:not(.accessible) .primary {
-  background: var(--primary-dark) !important;
-  color: #fff !important;
-  border-color: var(--primary-dark) !important;
-}
-
-body:not(.accessible) button.secondary,
-body:not(.accessible) .secondary,
-body:not(.accessible) .back-home {
-  background: var(--soft) !important;
-  color: var(--primary-dark) !important;
-  border-color: var(--line) !important;
-}
-
-body:not(.accessible) .main-tab,
-body:not(.accessible) .level-btn,
-body:not(.accessible) .topic-btn,
-body:not(.accessible) .study-tab,
-body:not(.accessible) .stage-btn,
-body:not(.accessible) .option,
-body:not(.accessible) .level-card {
-  background: var(--soft) !important;
-  color: var(--primary-dark) !important;
-  border-color: var(--line) !important;
-}
-
-body:not(.accessible) .main-tab.active,
-body:not(.accessible) .level-btn.active,
-body:not(.accessible) .study-tab.active,
-body:not(.accessible) .stage-btn.active,
-body:not(.accessible) .option.selected {
-  background: var(--primary-dark) !important;
-  color: #fff !important;
-  border-color: var(--primary-dark) !important;
-}
-
-body:not(.accessible) .dictionary-mode {
-  background: var(--soft) !important;
-}
-
-body:not(.accessible) .dictionary-mode-btn {
-  color: var(--primary-dark) !important;
-}
-
-body:not(.accessible) .dictionary-mode-btn.active {
-  background: var(--primary-dark) !important;
-  color: #fff !important;
-}
-
-body:not(.accessible) input,
-body:not(.accessible) textarea,
-body:not(.accessible) select {
-  background: #fffef9;
-  color: var(--text);
-  border-color: var(--line);
-}
-
-body:not(.accessible) a {
-  color: var(--primary-dark);
-}
-
-body:not(.accessible) .progress {
-  background: var(--soft);
-}
-
-body:not(.accessible) .bar {
-  background: var(--primary);
-}
-
-body:not(.accessible) .subtitle,
-body:not(.accessible) .muted {
-  color: var(--muted);
-}
-
-
-/* ===== Oops! global design system — applied consistently across every page ===== */
-:root {
-  --oops-teal: #0B3D3B;
-  --oops-mint: #45C5B2;
-  --oops-yellow: #F4BD32;
-  --oops-ivory: #F7F6EF;
-  --oops-cream: #FFFDF5;
-  --oops-muted: #71817D;
-  --oops-line: #DCE6DF;
-  --oops-soft: #EAF3EE;
+  --oops-bg: #0d1d1b;
+  --oops-header: #0d1d1b;
+  --oops-deep: #073d3b;
+  --oops-mint: #43c7b6;
+  --oops-yellow: #f6bd2f;
+  --oops-card: #e9f4e9;
+  --oops-white: #fffdf5;
+  --oops-ink: #103f3d;
+  --oops-text: #f4f8f5;
+  --oops-muted: #b9cbc5;
+  --oops-line: rgba(190, 220, 210, .18);
   --primary: var(--oops-mint);
-  --primary-dark: var(--oops-teal);
-  --bg: var(--oops-ivory);
-  --text: var(--oops-teal);
-  --card: var(--oops-cream);
+  --primary-dark: var(--oops-deep);
+  --bg: var(--oops-bg);
+  --text: var(--oops-text);
+  --card: var(--oops-card);
   --muted: var(--oops-muted);
   --line: var(--oops-line);
-  --soft: var(--oops-soft);
+  --soft: #143b37;
   --gold: var(--oops-yellow);
 }
+
+/* Normal mode: keep the original deep-teal Oops! appearance on every page. */
 body:not(.accessible) {
-  background: var(--oops-ivory) !important;
-  color: var(--oops-teal) !important;
+  background: var(--oops-bg) !important;
+  color: var(--oops-text) !important;
+  font-family: "Be Vietnam Pro", Arial, sans-serif !important;
 }
 body:not(.accessible) header,
-body:not(.accessible) .site-header,
-body:not(.accessible) .navbar,
-body:not(.accessible) .nav-wrap {
-  background-color: var(--oops-cream) !important;
-  color: var(--oops-teal) !important;
+body:not(.accessible) .site-header {
+  background: var(--oops-header) !important;
+  color: var(--oops-text) !important;
   border-color: var(--oops-line) !important;
+  box-shadow: none;
 }
-body:not(.accessible) h1,
-body:not(.accessible) h2,
-body:not(.accessible) h3,
-body:not(.accessible) h4,
-body:not(.accessible) .logo,
-body:not(.accessible) .page-title {
-  color: var(--oops-teal) !important;
+body:not(.accessible) .logo { color: var(--oops-white) !important; }
+body:not(.accessible) .logo span { color: var(--oops-mint) !important; }
+body:not(.accessible) .main-nav a,
+body:not(.accessible) header a,
+body:not(.accessible) .nav-link {
+  color: #c4d2cd !important;
 }
+body:not(.accessible) .main-nav a:hover,
+body:not(.accessible) .main-nav a.active,
+body:not(.accessible) .nav-link:hover,
+body:not(.accessible) .nav-link.active {
+  color: var(--oops-white) !important;
+}
+body:not(.accessible) .nav-link::after { background: var(--oops-mint) !important; }
+
+/* Hero areas use the same deep teal block as the original Home page. */
 body:not(.accessible) .hero,
 body:not(.accessible) .intro,
-body:not(.accessible) .hero-card,
-body:not(.accessible) .welcome-banner {
-  background: linear-gradient(125deg, #E7F2EC 0%, #FFFDF5 100%) !important;
-  color: var(--oops-teal) !important;
-  border-color: var(--oops-line) !important;
+body:not(.accessible) .page-hero {
+  background: var(--oops-deep) !important;
+  color: var(--oops-white) !important;
+  border: 1px solid var(--oops-line) !important;
 }
+body:not(.accessible) .hero h1,
+body:not(.accessible) .hero h2,
+body:not(.accessible) .intro h1,
+body:not(.accessible) .intro h2,
+body:not(.accessible) .page-hero h1 {
+  color: var(--oops-white) !important;
+}
+body:not(.accessible) .hero p,
+body:not(.accessible) .intro p,
+body:not(.accessible) .page-hero p,
+body:not(.accessible) .subtitle,
+body:not(.accessible) .muted {
+  color: #c5d8d1 !important;
+}
+
+/* Learning cards and content panels retain the pale-green card treatment. */
 body:not(.accessible) .card,
 body:not(.accessible) .panel,
 body:not(.accessible) .practice,
 body:not(.accessible) .profile-card,
 body:not(.accessible) .settings-card,
 body:not(.accessible) .dictionary-shell,
-body:not(.accessible) .lesson-card,
-body:not(.accessible) .stat-card,
-body:not(.accessible) .quest-card,
-body:not(.accessible) .roadmap-card,
-body:not(.accessible) .task-card,
-body:not(.accessible) .content-card {
-  background-color: var(--oops-cream) !important;
-  color: var(--oops-teal) !important;
-  border-color: var(--oops-line) !important;
+body:not(.accessible) .lesson,
+body:not(.accessible) .content-card,
+body:not(.accessible) .quiz,
+body:not(.accessible) .sidebar-card,
+body:not(.accessible) .learning-card,
+body:not(.accessible) .stat,
+body:not(.accessible) .level-card {
+  background: var(--oops-card) !important;
+  color: var(--oops-ink) !important;
+  border-color: rgba(7, 61, 59, .16) !important;
 }
+body:not(.accessible) .card h1,
+body:not(.accessible) .card h2,
+body:not(.accessible) .card h3,
+body:not(.accessible) .panel h1,
+body:not(.accessible) .panel h2,
+body:not(.accessible) .panel h3,
+body:not(.accessible) .lesson h1,
+body:not(.accessible) .lesson h2,
+body:not(.accessible) .lesson h3,
+body:not(.accessible) .stat strong,
+body:not(.accessible) .level-card strong {
+  color: var(--oops-deep) !important;
+}
+body:not(.accessible) .card p,
+body:not(.accessible) .panel p,
+body:not(.accessible) .lesson p,
+body:not(.accessible) .sidebar-card p,
+body:not(.accessible) .info,
+body:not(.accessible) .lesson-desc {
+  color: #526e68 !important;
+}
+
+/* Buttons: yellow primary action, mint accents, dark secondary controls. */
 body:not(.accessible) button.primary,
 body:not(.accessible) .primary,
-body:not(.accessible) .btn-primary,
-body:not(.accessible) .cta,
-body:not(.accessible) .submit-btn {
-  background: var(--oops-teal) !important;
-  color: #FFFFFF !important;
-  border-color: var(--oops-teal) !important;
+body:not(.accessible) .card a,
+body:not(.accessible) .hero .cta,
+body:not(.accessible) a.button {
+  background: var(--oops-yellow) !important;
+  color: var(--oops-deep) !important;
+  border-color: var(--oops-yellow) !important;
 }
 body:not(.accessible) button.secondary,
 body:not(.accessible) .secondary,
-body:not(.accessible) .btn-secondary,
 body:not(.accessible) .back-home,
 body:not(.accessible) .main-tab,
 body:not(.accessible) .level-btn,
@@ -207,10 +132,10 @@ body:not(.accessible) .topic-btn,
 body:not(.accessible) .study-tab,
 body:not(.accessible) .stage-btn,
 body:not(.accessible) .option,
-body:not(.accessible) .level-card,
-body:not(.accessible) .tab-button {
-  background: var(--oops-soft) !important;
-  color: var(--oops-teal) !important;
+body:not(.accessible) .dictionary-mode,
+body:not(.accessible) .level-card {
+  background: #143b37 !important;
+  color: #eaf5f0 !important;
   border-color: var(--oops-line) !important;
 }
 body:not(.accessible) .main-tab.active,
@@ -218,42 +143,79 @@ body:not(.accessible) .level-btn.active,
 body:not(.accessible) .study-tab.active,
 body:not(.accessible) .stage-btn.active,
 body:not(.accessible) .option.selected,
-body:not(.accessible) .tab-button.active,
-body:not(.accessible) .topic-btn.active {
-  background: var(--oops-teal) !important;
-  color: #FFFFFF !important;
-  border-color: var(--oops-teal) !important;
+body:not(.accessible) .dictionary-mode-btn.active {
+  background: var(--oops-mint) !important;
+  color: var(--oops-deep) !important;
+  border-color: var(--oops-mint) !important;
 }
+body:not(.accessible) .tool-button,
+body:not(.accessible) .account-trigger,
+body:not(.accessible) .language-button {
+  background: #172a27 !important;
+  color: var(--oops-white) !important;
+  border-color: var(--oops-line) !important;
+}
+body:not(.accessible) .account-trigger .avatar,
+body:not(.accessible) .avatar {
+  background: var(--oops-deep) !important;
+  color: var(--oops-white) !important;
+  border-color: var(--oops-mint) !important;
+}
+
+/* Form controls and progress indicators. */
 body:not(.accessible) input,
 body:not(.accessible) textarea,
 body:not(.accessible) select {
-  background-color: #FFFFFF !important;
-  color: var(--oops-teal) !important;
-  border-color: var(--oops-line) !important;
+  background: #f8fbf7 !important;
+  color: var(--oops-ink) !important;
+  border-color: #9ab8ad !important;
 }
-body:not(.accessible) a { color: var(--oops-teal); }
-body:not(.accessible) .muted,
-body:not(.accessible) .subtitle,
-body:not(.accessible) .description,
-body:not(.accessible) .helper-text { color: var(--oops-muted) !important; }
 body:not(.accessible) .progress,
-body:not(.accessible) .progress-track,
-body:not(.accessible) .bar-track { background: var(--oops-soft) !important; }
-body:not(.accessible) .progress-bar,
+body:not(.accessible) .progress-track {
+  background: #d1e3da !important;
+}
 body:not(.accessible) .bar,
-body:not(.accessible) .progress-fill { background: var(--oops-mint) !important; }
-body:not(.accessible) .badge,
-body:not(.accessible) .tag,
-body:not(.accessible) .eyebrow {
-  border-color: var(--oops-line);
+body:not(.accessible) .progress-fill {
+  background: var(--oops-mint) !important;
+}
+body:not(.accessible) a { color: var(--oops-mint); }
+body:not(.accessible) .card a,
+body:not(.accessible) .lesson-link,
+body:not(.accessible) .text-link { color: var(--oops-deep) !important; }
+body:not(.accessible) footer {
+  color: #9eb5ad !important;
+  border-color: var(--oops-line) !important;
 }
 body:not(.accessible) :focus-visible {
   outline: 3px solid var(--oops-yellow) !important;
   outline-offset: 3px !important;
 }
-@media (prefers-reduced-motion: reduce) {
-  body:not(.accessible) *, body:not(.accessible) *::before, body:not(.accessible) *::after {
-    transition-duration: .01ms !important;
-    animation-duration: .01ms !important;
-  }
+
+/* Accessible Mode deliberately keeps its own high-contrast rules. */
+body.accessible {
+  --bg: #000 !important;
+  --text: #fff !important;
+  --card: #111 !important;
+  --muted: #eee !important;
+  color: #fff !important;
+  background: #000 !important;
+}
+body.accessible header,
+body.accessible .site-header,
+body.accessible .hero,
+body.accessible .intro,
+body.accessible .card,
+body.accessible .panel,
+body.accessible .lesson,
+body.accessible .content-card,
+body.accessible .quiz {
+  background: #111 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+body.accessible a,
+body.accessible button { text-decoration-thickness: 2px; }
+body.accessible :focus-visible {
+  outline: 4px solid #ffeb3b !important;
+  outline-offset: 4px !important;
 }

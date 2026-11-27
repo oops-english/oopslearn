@@ -402,7 +402,8 @@ body.accessible .hero-actions .primary { background:#ffeb3b;color:#000; }
 }
 
 </style>
-<link rel="stylesheet" href="theme-fix.css?v=20261127">
+
+  <link rel="stylesheet" href="theme-fix.css?v=20261128">
 </head>
 <body>
 <header class="site-header">
@@ -419,7 +420,6 @@ body.accessible .hero-actions .primary { background:#ffeb3b;color:#000; }
 
   <div class="header-tools">
     <button class="tool-button accessible-button" id="modeBtn" type="button" aria-pressed="false" data-en="Accessible Mode" data-vi="Chế độ tiếp cận">Accessible Mode</button>
-    <button class="tool-button theme-button" id="themeBtn" type="button" aria-label="Switch to dark mode" title="Switch theme">☾</button>
     <button class="tool-button language-button" id="langBtn" type="button" aria-label="Switch language">
       <span class="lang-option active" id="langVi">VI</span><span class="separator">·</span><span class="lang-option" id="langEn">EN</span>
     </button>
@@ -503,23 +503,6 @@ body.accessible .hero-actions .primary { background:#ffeb3b;color:#000; }
   const langBtn = document.getElementById('langBtn');
   const accountBtn = document.getElementById('accountBtn');
   const accountMenu = document.getElementById('accountMenu');
-
-  const savedTheme = localStorage.getItem('oopsTheme');
-  if (savedTheme === 'dark') body.classList.add('dark-mode');
-  updateThemeButton();
-
-  function updateThemeButton() {
-    const dark = body.classList.contains('dark-mode');
-    themeBtn.textContent = dark ? '☀' : '☾';
-    themeBtn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
-    themeBtn.title = dark ? 'Light mode' : 'Dark mode';
-  }
-
-  themeBtn.addEventListener('click', () => {
-    body.classList.toggle('dark-mode');
-    localStorage.setItem('oopsTheme', body.classList.contains('dark-mode') ? 'dark' : 'light');
-    updateThemeButton();
-  });
 
   function applyLanguage(language) {
     document.documentElement.lang = language;
