@@ -30,54 +30,19 @@ main{width:min(1120px,92%);margin:0 auto;padding:34px 0 64px}
 .panel-top{display:flex;align-items:center;gap:12px;margin-bottom:18px}
 .back-btn{border:1px solid var(--line);border-radius:999px;padding:9px 15px;background:var(--soft);color:var(--text);font:inherit;font-weight:700;cursor:pointer}
 .panel-top h2{margin:0;font-size:25px}
-.filter-panel{margin:24px 0 30px;padding:28px 30px;border:1px solid #dce9e2;border-radius:24px;background:#f6faf6;box-shadow:0 14px 38px rgba(9,55,48,.055)}
-.filter-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:25px}
-.filter-heading h3{margin:0;color:#103f3d;font-size:21px;font-weight:800;letter-spacing:-.55px}
-.filter-heading p{margin:4px 0 0;color:#718780;font-size:13px}
-.filter-kicker{display:flex;align-items:center;gap:8px;color:#278c7d;font-size:10px;font-weight:850;letter-spacing:1.35px;text-transform:uppercase;margin-bottom:7px}
-.filter-kicker:before{content:"";width:19px;height:2px;border-radius:4px;background:#43b9a9}
-.filters{display:grid;grid-template-columns:1fr;gap:25px;margin:0}
+.filter-panel{margin:22px 0 28px;padding:25px;border:1px solid rgba(24,83,74,.12);border-radius:20px;background:#e9f4e9;box-shadow:0 8px 24px rgba(8,49,43,.045)}
+.filter-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:20px}
+.filter-heading h3{margin:0;color:#103f3d;font-size:19px;letter-spacing:-.3px}
+.filter-heading p{margin:3px 0 0;color:#638078;font-size:13px}
+.filter-kicker{display:inline-flex;align-items:center;gap:7px;color:#238f80;font-size:11px;font-weight:850;letter-spacing:1.15px;text-transform:uppercase;margin-bottom:5px}
+.filter-kicker:before{content:"";width:7px;height:7px;border-radius:50%;background:#43c7b6}
+.filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0}
 .field{min-width:0}
-.field label{display:block;font-size:11px;font-weight:850;letter-spacing:1.05px;text-transform:uppercase;color:#688078;margin:0 0 11px}
-.state-select{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
-.segmented{display:inline-flex;align-items:center;gap:5px;padding:5px;border:1px solid #e0eae4;border-radius:15px;background:#eaf2ed;max-width:100%}
-.segment-option{display:flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:0 21px;border:1px solid transparent;border-radius:11px;background:transparent;color:#60786f;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:background .18s,color .18s,box-shadow .18s}
-.segment-option:hover{color:#124e45}
-.segment-option[aria-pressed="true"]{background:#fff;color:#123f3a;border-color:#e0eae4;box-shadow:0 3px 10px rgba(14,57,49,.08)}
-.segment-mark{display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:#dceee5;color:#167c6d;font-size:11px;font-weight:900}
-.segment-option[aria-pressed="true"] .segment-mark{background:#123f3a;color:#fff}
-.volume-grid{display:flex;flex-wrap:wrap;gap:9px}
-.volume-choice{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-width:76px;min-height:66px;padding:10px 13px;border:1px solid #dce8e1;border-radius:13px;background:#fff;color:#527068;font-family:inherit;cursor:pointer;transition:transform .18s,border-color .18s,background .18s,box-shadow .18s}
-.volume-choice:hover{transform:translateY(-2px);border-color:#8bcfc1}
-.volume-choice .vol-caption{font-size:9px;letter-spacing:1px;font-weight:850;color:#8ba097;text-transform:uppercase}
-.volume-choice .vol-number{font-size:20px;line-height:1.1;font-weight:850;letter-spacing:-.7px}
-.volume-choice[aria-pressed="true"]{border-color:#1c8e7e;background:#123f3a;color:#fff;box-shadow:0 6px 15px rgba(18,63,58,.16)}
-.volume-choice[aria-pressed="true"] .vol-caption{color:#9eddd0}
-.format-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:720px}
-.format-option{display:flex;align-items:center;gap:14px;min-height:82px;padding:15px 17px;border:1px solid #dce8e1;border-radius:16px;background:#fff;color:#284e46;text-align:left;font-family:inherit;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s}
-.format-option:hover{transform:translateY(-2px);border-color:#8bcfc1;box-shadow:0 7px 17px rgba(14,57,49,.06)}
-.format-option[aria-pressed="true"]{border:1.5px solid #238f80;background:#f0f8f3;box-shadow:0 0 0 3px rgba(67,199,182,.1)}
-.format-symbol{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:12px;background:#e6f2eb;color:#167c6d;font-size:19px}
-.format-copy{display:flex;flex-direction:column;gap:3px}
-.format-copy strong{font-size:14px}
-.format-copy small{font-size:11px;color:#7a8e86}
-.format-check{margin-left:auto;color:transparent;font-size:16px;font-weight:900}
-.format-option[aria-pressed="true"] .format-check{color:#168d7d}
-.part-field{margin-top:22px;padding-top:20px;border-top:1px solid #dce8e1}
-.part-options{display:flex;flex-wrap:wrap;gap:8px}
-.part-option{min-width:104px;padding:10px 15px;border:1px solid #dce8e1;border-radius:11px;background:#fff;color:#527068;font-family:inherit;font-size:13px;font-weight:750;cursor:pointer;transition:.18s}
-.part-option:hover{border-color:#78cbbb;color:#116b60}
-.part-option[aria-pressed="true"]{background:#123f3a;color:#fff;border-color:#123f3a}
-body.accessible .filter-panel{background:#111;border:2px solid #fff}
-body.accessible .filter-heading h3,body.accessible .filter-heading p,body.accessible .field label{color:#fff}
-body.accessible .segmented{background:#252525;border-color:#fff}
-body.accessible .segment-option{color:#fff}
-body.accessible .segment-option[aria-pressed="true"]{background:#fff;color:#111}
-body.accessible .volume-choice,body.accessible .format-option,body.accessible .part-option{background:#111;color:#fff;border:2px solid #fff}
-body.accessible .volume-choice[aria-pressed="true"],body.accessible .part-option[aria-pressed="true"]{background:#fff;color:#111;border-color:#ffeb3b}
-body.accessible .format-option[aria-pressed="true"]{background:#222;border-color:#ffeb3b}
-body.accessible .format-copy small{color:#eee}
-@media(max-width:650px){.filter-panel{padding:20px}.format-options{grid-template-columns:1fr}.segment-option{padding:0 13px}.volume-choice{min-width:62px}}
+.field label{display:block;font-weight:750;margin:0 0 8px;color:#103f3d;font-size:14px}
+.field select{appearance:auto;width:100%;min-height:52px;border-radius:13px;padding:0 14px;border:1px solid #a9c7ba;background:#f8fbf7;color:#103f3d;font:inherit;cursor:pointer}
+.field select:focus{outline:3px solid rgba(67,199,182,.25);border-color:#43b9a9}
+.part-field{margin-top:18px;padding-top:0;border-top:0}
+@media(max-width:760px){.filters{grid-template-columns:1fr}}
 .test-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}
 .test-card{background:var(--soft);color:var(--text);border:1px solid var(--line);display:flex;flex-direction:column;gap:7px}
 .test-card h3{margin:0}
@@ -139,18 +104,11 @@ footer{text-align:center;padding:25px;color:var(--muted)}
 <div class="filter-panel">
  <div class="filter-heading"><div><div class="filter-kicker">FIND YOUR NEXT PRACTICE</div><h3>Build your practice</h3><p>Choose the materials and format that suit your study session.</p></div></div>
  <div class="filters">
-  <div class="field"><label>01 / Source</label><input class="state-select" id="sourceSelect" aria-hidden="true" tabindex="-1" value="VOL"><div class="segmented" id="sourceChoices" role="group" aria-label="Choose source">
-   <button class="segment-option" type="button" data-value="VOL" aria-pressed="true"><span class="segment-mark">V</span> VOL Collection</button>
-   <button class="segment-option" type="button" data-value="Cambridge" aria-pressed="false"><span class="segment-mark">C</span> Cambridge IELTS</button>
-  </div></div>
-  <div class="field"><label>02 / Volume</label><input class="state-select" id="volumeSelect" aria-hidden="true" tabindex="-1" value="9"><div class="volume-grid" id="volumeChoices" aria-label="Choose volume"></div></div>
-  <div class="field"><label>03 / Practice format</label><input class="state-select" id="formatSelect" aria-hidden="true" tabindex="-1" value="full"><div class="format-options" id="formatChoices" role="group" aria-label="Choose practice format">
-   <button class="format-option" type="button" data-value="full" aria-pressed="true"><span class="format-symbol">▤</span><span class="format-copy"><strong>Full Test</strong><small>Complete Listening / Reading test</small></span><span class="format-check">✓</span></button>
-   <button class="format-option" type="button" data-value="part" aria-pressed="false"><span class="format-symbol">▥</span><span class="format-copy"><strong>Choose a part</strong><small>Practise one section or passage</small></span><span class="format-check">✓</span></button>
-  </div></div>
+  <div class="field"><label for="sourceSelect">Source</label><select id="sourceSelect"><option value="VOL">VOL</option><option value="Cambridge">Cambridge IELTS</option></select></div>
+  <div class="field"><label for="volumeSelect">Volume / Book</label><select id="volumeSelect"><option value="9">VOL 9</option><option value="1">VOL 1</option><option value="2">VOL 2</option><option value="3">VOL 3</option><option value="4">VOL 4</option><option value="5">VOL 5</option><option value="6">VOL 6</option><option value="7">VOL 7</option><option value="8">VOL 8</option><option value="10">VOL 10</option></select></div>
+  <div class="field"><label for="formatSelect">Practice format</label><select id="formatSelect"><option value="full">Full Test</option><option value="part">Individual Section / Passage</option></select></div>
  </div>
- <div id="partWrap" class="part-field hidden"><div class="field"><label id="partLabel">Choose a section</label><div id="partOptions" class="part-options" role="group" aria-label="Choose a section"></div></div></div>
-</div>
+ <div id="partWrap" class="part-field hidden"><div class="field"><label id="partLabel" for="partSelect">Choose a section</label><select id="partSelect"></select></div></div></div>
 <div class="heading"><div><h2>Available tests</h2><p id="testDescription">Select a test to continue.</p></div></div>
 <div class="test-grid" id="testGrid" aria-live="polite"></div>
 <div class="notice"><p><strong>Content status:</strong> VOL 9 test lists have been identified. Audio, question sets and verified answer keys must be added before these tests can be completed and scored.</p></div>
@@ -190,33 +148,11 @@ function openSkill(skill){
  $("skillHeading").textContent=listening?"Listening":"Reading";
  $("libraryIntro").textContent=listening?"Choose a source, volume and Listening test.":"Choose a source, volume and Reading test.";
  $("partLabel").textContent=listening?"Choose a section":"Choose a passage";
- $("partOptions").innerHTML="";state.part=1;
- for(let i=1;i<=(listening?4:3);i++){const option=document.createElement("button");option.type="button";option.className="part-option";option.textContent=(listening?"Section ":"Passage ")+i;option.setAttribute("aria-pressed",i===1?"true":"false");option.addEventListener("click",()=>{state.part=i;$("partOptions").querySelectorAll("button").forEach((b,index)=>b.setAttribute("aria-pressed",index+1===i?"true":"false"));});$("partOptions").append(option);}
+ $("partSelect").innerHTML="";state.part=1;
+ for(let i=1;i<=(listening?4:3);i++){const option=document.createElement("option");option.value=String(i);option.textContent=(listening?"Section ":"Passage ")+i;$("partSelect").append(option);}
  $("formatSelect").value="full";$("partWrap").classList.add("hidden");
  setHeading(listening?"Listening practice":"Reading practice",listening?"Browse Listening tests and choose a full test or one section.":"Browse Reading tests and choose a full test or one passage.");
  renderTests();show("libraryScreen");history.pushState({screen:"library",skill:skill},"","#"+skill);
-}
-function syncChoices(groupId,selectId){
- const group=$(groupId),select=$(selectId);
- group.querySelectorAll("[data-value]").forEach(button=>{
-  const active=button.dataset.value===select.value;
-  button.setAttribute("aria-pressed",active?"true":"false");
- });
-}
-function buildVolumeChoices(){
- const grid=$("volumeChoices");grid.innerHTML="";
- for(let i=1;i<=10;i++){
-  const button=document.createElement("button");button.type="button";button.className="volume-choice";button.dataset.value=String(i);
-  button.innerHTML='<span class="vol-caption">'+($("sourceSelect").value==="VOL"?"VOL":"BOOK")+'</span><span class="vol-number">'+i+'</span>';button.setAttribute("aria-label",( $("sourceSelect").value==="VOL"?"VOL ":"Cambridge IELTS ")+i);
-  button.setAttribute("aria-pressed",String(i)===$("volumeSelect").value?"true":"false");
-  button.addEventListener("click",()=>{$("volumeSelect").value=String(i);syncChoices("volumeChoices","volumeSelect");renderTests();});
-  grid.append(button);
- }
-}
-function bindChoiceGroup(groupId,selectId,onChange){
- $(groupId).querySelectorAll("[data-value]").forEach(button=>button.addEventListener("click",()=>{
-  $(selectId).value=button.dataset.value;syncChoices(groupId,selectId);if(onChange)onChange();
- }));
 }
 function renderTests(){
  const source=$("sourceSelect").value,volume=$("volumeSelect").value;
@@ -237,7 +173,7 @@ function openTest(test){
  state.test=test;
  const source=$("sourceSelect").value,volume=$("volumeSelect").value;
  const mode=$("formatSelect").value;
- const part=mode==="part"?(state.skill==="listening"?"Section ":"Passage ")+state.part:"Full Test";
+ const part=mode==="part"?(state.skill==="listening"?"Section ":"Passage ")+$("partSelect").value:"Full Test";
  $("practiceHeading").textContent=(state.skill==="listening"?"Listening":"Reading")+" · "+source+" "+volume+" · Test "+test;
  $("practiceTitle").textContent=part+" workspace";
  $("practiceMessage").textContent=state.skill==="listening"?"The test listing is available, but its audio files, question content and verified answer key are not included in the current website package.":"The test listing is available, but its question content and verified answer key are not included in the current website package.";
@@ -247,10 +183,9 @@ function openTest(test){
 document.querySelectorAll("[data-open-skill]").forEach(button=>button.addEventListener("click",()=>openSkill(button.dataset.openSkill)));
 $("backToHub").addEventListener("click",()=>{show("hubScreen");setHeading("Your IELTS practice space","Choose a skill and build your confidence step by step. Practise with a clear structure and review your progress.");history.pushState({screen:"hub"},"","#hub");});
 $("backToLibrary").addEventListener("click",()=>{show("libraryScreen");setHeading(state.skill==="listening"?"Listening practice":"Reading practice","Browse tests and choose a full test or one part.");history.back();});
-bindChoiceGroup("sourceChoices","sourceSelect",()=>{buildVolumeChoices();renderTests();});
-bindChoiceGroup("formatChoices","formatSelect",()=>{$("partWrap").classList.toggle("hidden",$("formatSelect").value!=="part");});
-buildVolumeChoices();
-$("partWrap").classList.add("hidden");
+$("sourceSelect").addEventListener("change",renderTests);
+$("volumeSelect").addEventListener("change",renderTests);
+$("formatSelect").addEventListener("change",()=>{$("partWrap").classList.toggle("hidden",$("formatSelect").value!=="part");});
 window.addEventListener("popstate",()=>{const hash=location.hash;if(hash.includes("/test-")){show("practiceScreen");}else if(hash==="#listening"||hash==="#reading"){state.skill=hash.slice(1);show("libraryScreen");renderTests();}else{show("hubScreen");setHeading("Your IELTS practice space","Choose a skill and build your confidence step by step. Practise with a clear structure and review your progress.");}});
 show("hubScreen");
 })();
