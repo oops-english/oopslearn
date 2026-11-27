@@ -122,3 +122,138 @@ body:not(.accessible) .subtitle,
 body:not(.accessible) .muted {
   color: var(--muted);
 }
+
+
+/* ===== Oops! global design system — applied consistently across every page ===== */
+:root {
+  --oops-teal: #0B3D3B;
+  --oops-mint: #45C5B2;
+  --oops-yellow: #F4BD32;
+  --oops-ivory: #F7F6EF;
+  --oops-cream: #FFFDF5;
+  --oops-muted: #71817D;
+  --oops-line: #DCE6DF;
+  --oops-soft: #EAF3EE;
+  --primary: var(--oops-mint);
+  --primary-dark: var(--oops-teal);
+  --bg: var(--oops-ivory);
+  --text: var(--oops-teal);
+  --card: var(--oops-cream);
+  --muted: var(--oops-muted);
+  --line: var(--oops-line);
+  --soft: var(--oops-soft);
+  --gold: var(--oops-yellow);
+}
+body:not(.accessible) {
+  background: var(--oops-ivory) !important;
+  color: var(--oops-teal) !important;
+}
+body:not(.accessible) header,
+body:not(.accessible) .site-header,
+body:not(.accessible) .navbar,
+body:not(.accessible) .nav-wrap {
+  background-color: var(--oops-cream) !important;
+  color: var(--oops-teal) !important;
+  border-color: var(--oops-line) !important;
+}
+body:not(.accessible) h1,
+body:not(.accessible) h2,
+body:not(.accessible) h3,
+body:not(.accessible) h4,
+body:not(.accessible) .logo,
+body:not(.accessible) .page-title {
+  color: var(--oops-teal) !important;
+}
+body:not(.accessible) .hero,
+body:not(.accessible) .intro,
+body:not(.accessible) .hero-card,
+body:not(.accessible) .welcome-banner {
+  background: linear-gradient(125deg, #E7F2EC 0%, #FFFDF5 100%) !important;
+  color: var(--oops-teal) !important;
+  border-color: var(--oops-line) !important;
+}
+body:not(.accessible) .card,
+body:not(.accessible) .panel,
+body:not(.accessible) .practice,
+body:not(.accessible) .profile-card,
+body:not(.accessible) .settings-card,
+body:not(.accessible) .dictionary-shell,
+body:not(.accessible) .lesson-card,
+body:not(.accessible) .stat-card,
+body:not(.accessible) .quest-card,
+body:not(.accessible) .roadmap-card,
+body:not(.accessible) .task-card,
+body:not(.accessible) .content-card {
+  background-color: var(--oops-cream) !important;
+  color: var(--oops-teal) !important;
+  border-color: var(--oops-line) !important;
+}
+body:not(.accessible) button.primary,
+body:not(.accessible) .primary,
+body:not(.accessible) .btn-primary,
+body:not(.accessible) .cta,
+body:not(.accessible) .submit-btn {
+  background: var(--oops-teal) !important;
+  color: #FFFFFF !important;
+  border-color: var(--oops-teal) !important;
+}
+body:not(.accessible) button.secondary,
+body:not(.accessible) .secondary,
+body:not(.accessible) .btn-secondary,
+body:not(.accessible) .back-home,
+body:not(.accessible) .main-tab,
+body:not(.accessible) .level-btn,
+body:not(.accessible) .topic-btn,
+body:not(.accessible) .study-tab,
+body:not(.accessible) .stage-btn,
+body:not(.accessible) .option,
+body:not(.accessible) .level-card,
+body:not(.accessible) .tab-button {
+  background: var(--oops-soft) !important;
+  color: var(--oops-teal) !important;
+  border-color: var(--oops-line) !important;
+}
+body:not(.accessible) .main-tab.active,
+body:not(.accessible) .level-btn.active,
+body:not(.accessible) .study-tab.active,
+body:not(.accessible) .stage-btn.active,
+body:not(.accessible) .option.selected,
+body:not(.accessible) .tab-button.active,
+body:not(.accessible) .topic-btn.active {
+  background: var(--oops-teal) !important;
+  color: #FFFFFF !important;
+  border-color: var(--oops-teal) !important;
+}
+body:not(.accessible) input,
+body:not(.accessible) textarea,
+body:not(.accessible) select {
+  background-color: #FFFFFF !important;
+  color: var(--oops-teal) !important;
+  border-color: var(--oops-line) !important;
+}
+body:not(.accessible) a { color: var(--oops-teal); }
+body:not(.accessible) .muted,
+body:not(.accessible) .subtitle,
+body:not(.accessible) .description,
+body:not(.accessible) .helper-text { color: var(--oops-muted) !important; }
+body:not(.accessible) .progress,
+body:not(.accessible) .progress-track,
+body:not(.accessible) .bar-track { background: var(--oops-soft) !important; }
+body:not(.accessible) .progress-bar,
+body:not(.accessible) .bar,
+body:not(.accessible) .progress-fill { background: var(--oops-mint) !important; }
+body:not(.accessible) .badge,
+body:not(.accessible) .tag,
+body:not(.accessible) .eyebrow {
+  border-color: var(--oops-line);
+}
+body:not(.accessible) :focus-visible {
+  outline: 3px solid var(--oops-yellow) !important;
+  outline-offset: 3px !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  body:not(.accessible) *, body:not(.accessible) *::before, body:not(.accessible) *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
