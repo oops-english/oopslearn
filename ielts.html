@@ -1,213 +1,215 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="IELTS Listening and Reading practice on Oops!">
 <title>IELTS Practice | Oops!</title>
+<link rel="stylesheet" href="theme-fix.css?v=20261127-ielts1">
 <style>
-:root{--primary:#6957e8;--bg:#f7f7fc;--text:#26243a;--card:#fff;--muted:#77778d}
+:root{--ielts-accent:#43c7b6;--ielts-gold:#f6bd2f}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
-header{padding:17px 7%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;background:var(--card);border-bottom:1px solid #eee}
-.logo{font-size:26px;font-weight:800;color:var(--primary);text-decoration:none}
-header a:not(.logo){color:var(--text);text-decoration:none}
-button,textarea,input{font:inherit}
-button{border:0;border-radius:10px;padding:11px 16px;cursor:pointer;font-weight:bold}
-.primary{background:var(--primary);color:white}
-.secondary{background:#eeeaff;color:var(--primary)}
-main{max-width:1050px;margin:auto;padding:40px 22px}
-.hero{padding:35px;background:linear-gradient(120deg,#eeeaff,#fff0f6);border-radius:22px;margin-bottom:30px}
-.hero h1{font-size:36px;margin:0}
-.hero p{color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.card{background:var(--card);padding:24px;border:1px solid #eee;border-radius:18px}
-.card h2{margin-top:0}
-.card p{color:var(--muted)}
-.practice{margin-top:30px;background:var(--card);padding:25px;border-radius:18px}
-.practice textarea{width:100%;min-height:130px;padding:14px;border:1px solid #ddd;border-radius:12px}
-.practice input{padding:11px;border:1px solid #ddd;border-radius:10px;width:100%;margin:10px 0}
-#feedback{font-weight:bold}
-.hidden{display:none}
-body.accessible{--bg:#000;--text:#fff;--card:#111;--muted:#eee;--primary:#ffeb3b}
-body.accessible .hero{background:#171717}
-body.accessible textarea,body.accessible input{background:#111;color:white;border:2px solid white}
-body.accessible .secondary{background:#333;color:#ffeb3b}
-:focus-visible{outline:3px solid #ff9800;outline-offset:4px}
-footer{text-align:center;padding:30px;color:var(--muted)}
-@media(max-width:650px){.grid{grid-template-columns:1fr}.hero h1{font-size:29px}}
+body{margin:0;font-family:"Be Vietnam Pro",Arial,sans-serif;line-height:1.65}
+main{width:min(1120px,92%);margin:0 auto;padding:38px 0 64px}
+.page-intro{padding:34px clamp(22px,4vw,42px);border-radius:26px;margin-bottom:30px}
+.page-intro h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);letter-spacing:-1px}
+.page-intro p{margin:0;max-width:720px}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--ielts-accent);margin-bottom:8px}
+.section-heading{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin:30px 0 14px}
+.section-heading h2{margin:0;font-size:23px}
+.section-heading p{margin:3px 0 0;color:var(--muted)}
+.skill-grid,.test-grid,.mode-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.skill-card,.selector-panel,.test-card,.status-panel{border-radius:20px;padding:22px}
+.skill-card{border:1px solid var(--line);background:var(--soft);color:var(--text);text-align:left;cursor:pointer;min-height:150px;transition:transform .15s,border-color .15s}
+.skill-card:hover{transform:translateY(-2px);border-color:var(--ielts-accent)}
+.skill-card[aria-pressed="true"]{outline:3px solid var(--ielts-accent);outline-offset:2px}
+.skill-icon{font-size:25px;margin-bottom:8px}
+.skill-card h3{margin:0 0 5px;font-size:20px}
+.skill-card p{margin:0;color:var(--muted);font-size:14px}
+.selector-panel{margin-top:22px;background:var(--card);color:var(--text);border:1px solid var(--line)}
+.selector-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
+.field label{display:block;font-weight:750;margin-bottom:7px}
+.field select{width:100%;min-height:48px;border-radius:12px;padding:0 13px;border:1px solid #9ab8ad;background:#f8fbf7;color:#103f3d;font:inherit}
+.mode-grid{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:15px}
+.mode-option{border:1px solid var(--line);border-radius:15px;padding:15px;background:var(--soft);color:var(--text);text-align:left;cursor:pointer}
+.mode-option[aria-pressed="true"]{border:2px solid var(--ielts-accent);padding:14px}
+.mode-option strong{display:block}
+.mode-option span{font-size:13px;color:var(--muted)}
+.test-grid{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:16px}
+.test-card{background:var(--card);color:var(--text);border:1px solid var(--line);display:flex;flex-direction:column;gap:7px}
+.test-card h3{margin:0}
+.test-card p{margin:0;color:var(--muted);font-size:13px}
+.test-card button{margin-top:auto}
+.test-status{font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:#8b6410}
+.primary-action{background:var(--ielts-gold);color:#073d3b;border:0;border-radius:999px;padding:12px 20px;font:inherit;font-weight:800;cursor:pointer}
+.secondary-action{background:var(--soft);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:10px 17px;font:inherit;font-weight:700;cursor:pointer}
+.notice{padding:15px 17px;border-radius:14px;background:rgba(246,189,47,.12);border:1px solid rgba(246,189,47,.4);margin-top:17px}
+.notice p{margin:0}
+.hidden{display:none!important}
+#selectionStatus{margin-top:16px}
+.practice-placeholder{margin-top:22px;padding:22px;border-radius:18px;border:1px dashed var(--ielts-accent);background:var(--soft)}
+.practice-placeholder h3{margin-top:0}
+footer{text-align:center;padding:25px;color:var(--muted)}
+body:not(.accessible) .selector-panel,body:not(.accessible) .test-card{background:#e9f4e9!important;color:#103f3d!important;border-color:rgba(7,61,59,.16)!important}
+body:not(.accessible) .test-card p,body:not(.accessible) .selector-panel .section-heading p{color:#526e68!important}
+body:not(.accessible) .status-panel{background:#e9f4e9;color:#103f3d;border:1px solid rgba(7,61,59,.16);border-radius:18px;padding:20px}
+body.accessible .skill-card,body.accessible .selector-panel,body.accessible .test-card,body.accessible .mode-option,body.accessible .practice-placeholder{background:#111!important;color:#fff!important;border:2px solid #fff!important}
+body.accessible .field select{background:#111;color:#fff;border:2px solid #fff}
+body.accessible .skill-card p,body.accessible .mode-option span,body.accessible .test-card p{color:#eee}
+:focus-visible{outline:4px solid #ffeb3b!important;outline-offset:4px!important}
+@media(max-width:760px){.test-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.skill-grid,.selector-row,.mode-grid,.test-grid{grid-template-columns:1fr}.page-intro{padding:25px 20px}}
 </style>
- 
-  <link rel="stylesheet" href="theme-fix.css?v=20261129">
 </head>
 <body>
 <header>
 <a class="logo" href="index.html">Oops!</a>
 <a class="back-home" href="index.html">← Back to Home</a>
-<button class="secondary mode-button" id="modeBtn" aria-pressed="false">Accessible Mode</button>
+<button class="secondary mode-button" id="modeBtn" type="button" aria-pressed="false">Accessible Mode</button>
 </header>
 
 <main>
-<section class="hero">
-<h1>IELTS Practice 🎯</h1>
-<p>Develop your English skills through structured practice and thoughtful reflection.</p>
-<strong>Practise consistently. Learn from feedback. Make progress.</strong>
+<section class="page-intro hero">
+<div class="eyebrow">IELTS · PRACTICE HUB</div>
+<h1>Build your IELTS skills</h1>
+<p>Choose a skill, select your material and practise in a structured test format. Your practice settings are saved on this device.</p>
 </section>
 
-<h2>Choose your skill</h2>
-<div class="grid">
-<article class="card">
-<h2>🎧 Listening</h2>
-<p>Practise listening comprehension, identifying key information and understanding details.</p>
-<button class="primary" data-skill="listening">Start Listening</button>
-</article>
-<article class="card">
-<h2>📖 Reading</h2>
-<p>Develop skimming, scanning, inference and vocabulary-in-context skills.</p>
-<button class="primary" data-skill="reading">Start Reading</button>
-</article>
-<article class="card">
-<h2>✍️ Writing</h2>
-<p>Practise Task 1 and Task 2, organize ideas and improve coherence and vocabulary.</p>
-<button class="primary" data-skill="writing">Start Writing</button>
-</article>
-<article class="card">
-<h2>🗣️ Speaking</h2>
-<p>Practise Part 1, Part 2 and Part 3 with topic-based speaking prompts.</p>
-<button class="primary" data-skill="speaking">Start Speaking</button>
-</article>
+<div class="section-heading">
+<div><h2>1. Choose your skill</h2><p>Listening and Reading are being prepared first.</p></div>
+</div>
+<div class="skill-grid" role="group" aria-label="Choose IELTS skill">
+<button class="skill-card" type="button" data-skill="listening" aria-pressed="true">
+<div class="skill-icon" aria-hidden="true">🎧</div><h3>Listening</h3><p>Practise all four sections or focus on one section at a time.</p>
+</button>
+<button class="skill-card" type="button" data-skill="reading" aria-pressed="false">
+<div class="skill-icon" aria-hidden="true">📖</div><h3>Reading</h3><p>Practise all three passages or focus on an individual passage.</p>
+</button>
+<button class="skill-card" type="button" data-skill="writing" aria-pressed="false">
+<div class="skill-icon" aria-hidden="true">✍️</div><h3>Writing</h3><p>Writing practice area. Existing practice is retained.</p>
+</button>
+<button class="skill-card" type="button" data-skill="speaking" aria-pressed="false">
+<div class="skill-icon" aria-hidden="true">🗣️</div><h3>Speaking</h3><p>Speaking practice area. Existing practice is retained.</p>
+</button>
 </div>
 
-<section class="practice hidden" id="practice">
-<h2 id="practiceTitle">Practice</h2>
-<p id="instructions"></p>
-<div id="task"></div>
-<p id="feedback" aria-live="polite"></p>
-<button class="secondary" id="reset">Back to skills</button>
+<section class="selector-panel" id="testSelector" aria-labelledby="selectorTitle">
+<div class="section-heading" style="margin-top:0">
+<div><h2 id="selectorTitle">2. Choose your material</h2><p id="selectorDescription">Select a source, volume and test.</p></div>
+</div>
+<div class="selector-row">
+<div class="field"><label for="sourceSelect">Source</label>
+<select id="sourceSelect"><option value="VOL">VOL</option><option value="Cambridge">Cambridge IELTS</option></select></div>
+<div class="field"><label for="volumeSelect">Volume / Book</label>
+<select id="volumeSelect"><option value="9">VOL 9</option><option value="1">VOL 1</option><option value="2">VOL 2</option><option value="3">VOL 3</option><option value="4">VOL 4</option><option value="5">VOL 5</option><option value="6">VOL 6</option><option value="7">VOL 7</option><option value="8">VOL 8</option><option value="10">VOL 10</option></select></div>
+</div>
+<div class="field"><label>Practice mode</label>
+<div class="mode-grid" role="group" aria-label="Choose practice mode">
+<button class="mode-option" type="button" data-mode="full" aria-pressed="true"><strong id="fullModeTitle">Full Test</strong><span id="fullModeDesc">All 4 Listening sections</span></button>
+<button class="mode-option" type="button" data-mode="part" aria-pressed="false"><strong id="partModeTitle">Individual Section</strong><span id="partModeDesc">Choose one section to practise</span></button>
+</div></div>
+<div class="field hidden" id="partPickerWrap" style="margin-top:16px"><label id="partPickerLabel" for="partSelect">Choose a section</label>
+<select id="partSelect"></select></div>
+<div class="section-heading"><div><h2 id="testListTitle">3. Choose a test</h2><p id="testListDescription">Available VOL 9 Listening materials.</p></div></div>
+<div class="test-grid" id="testGrid" aria-live="polite"></div>
+<div id="selectionStatus" class="notice hidden" role="status" aria-live="polite"></div>
+<div class="practice-placeholder hidden" id="contentPanel" tabindex="-1">
+<h3 id="contentTitle">Practice content</h3>
+<p id="contentMessage"></p>
+<button class="secondary-action" id="closeContent" type="button">Back to test list</button>
+</div>
 </section>
 </main>
-
 <footer>Oops! — Make mistakes. Make progress.</footer>
 
 <script src="tracker.js"></script>
-<script>
-const tasks={
-listening:{
-title:"Listening Practice",
-instructions:"Listen to the sentence and answer the question. This browser-based demo uses text-to-speech.",
-content:"The student usually studies English for thirty minutes every evening.",
-question:"How long does the student study English every evening?",
-answer:"thirty minutes",
-placeholder:"Type your answer..."
-},
-reading:{
-title:"Reading Practice",
-instructions:"Read the passage and answer the question.",
-content:"Many schools are introducing digital learning tools. These tools can help students access educational materials more easily. However, technology should support teachers rather than replace meaningful human interaction.",
-question:"According to the passage, what should technology support?",
-answer:"teachers",
-placeholder:"Type your answer..."
-},
-writing:{
-title:"Writing Practice",
-instructions:"Write a short response to the following IELTS-style practice prompt. This is an original practice prompt, not an official test question.",
-content:"Some people believe that students should learn practical skills at school in addition to academic subjects. To what extent do you agree or disagree?",
-question:"Write your response below:",
-answer:null,
-placeholder:"Write your ideas here..."
-},
-speaking:{
-title:"Speaking Practice",
-instructions:"Read the question aloud and practise answering it. You can use your device's microphone or record yourself separately.",
-content:"Describe a skill you would like to learn in the future. You should say what the skill is, why you want to learn it, how you would learn it and explain how it could help you.",
-question:"Speaking Part 2 – Practice prompt",
-answer:null,
-placeholder:"Write a few notes about your answer..."
-}
-};
-
-const practice=document.getElementById("practice");
-const task=document.getElementById("task");
-let currentSkill="";
-
-function startSkill(skill){
- currentSkill=skill;
- const item=tasks[skill];
- document.getElementById("practiceTitle").textContent=item.title;
- document.getElementById("instructions").textContent=item.instructions;
- document.getElementById("feedback").textContent="";
- task.innerHTML="";
-
- const passage=document.createElement("p");
- passage.textContent=item.content;
- task.append(passage);
-
- const question=document.createElement("h3");
- question.textContent=item.question;
- task.append(question);
-
- if(skill==="listening"){
-  const listen=document.createElement("button");
-  listen.className="secondary";
-  listen.textContent="🔊 Listen to the sentence";
-  listen.addEventListener("click",()=>{
-   if("speechSynthesis" in window){
-    speechSynthesis.cancel();
-    const utterance=new SpeechSynthesisUtterance(item.content);
-    utterance.lang="en-US";
-    speechSynthesis.speak(utterance);
-   }else{
-    document.getElementById("feedback").textContent="Speech playback is not supported in this browser.";
-   }
-  });
-  task.append(listen);
- }
-
- const answer=skill==="writing"||skill==="speaking"
-  ?document.createElement("textarea")
-  :document.createElement("input");
- answer.id="answer";
- answer.placeholder=item.placeholder;
- answer.setAttribute("aria-label",item.placeholder);
- task.append(answer);
-
- const submit=document.createElement("button");
- submit.className="primary";
- submit.textContent=skill==="writing"||skill==="speaking"?"Save practice response":"Check answer";
- submit.style.marginTop="12px";
- submit.addEventListener("click",()=>{
-  const value=answer.value.trim();
-  if(!value){
-   document.getElementById("feedback").textContent="Please enter your response first.";
-   return;
-  }
-    // Record one study day after the learner submits a practice response.
-  if(window.OopsTracker){
-   window.OopsTracker.recordStudyDay();
-  }
-  if(item.answer){
-   const correct=value.toLowerCase().includes(item.answer);
-   document.getElementById("feedback").textContent=correct?"Correct! Well done.":"Not quite. Review the passage or listen again and try once more.";
-  }else{
-   document.getElementById("feedback").textContent="Your response has been saved in this practice session. Review your ideas and improve your answer.";
-  }
- });
- task.append(submit);
- practice.classList.remove("hidden");
- practice.scrollIntoView({behavior:"smooth"});
-}
-
-document.querySelectorAll("[data-skill]").forEach(button=>{
- button.addEventListener("click",()=>startSkill(button.dataset.skill));
-});
-
-document.getElementById("reset").addEventListener("click",()=>{
- practice.classList.add("hidden");
-});
-
-</script>
-
 <script src="accessibility.js"></script>
 <script src="settings.js"></script>
+<script>
+(function(){
+"use strict";
+const vol9={listening:[1,3,7,8,9],reading:[1,2,7]};
+const state={skill:"listening",mode:"full",test:null};
+const $=id=>document.getElementById(id);
+const testGrid=$("testGrid");
+const partSelect=$("partSelect");
+const contentPanel=$("contentPanel");
+const available=(skill,source,volume)=>{
+ if(source==="VOL"&&volume==="9")return vol9[skill]||[];
+ return [];
+};
+function setSkill(skill){
+ state.skill=skill;state.mode="full";state.test=null;
+ document.querySelectorAll("[data-skill]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.skill===skill)));
+ const isLR=skill==="listening"||skill==="reading";
+ $("testSelector").classList.toggle("hidden",!isLR);
+ if(!isLR){showLegacyMessage(skill);return;}
+ $("fullModeTitle").textContent="Full Test";
+ $("partModeTitle").textContent=skill==="listening"?"Individual Section":"Individual Passage";
+ $("fullModeDesc").textContent=skill==="listening"?"All 4 Listening sections":"All 3 Reading passages";
+ $("partModeDesc").textContent=skill==="listening"?"Choose one section to practise":"Choose one passage to practise";
+ $("selectorDescription").textContent=skill==="listening"?"Select a source, volume and Listening test.":"Select a source, volume and Reading test.";
+ $("testListDescription").textContent="Available "+(skill==="listening"?"Listening":"Reading")+" materials for the selected source.";
+ $("partPickerLabel").textContent=skill==="listening"?"Choose a section":"Choose a passage";
+ populateParts();renderTests();hideContent();
+}
+function showLegacyMessage(skill){
+ $("testSelector").classList.remove("hidden");
+ $("selectorTitle").textContent=skill==="writing"?"Writing practice":"Speaking practice";
+ $("selectorDescription").textContent="This area is kept separate while Listening and Reading are being upgraded.";
+ testGrid.innerHTML='<article class="test-card"><h3>'+ (skill==="writing"?"Writing practice":"Speaking practice") +'</h3><p>The previous practice activity is retained in this version and can be restored in the next integration step.</p></article>';
+ $("partPickerWrap").classList.add("hidden");
+ $("selectionStatus").classList.add("hidden");
+ hideContent();
+}
+function populateParts(){
+ const isListening=state.skill==="listening";
+ const count=isListening?4:3;
+ partSelect.innerHTML="";
+ for(let i=1;i<=count;i++){const o=document.createElement("option");o.value=String(i);o.textContent=(isListening?"Section ":"Passage ")+i;partSelect.append(o);}
+}
+function renderTests(){
+ const source=$("sourceSelect").value,volume=$("volumeSelect").value;
+ const tests=available(state.skill,source,volume);
+ testGrid.innerHTML="";
+ if(!tests.length){
+  testGrid.innerHTML='<div class="status-panel"><strong>Materials not added yet</strong><p>There are no imported '+state.skill+' tests for this source and volume in the current website package.</p></div>';
+  return;
+ }
+ tests.forEach(test=>{
+  const article=document.createElement("article");article.className="test-card";
+  const status=document.createElement("span");status.className="test-status";status.textContent="Structure identified · content not imported";
+  const title=document.createElement("h3");title.textContent="Test "+test;
+  const desc=document.createElement("p");desc.textContent=state.skill==="listening"?"4 Sections · audio and answer key required":"3 Passages · answer key and explanations required";
+  const btn=document.createElement("button");btn.className="primary-action";btn.type="button";btn.textContent="Select Test";
+  btn.addEventListener("click",()=>selectTest(test));
+  article.append(status,title,desc,btn);testGrid.append(article);
+ });
+}
+function selectTest(test){
+ state.test=test;
+ const source=$("sourceSelect").value,volume=$("volumeSelect").value;
+ const part=state.mode==="part"?(state.skill==="listening"?"Section ":"Passage ")+partSelect.value:"Full Test";
+ $("contentTitle").textContent=source+" "+volume+" · Test "+test+" · "+part;
+ $("contentMessage").textContent=state.skill==="listening"
+ ?"The test structure is listed, but its audio files and verified answer key are not included in the uploaded VOL 9 package. The actual timed player and scoring will be activated when those assets and permitted question content are added."
+ :"The test structure is listed, but the answer key and explanations are not included in the uploaded VOL 9 package. The timed Reading interface and verified scoring will be activated when the content data is added.";
+ contentPanel.classList.remove("hidden");contentPanel.focus();
+ $("selectionStatus").classList.add("hidden");
+}
+function hideContent(){contentPanel.classList.add("hidden");}
+document.querySelectorAll("[data-skill]").forEach(b=>b.addEventListener("click",()=>setSkill(b.dataset.skill)));
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>{
+ state.mode=b.dataset.mode;
+ document.querySelectorAll("[data-mode]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+ $("partPickerWrap").classList.toggle("hidden",state.mode!=="part");
+}));
+$("sourceSelect").addEventListener("change",renderTests);
+$("volumeSelect").addEventListener("change",renderTests);
+$("closeContent").addEventListener("click",hideContent);
+$("partPickerWrap").classList.add("hidden");
+setSkill("listening");
+})();
+</script>
 </body>
 </html>
