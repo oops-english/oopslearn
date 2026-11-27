@@ -58,18 +58,30 @@ body.accessible .formula,body.accessible .option,body.accessible select{backgrou
 body.accessible .primary,body.accessible .secondary{background:#ffeb3b;color:#000}
 body.accessible .example-box,body.accessible .mistake-box{background:#181818;color:#fff;border:1px solid #ffeb3b}
 body.large-text{font-size:120%}
-@media(max-width:760px){header{grid-template-columns:1fr auto;gap:10px;padding:12px 18px}header a:not(.logo){grid-column:1/-1;grid-row:2;justify-self:start}header button{grid-column:2;grid-row:1;padding:0 13px;font-size:13px}main{width:92%;padding-top:28px}.lesson-grid{grid-template-columns:1fr}}
-@media(max-width:480px){.hero{padding:25px 21px;border-radius:20px}.filters{flex-direction:column}select{width:100%}.lesson{padding:20px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+@media(max-width:760px){
+  header{grid-template-columns:1fr auto;gap:10px;padding:12px 18px}
+  header .header-actions{grid-column:1/-1;justify-content:flex-start}
+  main{width:92%}
+}
+@media(max-width:480px){
+  .hero{padding:25px 21px;border-radius:20px}
+  .lesson{padding:20px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
 </style>
 
-  <link rel="stylesheet" href="theme-fix.css?v=20261128">
+  <link rel="stylesheet" href="theme-fix.css?v=20261129">
 </head>
 <body>
-<header>
+<header class="page-header">
 <a class="logo" href="index.html">Oops!</a>
-<a href="index.html">← Back to Home</a>
-<button class="secondary" id="modeBtn" type="button" aria-pressed="false">Accessible Mode</button>
+<div class="header-actions">
+<a class="back-home" href="index.html">← Back to Home</a>
+<button class="mode-button" id="modeBtn" type="button" aria-pressed="false">Accessible Mode</button>
+</div>
 </header>
 <main>
 <section class="hero">
@@ -77,610 +89,130 @@ body.large-text{font-size:120%}
 <p>Build a stronger understanding of English grammar, one lesson at a time.</p>
 <strong>Learn the rules. Understand the mistakes. Improve your English.</strong>
 </section>
-<h2>Explore Grammar</h2>
-<p>Choose your level and topic to find a lesson.</p>
-<div class="filters">
-<select id="level" aria-label="Choose level">
-<option value="all">All levels</option><option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option><option>C2</option>
-</select>
-<select id="topic" aria-label="Choose grammar topic">
-<option value="all">All topics</option><option value="Tenses">Tenses</option><option value="Nouns">Nouns and pronouns</option><option value="Clauses">Clauses</option><option value="Advanced">Advanced grammar</option>
-</select>
-</div>
-<div class="lesson-grid" id="lessons" aria-live="polite"></div>
+<section class="grammar-browser" aria-labelledby="exploreTitle">
+  <div class="browser-heading">
+    <h2 id="exploreTitle">Explore Grammar</h2>
+    <p>Choose an English level, then select a topic to explore its lessons.</p>
+  </div>
+  <h3 class="browser-step">1. Choose your English level</h3>
+  <div class="grammar-levels" id="grammarLevels" role="group" aria-label="Choose English level">
+    <button class="grammar-level active" type="button" data-level="all">All levels</button>
+    <button class="grammar-level" type="button" data-level="A1">A1</button>
+    <button class="grammar-level" type="button" data-level="A2">A2</button>
+    <button class="grammar-level" type="button" data-level="B1">B1</button>
+    <button class="grammar-level" type="button" data-level="B2">B2</button>
+    <button class="grammar-level" type="button" data-level="C1">C1</button>
+    <button class="grammar-level" type="button" data-level="C2">C2</button>
+  </div>
+  <div class="browser-step-row">
+    <h3 class="browser-step">2. Choose a grammar topic</h3>
+    <button class="grammar-all-topics active" id="allTopics" type="button">All topics</button>
+  </div>
+  <div class="grammar-topics" id="grammarTopics" aria-label="Grammar topics"></div>
+  <div class="browser-step-row lesson-results-heading">
+    <div>
+      <h3 class="browser-step">3. Explore lessons</h3>
+      <p id="grammarResultSummary" aria-live="polite">Showing all available lessons</p>
+    </div>
+  </div>
+  <div class="lesson-grid" id="lessons" aria-live="polite"></div>
+</section>
 </main>
 <footer>Oops! — Make mistakes. Make progress.</footer>
 <script src="tracker.js"></script>
 <script>
 const data = [{"id": "a1-present-simple", "level": "A1", "topic": "Tenses", "title": "Present Simple", "formula": "S + V(s/es)", "ex": "She goes to school every day.", "mistake": "She go to school every day.", "note": "Use the third-person singular form with he, she and it."}, {"id": "a1-present-continuous", "level": "A1", "topic": "Tenses", "title": "Present Continuous", "formula": "S + am/is/are + V-ing", "ex": "They are studying English now.", "mistake": "They studying English now.", "note": "Do not forget the correct form of the verb to be."}, {"id": "a1-articles-a-an", "level": "A1", "topic": "Nouns", "title": "Articles: A / An", "formula": "a + consonant sound | an + vowel sound", "ex": "I have an apple and a book.", "mistake": "She is an teacher.", "note": "Choose articles according to pronunciation, not simply spelling."}, {"id": "a2-past-simple", "level": "A2", "topic": "Tenses", "title": "Past Simple", "formula": "S + V2/ed", "ex": "We visited London last year.", "mistake": "We visit London yesterday.", "note": "Use the past form for completed actions in the past."}, {"id": "a2-countable-uncountable", "level": "A2", "topic": "Nouns", "title": "Countable and Uncountable Nouns", "formula": "many + countable | much + uncountable", "ex": "How much water do you need?", "mistake": "How many water do you need?", "note": "Water is uncountable in this context."}, {"id": "b1-present-perfect", "level": "B1", "topic": "Tenses", "title": "Present Perfect", "formula": "S + have/has + V3", "ex": "I have lived here for five years.", "mistake": "I live here since five years.", "note": "Use for and since correctly with the present perfect."}, {"id": "b1-relative-clauses", "level": "B1", "topic": "Clauses", "title": "Relative Clauses", "formula": "who / which / that / whose", "ex": "The girl who won the prize is my friend.", "mistake": "The girl which won the prize...", "note": "Use who for people and which for things."}, {"id": "b2-conditional-sentences", "level": "B2", "topic": "Clauses", "title": "Conditional Sentences", "formula": "If + past simple, would + V", "ex": "If I had more time, I would travel.", "mistake": "If I will have time, I would travel.", "note": "Do not normally use will in the if-clause of this conditional."}, {"id": "c1-inversion", "level": "C1", "topic": "Advanced", "title": "Inversion", "formula": "Negative adverbial + auxiliary + subject + verb", "ex": "Rarely have I seen such dedication.", "mistake": "Rarely I have seen such dedication.", "note": "Inversion is required after certain negative adverbials."}, {"id": "c2-cleft-sentences", "level": "C2", "topic": "Advanced", "title": "Cleft Sentences", "formula": "It is/was + focus + that/who...", "ex": "It was her determination that impressed us.", "mistake": "It her determination was that impressed us.", "note": "Use the cleft structure to emphasize a particular part of a sentence."}];
-function renderLessons(){
- const level=document.getElementById("level").value;
- const topic=document.getElementById("topic").value;
- const results=data.filter(x=>(level==="all"||x.level===level)&&(topic==="all"||x.topic===topic));
- const container=document.getElementById("lessons");
- container.innerHTML="";
- if(!results.length){container.textContent="No lessons found.";return;}
- results.forEach(item=>{
-  const card=document.createElement("article");card.className="lesson";
-  const label=document.createElement("span");label.className="level";label.textContent=item.level+" · "+item.topic;
-  const title=document.createElement("h3");title.textContent=item.title;
-  const desc=document.createElement("p");desc.className="lesson-desc";desc.textContent="Explore the lesson and practise what you learn.";
-  const link=document.createElement("a");link.className="lesson-link";link.href="grammar-lesson.html?id="+encodeURIComponent(item.id);link.textContent="View lesson →";
-  card.append(label,title,desc,link);container.append(card);
- });
+let selectedGrammarLevel = "all";
+let selectedGrammarTopic = "all";
+
+function topicLabel(topic){
+  return topic === "Nouns" ? "Nouns and pronouns" :
+         topic === "Advanced" ? "Advanced grammar" : topic;
 }
-document.getElementById("level").addEventListener("change",renderLessons);
-document.getElementById("topic").addEventListener("change",renderLessons);
+function getFilteredGrammarLessons(){
+  return data.filter(item =>
+    (selectedGrammarLevel === "all" || item.level === selectedGrammarLevel) &&
+    (selectedGrammarTopic === "all" || item.topic === selectedGrammarTopic)
+  );
+}
+function renderGrammarTopics(){
+  const container = document.getElementById("grammarTopics");
+  container.innerHTML = "";
+  const visible = data.filter(item =>
+    selectedGrammarLevel === "all" || item.level === selectedGrammarLevel
+  );
+  const topics = [...new Set(visible.map(item => item.topic))];
+  topics.forEach(topic => {
+    const count = visible.filter(item => item.topic === topic).length;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "grammar-topic" + (selectedGrammarTopic === topic ? " active" : "");
+    const title = document.createElement("strong");
+    title.textContent = topicLabel(topic);
+    const description = document.createElement("span");
+    description.textContent = count + (count === 1 ? " lesson" : " lessons");
+    button.append(title, description);
+    button.addEventListener("click", () => {
+      selectedGrammarTopic = topic;
+      document.getElementById("allTopics").classList.remove("active");
+      renderGrammarTopics();
+      renderLessons();
+    });
+    container.append(button);
+  });
+}
+function renderLessons(){
+  const results = getFilteredGrammarLessons();
+  const container = document.getElementById("lessons");
+  container.innerHTML = "";
+  document.getElementById("grammarResultSummary").textContent =
+    selectedGrammarLevel === "all" ? "All levels" : selectedGrammarLevel;
+  document.getElementById("grammarResultSummary").textContent +=
+    " · " + (selectedGrammarTopic === "all" ? "All topics" : topicLabel(selectedGrammarTopic)) +
+    " · " + results.length + (results.length === 1 ? " lesson" : " lessons");
+  if(!results.length){
+    container.textContent = "No lessons available for this selection yet.";
+    return;
+  }
+  results.forEach(item=>{
+    const card=document.createElement("article");
+    card.className="lesson";
+    const label=document.createElement("span");
+    label.className="level";
+    label.textContent=item.level+" · "+topicLabel(item.topic);
+    const title=document.createElement("h3");
+    title.textContent=item.title;
+    const desc=document.createElement("p");
+    desc.className="lesson-desc";
+    desc.textContent="Explore the lesson and practise what you learn.";
+    const link=document.createElement("a");
+    link.className="lesson-link";
+    link.href="grammar-lesson.html?id="+encodeURIComponent(item.id);
+    link.textContent="View lesson →";
+    card.append(label,title,desc,link);
+    container.append(card);
+  });
+}
+document.querySelectorAll(".grammar-level").forEach(button=>{
+  button.addEventListener("click",()=>{
+    selectedGrammarLevel = button.dataset.level;
+    selectedGrammarTopic = "all";
+    document.querySelectorAll(".grammar-level").forEach(item=>
+      item.classList.toggle("active", item === button)
+    );
+    document.getElementById("allTopics").classList.add("active");
+    renderGrammarTopics();
+    renderLessons();
+  });
+});
+document.getElementById("allTopics").addEventListener("click",()=>{
+  selectedGrammarTopic = "all";
+  document.getElementById("allTopics").classList.add("active");
+  renderGrammarTopics();
+  renderLessons();
+});
+renderGrammarTopics();
 renderLessons();
 </script>
 <script src="accessibility.js"></script><script src="settings.js"></script>
 </body></html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grammar Lab | Oops!</title>
-
-<style>
-:root {
-  --primary: #39b9ad;
-  --primary-dark: #073d3b;
-  --bg: #f7f7f1;
-  --text: #123d3b;
-  --card: #fffef9;
-  --muted: #71817d;
-  --line: #dce6df;
-  --soft: #eaf3ee;
-  --gold: #f6bd2f;
-  --shadow: 0 12px 35px rgba(7,61,59,.06);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 100px;
-}
-
-body {
-  margin: 0;
-  font-family: "Be Vietnam Pro", "Segoe UI", Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.7;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-
-h1, h2, h3, .logo {
-  font-family: "Lexend", "Be Vietnam Pro", "Segoe UI", sans-serif;
-}
-
-header {
-  min-height: 76px;
-  padding: 12px clamp(20px, 4.5vw, 76px);
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 20px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(247,247,241,.96);
-  border-bottom: 1px solid var(--line);
-  box-shadow: 0 5px 22px rgba(7,61,59,.04);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-
-.logo {
-  justify-self: start;
-  font-size: 32px;
-  font-weight: 900;
-  letter-spacing: -1.8px;
-  color: var(--primary-dark);
-  text-decoration: none;
-}
-
-header a:not(.logo) {
-  justify-self: center;
-  color: var(--primary-dark);
-  text-decoration: none;
-  font-weight: 700;
-  transition: color .2s ease;
-}
-
-header a:not(.logo):hover {
-  color: #159b8e;
-}
-
-header button {
-  justify-self: end;
-  min-height: 46px;
-  padding: 0 20px;
-  border-radius: 999px;
-  font: inherit;
-  font-weight: 700;
-}
-
-button, select {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  transition: background .2s ease,
-              color .2s ease,
-              transform .2s ease,
-              box-shadow .2s ease;
-}
-
-button:active {
-  transform: translateY(1px);
-}
-
-.primary {
-  background: var(--primary-dark);
-  color: white;
-}
-
-.primary:hover {
-  background: #0c5751;
-  box-shadow: 0 5px 14px rgba(7,61,59,.13);
-}
-
-.secondary {
-  background: #eaf3ee;
-  color: var(--primary-dark);
-}
-
-.secondary:hover {
-  background: #dcece5;
-}
-
-main {
-  width: min(1100px, 92%);
-  margin: auto;
-  padding: 48px 0 70px;
-}
-
-.hero {
-  padding: clamp(30px, 5vw, 48px);
-  background: linear-gradient(120deg, #e7f2ec, #fff8e9);
-  border: 1px solid var(--line);
-  border-radius: 28px;
-  margin-bottom: 42px;
-}
-
-.hero h1 {
-  font-size: clamp(29px, 4vw, 42px);
-  line-height: 1.2;
-  letter-spacing: -1px;
-  margin-bottom: 15px;
-}
-
-.hero p {
-  color: var(--muted);
-  margin-bottom: 16px;
-  font-size: 16px;
-}
-
-.hero strong {
-  color: var(--primary-dark);
-}
-
-main > h2 {
-  font-size: 27px;
-  margin-bottom: 8px;
-}
-
-main > p {
-  color: var(--muted);
-}
-
-.filters {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 22px 0 26px;
-}
-
-select {
-  min-height: 48px;
-  min-width: 190px;
-  padding: 0 15px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--card);
-  color: var(--text);
-  outline: none;
-  cursor: pointer;
-}
-
-select:focus-visible {
-  outline: 3px solid var(--gold);
-  outline-offset: 3px;
-}
-
-.lesson-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-}
-
-.lesson {
-  min-width: 0;
-  background: var(--card);
-  padding: 25px;
-  border-radius: 22px;
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow);
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.lesson:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 35px rgba(7,61,59,.09);
-}
-
-.level {
-  color: #087d73;
-  font-size: 13px;
-  font-weight: 800;
-}
-
-.lesson h3 {
-  font-size: 19px;
-  margin: 8px 0 13px;
-}
-
-.formula {
-  background: var(--soft);
-  color: var(--primary-dark);
-  padding: 15px;
-  border-radius: 12px;
-  margin: 12px 0;
-  font-weight: 800;
-  overflow-wrap: anywhere;
-}
-
-.lesson p {
-  margin: 10px 0;
-  overflow-wrap: anywhere;
-}
-
-.muted {
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.quiz {
-  margin-top: 48px;
-  background: var(--card);
-  padding: clamp(22px, 4vw, 32px);
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  box-shadow: var(--shadow);
-}
-
-.quiz h2 {
-  font-size: 25px;
-  margin-bottom: 8px;
-}
-
-.quiz h3 {
-  margin: 22px 0;
-  font-size: 19px;
-}
-
-.option {
-  display: block;
-  width: 100%;
-  min-height: 52px;
-  text-align: left;
-  margin: 10px 0;
-  padding: 14px 18px;
-  border-radius: 12px;
-  background: var(--soft);
-  color: var(--text);
-  border: 1px solid var(--line);
-}
-
-.option:hover {
-  border-color: var(--primary);
-  background: #e1f1e9;
-}
-
-#feedback {
-  font-weight: 700;
-  margin-top: 16px;
-  line-height: 1.7;
-}
-
-#next {
-  margin-top: 18px;
-  min-height: 48px;
-  padding: 0 22px;
-  border-radius: 12px;
-}
-
-footer {
-  text-align: center;
-  padding: 28px 20px;
-  color: var(--muted);
-  border-top: 1px solid var(--line);
-}
-
-/* Accessible Mode */
-body.accessible {
-  --bg: #000;
-  --text: #fff;
-  --card: #111;
-  --muted: #eee;
-  --primary: #ffeb3b;
-  --primary-dark: #000;
-  --line: #ffeb3b;
-  --soft: #181818;
-  color-scheme: dark;
-}
-
-body.accessible header {
-  background: #000;
-  border-color: #ffeb3b;
-}
-
-body.accessible .logo,
-body.accessible header a:not(.logo) {
-  color: #ffeb3b;
-}
-
-body.accessible .hero,
-body.accessible .lesson,
-body.accessible .quiz {
-  background: #111;
-  border: 2px solid #ffeb3b;
-}
-
-body.accessible .hero strong,
-body.accessible .level {
-  color: #ffeb3b;
-}
-
-body.accessible .formula,
-body.accessible .option,
-body.accessible select {
-  background: #181818;
-  color: #fff;
-  border: 1px solid #ffeb3b;
-}
-
-body.accessible .primary,
-body.accessible .secondary {
-  background: #ffeb3b;
-  color: #000;
-}
-
-body.large-text {
-  font-size: 120%;
-}
-
-:focus-visible {
-  outline: 3px solid #ff9800;
-  outline-offset: 4px;
-}
-
-/* Responsive */
-@media (max-width: 760px) {
-  header {
-    grid-template-columns: 1fr auto;
-    gap: 10px;
-    padding: 12px 18px;
-  }
-
-  header a:not(.logo) {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    justify-self: start;
-  }
-
-  header button {
-    grid-column: 2;
-    grid-row: 1;
-    padding: 0 13px;
-    font-size: 13px;
-  }
-
-  main {
-    width: 92%;
-    padding-top: 28px;
-  }
-
-  .lesson-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero {
-    padding: 25px 21px;
-    border-radius: 20px;
-  }
-
-  .filters {
-    flex-direction: column;
-  }
-
-  select {
-    width: 100%;
-  }
-
-  .lesson {
-    padding: 20px;
-  }
-
-  .quiz {
-    padding: 21px 17px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-  }
-}
-</style>
-</head>
-<body>
-<header>
-<a class="logo" href="index.html">Oops!</a>
-<a href="index.html">← Back to Home</a>
-<button class="secondary" id="modeBtn" aria-pressed="false">Accessible Mode</button>
-</header>
-
-<main>
-<section class="hero">
-<h1>Grammar Lab 🧩</h1>
-<p>Understand grammar, recognize common mistakes and practise using English accurately.</p>
-<strong>Learn the rules. Understand the mistakes. Improve your English.</strong>
-</section>
-
-<h2>Explore Grammar</h2>
-<p>Choose your level and discover grammar lessons.</p>
-
-<div class="filters">
-<select id="level" aria-label="Choose level">
-<option value="all">All levels</option>
-<option>A1</option><option>A2</option><option>B1</option>
-<option>B2</option><option>C1</option><option>C2</option>
-</select>
-<select id="topic" aria-label="Choose grammar topic">
-<option value="all">All topics</option>
-<option value="Tenses">Tenses</option>
-<option value="Nouns">Nouns and pronouns</option>
-<option value="Clauses">Clauses</option>
-<option value="Advanced">Advanced grammar</option>
-</select>
-</div>
-
-<div class="lesson-grid" id="lessons"></div>
-
-<section class="quiz">
-<h2>Grammar Challenge</h2>
-<p>Choose the correct answer.</p>
-<h3 id="question"></h3>
-<div id="options"></div>
-<p id="feedback" aria-live="polite"></p>
-<button class="primary" id="next">Next question →</button>
-</section>
-</main>
-
-<footer>Oops! — Make mistakes. Make progress.</footer>
-
-<script src="tracker.js"></script>
-<script>
-const data=[
-{level:"A1",topic:"Tenses",title:"Present Simple",formula:"S + V(s/es)",ex:"She goes to school every day.",mistake:"She go to school every day.",note:"Use the third-person singular form with he, she and it."},
-{level:"A1",topic:"Tenses",title:"Present Continuous",formula:"S + am/is/are + V-ing",ex:"They are studying English now.",mistake:"They studying English now.",note:"Do not forget the correct form of the verb to be."},
-{level:"A1",topic:"Nouns",title:"Articles: A / An",formula:"a + consonant sound | an + vowel sound",ex:"I have an apple and a book.",mistake:"She is an teacher.",note:"Choose articles according to pronunciation, not simply spelling."},
-{level:"A2",topic:"Tenses",title:"Past Simple",formula:"S + V2/ed",ex:"We visited London last year.",mistake:"We visit London yesterday.",note:"Use the past form for completed actions in the past."},
-{level:"A2",topic:"Nouns",title:"Countable and Uncountable Nouns",formula:"many + countable | much + uncountable",ex:"How much water do you need?",mistake:"How many water do you need?",note:"Water is uncountable in this context."},
-{level:"B1",topic:"Tenses",title:"Present Perfect",formula:"S + have/has + V3",ex:"I have lived here for five years.",mistake:"I live here since five years.",note:"Use for and since correctly with the present perfect."},
-{level:"B1",topic:"Clauses",title:"Relative Clauses",formula:"who / which / that / whose",ex:"The girl who won the prize is my friend.",mistake:"The girl which won the prize...",note:"Use who for people and which for things."},
-{level:"B2",topic:"Clauses",title:"Conditional Sentences",formula:"If + past simple, would + V",ex:"If I had more time, I would travel.",mistake:"If I will have time, I would travel.",note:"Do not normally use will in the if-clause of this conditional."},
-{level:"C1",topic:"Advanced",title:"Inversion",formula:"Negative adverbial + auxiliary + subject + verb",ex:"Rarely have I seen such dedication.",mistake:"Rarely I have seen such dedication.",note:"Inversion is required after certain negative adverbials."},
-{level:"C2",topic:"Advanced",title:"Cleft Sentences",formula:"It is/was + focus + that/who...",ex:"It was her determination that impressed us.",mistake:"It her determination was that impressed us.",note:"Use the cleft structure to emphasize a particular part of a sentence."}
-];
-
-const questions=[
-{q:"She _____ to school every morning.",options:["go","goes","going","gone"],answer:1,explain:"With she, use goes in the Present Simple."},
-{q:"I _____ English for three years.",options:["study","studied","have studied","am study"],answer:2,explain:"Use the Present Perfect with for to describe a period continuing to the present."},
-{q:"If I were rich, I _____ around the world.",options:["travel","will travel","would travel","travelled"],answer:2,explain:"The Second Conditional uses would + infinitive in the main clause."},
-{q:"The student _____ won the competition is my friend.",options:["which","who","where","when"],answer:1,explain:"Use who to refer to people."}
-];
-
-let current=0;
-let answered=false;
-
-function renderLessons(){
- const selectedLevel=document.getElementById("level").value;
- const selectedTopic=document.getElementById("topic").value;
- const results=data.filter(x=>(selectedLevel==="all"||x.level===selectedLevel)&&(selectedTopic==="all"||x.topic===selectedTopic));
- const container=document.getElementById("lessons");
- container.innerHTML="";
- if(!results.length){container.textContent="No lessons found.";return;}
- results.forEach(item=>{
-  const card=document.createElement("article");
-  card.className="lesson";
-  const level=document.createElement("span");
-  level.className="level";
-  level.textContent=item.level+" · "+item.topic;
-  const title=document.createElement("h3");
-  title.textContent=item.title;
-  const formula=document.createElement("div");
-  formula.className="formula";
-  formula.textContent=item.formula;
-  const example=document.createElement("p");
-  example.textContent="Example: "+item.ex;
-  const mistake=document.createElement("p");
-  mistake.textContent="Common mistake: "+item.mistake;
-  const note=document.createElement("p");
-  note.className="muted";
-  note.textContent="Explanation: "+item.note;
-  card.append(level,title,formula,example,mistake,note);
-  container.append(card);
- });
-}
-
-function showQuestion(){
- answered=false;
- document.getElementById("feedback").textContent="";
- const q=questions[current];
- document.getElementById("question").textContent=q.q;
- const box=document.getElementById("options");
- box.innerHTML="";
- q.options.forEach((option,index)=>{
-  const button=document.createElement("button");
-  button.className="option";
-  button.textContent=String.fromCharCode(65+index)+". "+option;
-  button.addEventListener("click",()=>{
-   if(answered)return;
-   answered=true;
-
-// Record one study day when the learner answers a question.
-if (window.OopsTracker) {
-  window.OopsTracker.recordStudyDay();
-}
-
-const correct=index===q.answer;
-   document.getElementById("feedback").textContent=
-    (correct?"Correct! ":"Not quite. ")+q.explain;
-  });
-  box.append(button);
- });
-}
-
-document.getElementById("level").addEventListener("change",renderLessons);
-document.getElementById("topic").addEventListener("change",renderLessons);
-document.getElementById("next").addEventListener("click",()=>{
- current=(current+1)%questions.length;
- showQuestion();
-});
-renderLessons();
-showQuestion();
-</script>
-
-<script src="accessibility.js"></script>
-<script src="settings.js"></script>
-</body>
-</html>

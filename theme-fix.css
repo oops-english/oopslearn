@@ -219,3 +219,233 @@ body.accessible :focus-visible {
   outline: 4px solid #ffeb3b !important;
   outline-offset: 4px !important;
 }
+
+
+/* Shared page chrome: consistent logo, Back link and Accessible Mode control. */
+body:not(.accessible) header:not(.site-header) {
+  min-height: 76px !important;
+  height: auto !important;
+  padding: 12px clamp(20px, 4.5vw, 76px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+}
+body:not(.accessible) header:not(.site-header) .logo {
+  margin-right: auto !important;
+  color: var(--oops-white) !important;
+  font-size: 30px !important;
+  font-weight: 900 !important;
+  letter-spacing: -1.5px !important;
+}
+body:not(.accessible) .header-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+  margin-left: auto !important;
+}
+body:not(.accessible) header:not(.site-header) > a:not(.logo) {
+  margin-left: auto !important;
+}
+body:not(.accessible) .back-home,
+body:not(.accessible) .mode-button,
+body:not(.accessible) header:not(.site-header) > button,
+body:not(.accessible) .header-actions button {
+  min-height: 46px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 20px !important;
+  border-radius: 999px !important;
+  background: #143b37 !important;
+  color: #f4f8f5 !important;
+  border: 1px solid var(--oops-line) !important;
+  font: inherit !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  box-shadow: none !important;
+}
+body:not(.accessible) .back-home:hover,
+body:not(.accessible) .mode-button:hover,
+body:not(.accessible) header button:hover {
+  background: var(--oops-mint) !important;
+  color: var(--oops-deep) !important;
+  border-color: var(--oops-mint) !important;
+}
+
+/* Vocabulary browser: the learning area is a rounded surface, not a square white slab. */
+body:not(.accessible) #learnPanel,
+body:not(.accessible) #dictionaryPanel,
+body:not(.accessible) #wordbookPanel {
+  padding: clamp(22px, 3vw, 34px) !important;
+  border-radius: 24px !important;
+  background: var(--oops-card) !important;
+  color: var(--oops-ink) !important;
+  border: 1px solid rgba(7, 61, 59, .16) !important;
+  box-shadow: 0 12px 32px rgba(0,0,0,.10) !important;
+}
+body:not(.accessible) .topic-btn,
+body:not(.accessible) .level-btn,
+body:not(.accessible) .main-tab,
+body:not(.accessible) .study-tab {
+  border-radius: 14px !important;
+}
+body:not(.accessible) .topic-btn {
+  min-height: 96px !important;
+  padding: 18px !important;
+  text-align: left !important;
+}
+body:not(.accessible) .level-btn {
+  min-height: 48px !important;
+  padding: 0 19px !important;
+  border-radius: 13px !important;
+}
+body:not(.accessible) .main-tab {
+  border-radius: 15px !important;
+}
+body:not(.accessible) .flashcard,
+body:not(.accessible) .learn-quiz-card,
+body:not(.accessible) .dictionary-shell,
+body:not(.accessible) .note {
+  border-radius: 22px !important;
+}
+
+/* Grammar browser follows the same level -> topic -> lesson flow as Vocabulary. */
+body:not(.accessible) .grammar-browser {
+  margin-top: 30px !important;
+  padding: clamp(22px, 3vw, 34px) !important;
+  border-radius: 24px !important;
+  background: var(--oops-card) !important;
+  color: var(--oops-ink) !important;
+  border: 1px solid rgba(7,61,59,.16) !important;
+  box-shadow: 0 12px 32px rgba(0,0,0,.10) !important;
+}
+body:not(.accessible) .browser-heading h2,
+body:not(.accessible) .browser-step,
+body:not(.accessible) .grammar-topic strong {
+  color: var(--oops-deep) !important;
+}
+body:not(.accessible) .browser-heading p,
+body:not(.accessible) #grammarResultSummary,
+body:not(.accessible) .grammar-topic span {
+  color: #526e68 !important;
+}
+body:not(.accessible) .grammar-levels {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin: 18px 0 28px !important;
+}
+body:not(.accessible) .grammar-level,
+body:not(.accessible) .grammar-all-topics {
+  min-height: 48px !important;
+  padding: 0 19px !important;
+  border-radius: 13px !important;
+  background: #143b37 !important;
+  color: #eaf5f0 !important;
+  border: 1px solid var(--oops-line) !important;
+  font-weight: 750 !important;
+}
+body:not(.accessible) .grammar-level.active,
+body:not(.accessible) .grammar-all-topics.active {
+  background: var(--oops-mint) !important;
+  color: var(--oops-deep) !important;
+  border-color: var(--oops-mint) !important;
+}
+body:not(.accessible) .browser-step-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  flex-wrap: wrap !important;
+  margin: 22px 0 12px !important;
+}
+body:not(.accessible) .grammar-topics {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+  gap: 14px !important;
+  margin: 14px 0 28px !important;
+}
+body:not(.accessible) .grammar-topic {
+  min-height: 92px !important;
+  padding: 17px 19px !important;
+  border-radius: 16px !important;
+  background: #143b37 !important;
+  color: #f4f8f5 !important;
+  border: 1px solid var(--oops-line) !important;
+  text-align: left !important;
+}
+body:not(.accessible) .grammar-topic strong,
+body:not(.accessible) .grammar-topic span {
+  display: block !important;
+}
+body:not(.accessible) .grammar-topic strong {
+  color: #f4f8f5 !important;
+  font-size: 15px !important;
+}
+body:not(.accessible) .grammar-topic span {
+  margin-top: 5px !important;
+  color: #b9cbc5 !important;
+  font-size: 12px !important;
+}
+body:not(.accessible) .grammar-topic.active,
+body:not(.accessible) .grammar-topic:hover {
+  background: var(--oops-mint) !important;
+  border-color: var(--oops-mint) !important;
+}
+body:not(.accessible) .grammar-topic.active strong,
+body:not(.accessible) .grammar-topic:hover strong {
+  color: var(--oops-deep) !important;
+}
+body:not(.accessible) .grammar-topic.active span,
+body:not(.accessible) .grammar-topic:hover span {
+  color: #174b46 !important;
+}
+body:not(.accessible) .grammar-browser .lesson-grid {
+  margin-top: 14px !important;
+}
+body:not(.accessible) .grammar-browser .lesson {
+  border-radius: 20px !important;
+  padding: 22px !important;
+}
+
+/* Keep Accessible Mode high-contrast while retaining the same rounded geometry. */
+body.accessible #learnPanel,
+body.accessible #dictionaryPanel,
+body.accessible #wordbookPanel,
+body.accessible .grammar-browser {
+  background: #101010 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+  border-radius: 22px !important;
+  padding: 22px !important;
+  box-shadow: none !important;
+}
+body.accessible .grammar-level,
+body.accessible .grammar-all-topics,
+body.accessible .grammar-topic,
+body.accessible .back-home,
+body.accessible .mode-button {
+  border-radius: 13px !important;
+  border: 2px solid #fff !important;
+}
+body.accessible .grammar-topic strong,
+body.accessible .grammar-topic span,
+body.accessible .browser-heading h2,
+body.accessible .browser-step,
+body.accessible #grammarResultSummary {
+  color: #fff !important;
+}
+@media (max-width: 760px) {
+  body:not(.accessible) .grammar-topics { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+  body:not(.accessible) header:not(.site-header) { flex-wrap: wrap !important; }
+  body:not(.accessible) .header-actions { flex-wrap: wrap !important; }
+}
+@media (max-width: 480px) {
+  body:not(.accessible) .grammar-topics { grid-template-columns: 1fr !important; }
+  body:not(.accessible) .back-home,
+  body:not(.accessible) .mode-button,
+  body:not(.accessible) header:not(.site-header) > button { padding: 0 14px !important; font-size: 12px !important; }
+}
