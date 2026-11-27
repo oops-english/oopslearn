@@ -1,0 +1,124 @@
+
+/* Oops! — Unified visual theme */
+:root {
+  --primary: #39b9ad;
+  --primary-dark: #073d3b;
+  --bg: #f7f7f1;
+  --text: #123d3b;
+  --card: #fffef9;
+  --muted: #71817d;
+  --line: #dce6df;
+  --soft: #eaf3ee;
+  --gold: #f6bd2f;
+}
+
+body:not(.accessible) {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+  font-family: "Be Vietnam Pro", Arial, sans-serif;
+}
+
+body:not(.accessible) header {
+  background: rgba(255, 254, 249, .97) !important;
+  color: var(--text) !important;
+  border-bottom: 1px solid var(--line) !important;
+}
+
+body:not(.accessible) .logo,
+body:not(.accessible) h1,
+body:not(.accessible) h2,
+body:not(.accessible) h3 {
+  color: var(--primary-dark);
+}
+
+body:not(.accessible) .hero,
+body:not(.accessible) .intro {
+  background: linear-gradient(120deg, #e7f2ec, #fff8e9) !important;
+  color: var(--text);
+}
+
+body:not(.accessible) .card,
+body:not(.accessible) .panel,
+body:not(.accessible) .practice,
+body:not(.accessible) .profile-card,
+body:not(.accessible) .settings-card,
+body:not(.accessible) .dictionary-shell {
+  background: var(--card) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--line) !important;
+}
+
+body:not(.accessible) button.primary,
+body:not(.accessible) .primary {
+  background: var(--primary-dark) !important;
+  color: #fff !important;
+  border-color: var(--primary-dark) !important;
+}
+
+body:not(.accessible) button.secondary,
+body:not(.accessible) .secondary,
+body:not(.accessible) .back-home {
+  background: var(--soft) !important;
+  color: var(--primary-dark) !important;
+  border-color: var(--line) !important;
+}
+
+body:not(.accessible) .main-tab,
+body:not(.accessible) .level-btn,
+body:not(.accessible) .topic-btn,
+body:not(.accessible) .study-tab,
+body:not(.accessible) .stage-btn,
+body:not(.accessible) .option,
+body:not(.accessible) .level-card {
+  background: var(--soft) !important;
+  color: var(--primary-dark) !important;
+  border-color: var(--line) !important;
+}
+
+body:not(.accessible) .main-tab.active,
+body:not(.accessible) .level-btn.active,
+body:not(.accessible) .study-tab.active,
+body:not(.accessible) .stage-btn.active,
+body:not(.accessible) .option.selected {
+  background: var(--primary-dark) !important;
+  color: #fff !important;
+  border-color: var(--primary-dark) !important;
+}
+
+body:not(.accessible) .dictionary-mode {
+  background: var(--soft) !important;
+}
+
+body:not(.accessible) .dictionary-mode-btn {
+  color: var(--primary-dark) !important;
+}
+
+body:not(.accessible) .dictionary-mode-btn.active {
+  background: var(--primary-dark) !important;
+  color: #fff !important;
+}
+
+body:not(.accessible) input,
+body:not(.accessible) textarea,
+body:not(.accessible) select {
+  background: #fffef9;
+  color: var(--text);
+  border-color: var(--line);
+}
+
+body:not(.accessible) a {
+  color: var(--primary-dark);
+}
+
+body:not(.accessible) .progress {
+  background: var(--soft);
+}
+
+body:not(.accessible) .bar {
+  background: var(--primary);
+}
+
+body:not(.accessible) .subtitle,
+body:not(.accessible) .muted {
+  color: var(--muted);
+}
