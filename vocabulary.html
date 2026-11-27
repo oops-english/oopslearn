@@ -4,22 +4,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vocabulary Lab | Oops!</title>
+<title>Vocabulary | Oops!</title>
 
 <style>
 :root{
-  --primary:#8b35e8;
-  --bg:#f7f1ff;
-  --text:#26243a;
+  --primary:#0B3D3B;
+  --bg:#F7F6EF;
+  --text:#173A38;
   --card:#fff;
-  --muted:#77778d;
-  --soft:#f0eaff;
-  --border:#e8def5;
+  --muted:#71817D;
+  --soft:#E6F2EE;
+  --border:#DCE8E2;
 }
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Arial,sans-serif;
+  font-family:"Be Vietnam Pro",Arial,sans-serif;
   background:var(--bg);
   color:var(--text);
   line-height:1.6;
@@ -46,7 +46,7 @@ header{
 }
 .back-home,.mode-button{
   text-decoration:none;
-  background:#f1edff;
+  background:#E6F2EE;
   color:var(--primary);
   padding:11px 17px;
   border-radius:10px;
@@ -66,7 +66,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .secondary{background:var(--soft);color:var(--primary)}
 main{max-width:1150px;margin:auto;padding:40px 22px}
 .intro{
-  background:linear-gradient(120deg,#eeeaff,#fff0f6);
+  background:linear-gradient(120deg,#E6F2EE,#FFFDF5);
   padding:35px;
   border-radius:24px;
   margin-bottom:25px;
@@ -81,7 +81,7 @@ main{max-width:1150px;margin:auto;padding:40px 22px}
 }
 .main-tab{
   min-height:58px;
-  background:#eeeaff;
+  background:#E6F2EE;
   color:var(--primary);
   border:2px solid transparent;
   font-size:15px;
@@ -142,12 +142,12 @@ main{max-width:1150px;margin:auto;padding:40px 22px}
   width:min(100%,760px);
   margin:22px auto 28px;
   padding:5px;
-  background:#eeeaff;
+  background:#E6F2EE;
   border-radius:16px;
 }
 .study-tab{min-height:54px;border-radius:12px;font-size:16px;font-weight:750;}
 .study-tab{
-  background:#eeeaff;
+  background:#E6F2EE;
   color:var(--primary);
 }
 .study-tab.active{background:var(--primary);color:white}
@@ -191,7 +191,7 @@ main{max-width:1150px;margin:auto;padding:40px 22px}
   margin:20px 0 15px;
 }
 .stage-list{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:20px}
-.stage-btn{background:#eeeaff;color:var(--primary)}
+.stage-btn{background:#E6F2EE;color:var(--primary)}
 .stage-btn.active{background:var(--primary);color:white}
 .word-grid{
   display:grid;
@@ -219,28 +219,28 @@ main{max-width:1150px;margin:auto;padding:40px 22px}
 .actions button{font-size:13px}
 
 .dictionary-shell{max-width:980px;margin:24px auto;background:#fff;border:1px solid var(--border);border-radius:22px;padding:clamp(18px,3vw,30px);box-shadow:0 12px 35px rgba(54,35,90,.06)}
-.dictionary-mode{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#f0eaff;padding:5px;border-radius:14px;margin-bottom:18px}
+.dictionary-mode{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#E6F2EE;padding:5px;border-radius:14px;margin-bottom:18px}
 .dictionary-mode-btn{min-height:48px;border:0;border-radius:10px;background:transparent;color:var(--primary);font-weight:750}
 .dictionary-mode-btn.active{background:var(--primary);color:#fff}
 .dictionary-search-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px}
 .dictionary-search-form input{min-width:0;font-size:17px}
 .dictionary-search-form button{min-width:120px}
 .dictionary-hint,.dictionary-status{color:var(--muted);font-size:14px;margin:12px 0}
-.dictionary-status{padding:13px 15px;background:#f7f6fb;border-radius:12px}
+.dictionary-status{padding:13px 15px;background:#F1F5F0;border-radius:12px}
 .dictionary-result{margin-top:22px}
 .dictionary-word-head{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;flex-wrap:wrap}
 .dictionary-word-head h2{font-size:34px;margin:0 0 6px}
 .dictionary-pronunciations{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
-.dictionary-pron-card{background:#f7f5ff;border:1px solid var(--border);border-radius:14px;padding:15px}
+.dictionary-pron-card{background:#F1F5F0;border:1px solid var(--border);border-radius:14px;padding:15px}
 .dictionary-pron-card strong{display:block;margin-bottom:8px}
-.dictionary-pron-card button,.dictionary-audio-btn{background:#eeeaff;color:var(--primary);padding:8px 12px;margin-top:8px}
+.dictionary-pron-card button,.dictionary-audio-btn{background:#E6F2EE;color:var(--primary);padding:8px 12px;margin-top:8px}
 .dictionary-sense{border-top:1px solid var(--border);padding:18px 0}
 .dictionary-sense h3{margin:0 0 8px;font-size:18px;color:var(--primary)}
 .dictionary-definition{margin:7px 0}
-.dictionary-translation{color:#4d3a75;margin:6px 0}
-.dictionary-example{margin:8px 0 4px;padding:11px 14px;background:#f7f6fb;border-radius:10px;font-style:italic}
+.dictionary-translation{color:#0B3D3B;margin:6px 0}
+.dictionary-example{margin:8px 0 4px;padding:11px 14px;background:#F1F5F0;border-radius:10px;font-style:italic}
 .dictionary-extra{margin-top:18px;padding-top:15px;border-top:1px solid var(--border)}
-.dictionary-save{background:#eeeaff;color:var(--primary)}
+.dictionary-save{background:#E6F2EE;color:var(--primary)}
 .dictionary-source{font-size:12px;color:var(--muted);margin-top:18px}
 @media(max-width:600px){.dictionary-pronunciations{grid-template-columns:1fr}.dictionary-search-form{grid-template-columns:1fr}.dictionary-search-form button{width:100%}.dictionary-mode-btn{font-size:13px}}
 
@@ -267,11 +267,11 @@ input,select{
   grid-column:1/-1;
 }
 .note{
-  background:#f0eaff;
+  background:#E6F2EE;
   padding:15px 18px;
   border-radius:12px;
   margin:15px 0;
-  color:#57418b;
+  color:#0B3D3B;
 }
 .quiz-box{
   max-width:650px;
@@ -283,7 +283,7 @@ input,select{
 .quiz-options{display:grid;gap:10px;margin-top:20px}
 .quiz-option{
   text-align:left;
-  background:#f3edff;
+  background:#E6F2EE;
   color:var(--text);
   border:1px solid var(--border);
 }
@@ -351,7 +351,7 @@ body.large-text{font-size:120%}
 .learn-quiz-controls{display:none}
 .learn-quiz-card{max-width:850px;margin:28px auto;padding:clamp(18px,4vw,30px);border:1px solid var(--border,#e5e7eb);border-radius:20px;background:var(--card,#fff);box-shadow:0 8px 28px rgba(30,40,80,.07)}
 .learn-quiz-topline{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px;font-weight:700}
-#learnDifficultyBadge{padding:5px 10px;border-radius:999px;background:#eef2ff;color:#4f46e5}
+#learnDifficultyBadge{padding:5px 10px;border-radius:999px;background:#E6F2EE;color:#0B3D3B}
 .learn-question-type{margin:24px 0 8px;color:var(--primary);font-size:12px;font-weight:800;letter-spacing:.09em}
 #learnQuestionPrompt{font-size:clamp(20px,3vw,27px);line-height:1.4;margin:8px 0 12px;white-space:pre-line}
 .learn-question-context{font-size:17px;line-height:1.6;padding:14px;background:var(--surface,#f7f8fc);border-radius:12px;white-space:pre-line}
@@ -365,7 +365,7 @@ body.large-text{font-size:120%}
 .learn-answer-feedback{min-height:28px;line-height:1.6;font-weight:600}
 .learn-quiz-footer{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border,#eee);flex-wrap:wrap}
 .learn-quiz-note{display:none}
-.learn-progress-track{height:7px;background:#eeeaff;border-radius:99px;overflow:hidden;margin:18px 0 22px}
+.learn-progress-track{height:7px;background:#E6F2EE;border-radius:99px;overflow:hidden;margin:18px 0 22px}
 .learn-progress-fill{height:100%;width:0;background:var(--primary);border-radius:99px;transition:width .2s}
 .learn-finish{text-align:center;padding:28px 12px}
 .learn-finish h2{font-size:28px;margin-bottom:8px}
@@ -20824,19 +20824,8 @@ function renderTopics(){
     button.append(title, description);
 
     button.addEventListener("click", () => {
-      selectedTopic = topic;
-      flashcardIndex = 0;
-      cardFlipped = false;
-
-      $("topicBrowser").hidden = true;
-      $("topicStudy").hidden = false;
-
-      $("studyTopicTitle").textContent = topic;
-      $("studyTopicLevel").textContent = selectedLevel + " · Vocabulary";
-
-      resetLearnSession();
-      switchActivity("flashcards");
-      renderFlashcard();
+      const params = new URLSearchParams({level:selectedLevel, topic});
+      window.location.href = "vocabulary-lesson.html?" + params.toString();
     });
 
     container.append(button);
