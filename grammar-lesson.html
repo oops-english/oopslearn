@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar Lesson | Oops!</title>
+<link rel="stylesheet" href="theme-fix.css">
+<style>
+:root{--primary:#39b9ad;--primary-dark:#073d3b;--bg:#f7f7f1;--text:#123d3b;--card:#fffef9;--muted:#71817d;--line:#dce6df;--soft:#eaf3ee;--gold:#f6bd2f;--shadow:0 12px 35px rgba(7,61,59,.06)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{font-family:"Be Vietnam Pro","Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.logo{font-family:"Lexend","Be Vietnam Pro","Segoe UI",sans-serif}
+header{min-height:76px;padding:12px clamp(20px,4.5vw,76px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;position:sticky;top:0;z-index:100;background:rgba(247,247,241,.96);border-bottom:1px solid var(--line);box-shadow:0 5px 22px rgba(7,61,59,.04);backdrop-filter:blur(14px)}
+.logo{justify-self:start;font-size:32px;font-weight:900;letter-spacing:-1.8px;color:var(--primary-dark);text-decoration:none}
+header a:not(.logo){justify-self:center;color:var(--primary-dark);text-decoration:none;font-weight:700}
+header button{justify-self:end;min-height:46px;padding:0 20px;border-radius:999px;font:inherit;font-weight:700}
+button,select{font:inherit}button{cursor:pointer;border:none;transition:background .2s ease,color .2s ease,transform .2s ease,box-shadow .2s ease}
+button:active{transform:translateY(1px)}
+.primary{background:var(--primary-dark);color:white}.primary:hover{background:#0c5751;box-shadow:0 5px 14px rgba(7,61,59,.13)}
+.secondary{background:#eaf3ee;color:var(--primary-dark)}
+main{width:min(1100px,92%);margin:auto;padding:48px 0 70px}
+.hero{padding:clamp(30px,5vw,48px);background:linear-gradient(120deg,#e7f2ec,#fff8e9);border:1px solid var(--line);border-radius:28px;margin-bottom:42px}
+.hero h1{font-size:clamp(29px,4vw,42px);line-height:1.2;letter-spacing:-1px;margin-bottom:15px}
+.hero p{color:var(--muted);margin-bottom:16px;font-size:16px}
+.hero strong{color:var(--primary-dark)}
+main>h2{font-size:27px;margin-bottom:8px}main>p{color:var(--muted)}
+.filters{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0 26px}
+select{min-height:48px;min-width:190px;padding:0 15px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);cursor:pointer}
+select:focus-visible,:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.lesson-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.lesson{min-width:0;background:var(--card);padding:25px;border-radius:22px;border:1px solid var(--line);box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease}
+.lesson:hover{transform:translateY(-3px);box-shadow:0 16px 35px rgba(7,61,59,.09)}
+.level{color:#087d73;font-size:13px;font-weight:800}
+.lesson h3{font-size:19px;margin:8px 0 13px}
+.lesson-link{display:inline-flex;align-items:center;gap:8px;color:var(--primary-dark);font-weight:800;text-decoration:none;margin-top:8px}
+.lesson-link:hover{color:#159b8e}
+.lesson-desc{color:var(--muted);font-size:14px}
+footer{text-align:center;padding:28px 20px;color:var(--muted);border-top:1px solid var(--line)}
+.content-card,.quiz{background:var(--card);padding:clamp(22px,4vw,32px);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);margin-top:24px}
+.content-card h2,.quiz h2{font-size:25px;margin-bottom:12px}
+.content-card h3{font-size:18px;margin:22px 0 8px}
+.formula{background:var(--soft);color:var(--primary-dark);padding:16px;border-radius:12px;margin:12px 0;font-weight:800;overflow-wrap:anywhere}
+.content-card p{margin:10px 0;overflow-wrap:anywhere}
+.example-box,.mistake-box{padding:15px 18px;border-radius:12px;margin:12px 0}
+.example-box{background:#edf6ef;border-left:4px solid var(--primary)}
+.mistake-box{background:#fff4e5;border-left:4px solid var(--gold)}
+.muted{color:var(--muted);font-size:14px}
+.quiz h3{margin:22px 0;font-size:19px}
+.option{display:block;width:100%;min-height:52px;text-align:left;margin:10px 0;padding:14px 18px;border-radius:12px;background:var(--soft);color:var(--text);border:1px solid var(--line)}
+.option:hover{border-color:var(--primary);background:#e1f1e9}
+#feedback{font-weight:700;margin-top:16px;line-height:1.7}
+#next{margin-top:18px;min-height:48px;padding:0 22px;border-radius:12px}
+body.accessible{--bg:#000;--text:#fff;--card:#111;--muted:#eee;--primary:#ffeb3b;--primary-dark:#000;--line:#ffeb3b;--soft:#181818;color-scheme:dark}
+body.accessible header{background:#000;border-color:#ffeb3b}
+body.accessible .logo,body.accessible header a:not(.logo){color:#ffeb3b}
+body.accessible .hero,body.accessible .lesson,body.accessible .content-card,body.accessible .quiz{background:#111;border:2px solid #ffeb3b}
+body.accessible .hero strong,body.accessible .level{color:#ffeb3b}
+body.accessible .formula,body.accessible .option,body.accessible select{background:#181818;color:#fff;border:1px solid #ffeb3b}
+body.accessible .primary,body.accessible .secondary{background:#ffeb3b;color:#000}
+body.accessible .example-box,body.accessible .mistake-box{background:#181818;color:#fff;border:1px solid #ffeb3b}
+body.large-text{font-size:120%}
+@media(max-width:760px){header{grid-template-columns:1fr auto;gap:10px;padding:12px 18px}header a:not(.logo){grid-column:1/-1;grid-row:2;justify-self:start}header button{grid-column:2;grid-row:1;padding:0 13px;font-size:13px}main{width:92%;padding-top:28px}.lesson-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.hero{padding:25px 21px;border-radius:20px}.filters{flex-direction:column}select{width:100%}.lesson{padding:20px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+.back-link{display:inline-block;margin-bottom:20px;color:var(--primary-dark);font-weight:800;text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+<a class="logo" href="index.html">Oops!</a>
+<a href="grammar.html">← Back to Grammar</a>
+<button class="secondary" id="modeBtn" type="button" aria-pressed="false">Accessible Mode</button>
+</header>
+<main>
+<a class="back-link" href="grammar.html">← All grammar lessons</a>
+<section class="hero">
+<h1 id="lessonTitle">Grammar Lesson</h1>
+<p id="lessonMeta"></p>
+<strong>Learn the rule, understand the example and avoid common mistakes.</strong>
+</section>
+<section class="content-card" aria-labelledby="overviewTitle">
+<h2 id="overviewTitle">Lesson overview</h2>
+<h3>Grammar formula</h3>
+<div class="formula" id="formula"></div>
+<h3>Example</h3>
+<div class="example-box" id="example"></div>
+<h3>Common mistake</h3>
+<div class="mistake-box" id="mistake"></div>
+<h3>Explanation</h3>
+<p id="explanation"></p>
+</section>
+<section class="quiz">
+<h2>Grammar Challenge</h2>
+<p>Answer the questions to practise grammar.</p>
+<p class="muted">This is the existing general practice set from the Grammar page.</p>
+<h3 id="question"></h3>
+<div id="options"></div>
+<p id="feedback" aria-live="polite"></p>
+<button class="primary" id="next" type="button">Next question →</button>
+</section>
+</main>
+<footer>Oops! — Make mistakes. Make progress.</footer>
+<script src="tracker.js"></script>
+<script>
+const data = [{"id": "a1-present-simple", "level": "A1", "topic": "Tenses", "title": "Present Simple", "formula": "S + V(s/es)", "ex": "She goes to school every day.", "mistake": "She go to school every day.", "note": "Use the third-person singular form with he, she and it."}, {"id": "a1-present-continuous", "level": "A1", "topic": "Tenses", "title": "Present Continuous", "formula": "S + am/is/are + V-ing", "ex": "They are studying English now.", "mistake": "They studying English now.", "note": "Do not forget the correct form of the verb to be."}, {"id": "a1-articles-a-an", "level": "A1", "topic": "Nouns", "title": "Articles: A / An", "formula": "a + consonant sound | an + vowel sound", "ex": "I have an apple and a book.", "mistake": "She is an teacher.", "note": "Choose articles according to pronunciation, not simply spelling."}, {"id": "a2-past-simple", "level": "A2", "topic": "Tenses", "title": "Past Simple", "formula": "S + V2/ed", "ex": "We visited London last year.", "mistake": "We visit London yesterday.", "note": "Use the past form for completed actions in the past."}, {"id": "a2-countable-uncountable", "level": "A2", "topic": "Nouns", "title": "Countable and Uncountable Nouns", "formula": "many + countable | much + uncountable", "ex": "How much water do you need?", "mistake": "How many water do you need?", "note": "Water is uncountable in this context."}, {"id": "b1-present-perfect", "level": "B1", "topic": "Tenses", "title": "Present Perfect", "formula": "S + have/has + V3", "ex": "I have lived here for five years.", "mistake": "I live here since five years.", "note": "Use for and since correctly with the present perfect."}, {"id": "b1-relative-clauses", "level": "B1", "topic": "Clauses", "title": "Relative Clauses", "formula": "who / which / that / whose", "ex": "The girl who won the prize is my friend.", "mistake": "The girl which won the prize...", "note": "Use who for people and which for things."}, {"id": "b2-conditional-sentences", "level": "B2", "topic": "Clauses", "title": "Conditional Sentences", "formula": "If + past simple, would + V", "ex": "If I had more time, I would travel.", "mistake": "If I will have time, I would travel.", "note": "Do not normally use will in the if-clause of this conditional."}, {"id": "c1-inversion", "level": "C1", "topic": "Advanced", "title": "Inversion", "formula": "Negative adverbial + auxiliary + subject + verb", "ex": "Rarely have I seen such dedication.", "mistake": "Rarely I have seen such dedication.", "note": "Inversion is required after certain negative adverbials."}, {"id": "c2-cleft-sentences", "level": "C2", "topic": "Advanced", "title": "Cleft Sentences", "formula": "It is/was + focus + that/who...", "ex": "It was her determination that impressed us.", "mistake": "It her determination was that impressed us.", "note": "Use the cleft structure to emphasize a particular part of a sentence."}];
+const questions = [{"q": "She _____ to school every morning.", "options": ["go", "goes", "going", "gone"], "answer": 1, "explain": "With she, use goes in the Present Simple."}, {"q": "I _____ English for three years.", "options": ["study", "studied", "have studied", "am study"], "answer": 2, "explain": "Use the Present Perfect with for to describe a period continuing to the present."}, {"q": "If I were rich, I _____ around the world.", "options": ["travel", "will travel", "would travel", "travelled"], "answer": 2, "explain": "The Second Conditional uses would + infinitive in the main clause."}, {"q": "The student _____ won the competition is my friend.", "options": ["which", "who", "where", "when"], "answer": 1, "explain": "Use who to refer to people."}];
+const params = new URLSearchParams(window.location.search);
+const lesson = data.find(item=>item.id===params.get("id"));
+if(lesson){
+ document.title=lesson.title+" | Grammar | Oops!";
+ document.getElementById("lessonTitle").textContent=lesson.title;
+ document.getElementById("lessonMeta").textContent=lesson.level+" · "+lesson.topic;
+ document.getElementById("formula").textContent=lesson.formula;
+ document.getElementById("example").textContent=lesson.ex;
+ document.getElementById("mistake").textContent=lesson.mistake;
+ document.getElementById("explanation").textContent=lesson.note;
+}else{
+ document.getElementById("lessonTitle").textContent="Lesson not found";
+ document.getElementById("lessonMeta").textContent="Please return to Grammar and choose a lesson.";
+ document.querySelector(".content-card").hidden=true;
+ document.querySelector(".quiz").hidden=true;
+}
+let current=0,answered=false;
+function showQuestion(){
+ answered=false;
+ document.getElementById("feedback").textContent="";
+ const q=questions[current];
+ document.getElementById("question").textContent=q.q;
+ const box=document.getElementById("options");box.innerHTML="";
+ q.options.forEach((option,index)=>{
+  const button=document.createElement("button");button.type="button";button.className="option";
+  button.textContent=String.fromCharCode(65+index)+". "+option;
+  button.addEventListener("click",()=>{
+   if(answered)return;answered=true;
+   if(window.OopsTracker)window.OopsTracker.recordStudyDay();
+   document.getElementById("feedback").textContent=(index===q.answer?"Correct! ":"Not quite. ")+q.explain;
+  });
+  box.append(button);
+ });
+}
+document.getElementById("next").addEventListener("click",()=>{current=(current+1)%questions.length;showQuestion();});
+if(lesson)showQuestion();
+</script>
+<script src="accessibility.js"></script><script src="settings.js"></script>
+</body></html>
