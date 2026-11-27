@@ -30,42 +30,54 @@ main{width:min(1120px,92%);margin:0 auto;padding:34px 0 64px}
 .panel-top{display:flex;align-items:center;gap:12px;margin-bottom:18px}
 .back-btn{border:1px solid var(--line);border-radius:999px;padding:9px 15px;background:var(--soft);color:var(--text);font:inherit;font-weight:700;cursor:pointer}
 .panel-top h2{margin:0;font-size:25px}
-.filter-panel{margin:22px 0 28px;padding:25px;border:1px solid rgba(24,83,74,.1);border-radius:24px;background:linear-gradient(145deg,#f3f8f1,#eaf4ec);box-shadow:0 14px 34px rgba(8,49,43,.07)}
-.filter-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:23px}
-.filter-heading h3{margin:0;color:#103f3d;font-size:20px;letter-spacing:-.4px}
-.filter-heading p{margin:3px 0 0;color:#638078;font-size:13px}
-.filter-kicker{display:inline-flex;align-items:center;gap:7px;color:#238f80;font-size:10px;font-weight:850;letter-spacing:1.25px;text-transform:uppercase;margin-bottom:5px}
-.filter-kicker:before{content:"";width:7px;height:7px;border-radius:50%;background:#43c7b6;box-shadow:0 0 0 4px rgba(67,199,182,.15)}
-.filters{display:grid;grid-template-columns:1fr;gap:22px;margin:0}
+.filter-panel{margin:24px 0 30px;padding:28px 30px;border:1px solid #dce9e2;border-radius:24px;background:#f6faf6;box-shadow:0 14px 38px rgba(9,55,48,.055)}
+.filter-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:25px}
+.filter-heading h3{margin:0;color:#103f3d;font-size:21px;font-weight:800;letter-spacing:-.55px}
+.filter-heading p{margin:4px 0 0;color:#718780;font-size:13px}
+.filter-kicker{display:flex;align-items:center;gap:8px;color:#278c7d;font-size:10px;font-weight:850;letter-spacing:1.35px;text-transform:uppercase;margin-bottom:7px}
+.filter-kicker:before{content:"";width:19px;height:2px;border-radius:4px;background:#43b9a9}
+.filters{display:grid;grid-template-columns:1fr;gap:25px;margin:0}
 .field{min-width:0}
-.field label{display:block;font-size:11px;font-weight:850;letter-spacing:1px;text-transform:uppercase;color:#52756d;margin:0 0 10px 2px}
+.field label{display:block;font-size:11px;font-weight:850;letter-spacing:1.05px;text-transform:uppercase;color:#688078;margin:0 0 11px}
 .state-select{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
-.choice-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.choice-card{position:relative;display:flex;align-items:center;gap:13px;min-height:76px;padding:15px 18px;border:1px solid #d5e5dc;border-radius:17px;background:rgba(255,255,255,.86);color:#244d46;text-align:left;font-family:inherit;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s,background .18s}
-.choice-card:hover{transform:translateY(-2px);border-color:#79cdbf;box-shadow:0 8px 18px rgba(16,63,61,.07)}
-.choice-card[aria-pressed="true"]{border:1.5px solid #239f90;background:#fff;box-shadow:0 0 0 3px rgba(67,199,182,.13),0 9px 20px rgba(16,63,61,.07)}
-.choice-icon{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:13px;background:#e5f4ed;color:#167d70;font-size:19px;font-weight:850}
-.choice-copy{display:flex;flex-direction:column;gap:1px;min-width:0}
-.choice-copy strong{font-size:14px;line-height:1.35}
-.choice-copy small{font-size:11px;color:#718981}
-.choice-check{margin-left:auto;display:grid;place-items:center;width:20px;height:20px;border:1px solid #cbded4;border-radius:50%;color:transparent;font-size:12px}
-.choice-card[aria-pressed="true"] .choice-check{background:#168d7d;border-color:#168d7d;color:white}
-.volume-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px}
-.volume-choice{min-height:46px;border:1px solid #d5e5dc;border-radius:12px;background:rgba(255,255,255,.86);color:#42665e;font-family:inherit;font-size:13px;font-weight:750;cursor:pointer;transition:.18s}
-.volume-choice:hover{border-color:#79cdbf;color:#116b60;transform:translateY(-1px)}
-.volume-choice[aria-pressed="true"]{background:#123f3a;color:#fff;border-color:#123f3a;box-shadow:0 5px 12px rgba(18,63,58,.16)}
-.format-card{min-height:86px}
-.part-field{margin-top:20px;padding-top:18px;border-top:1px solid #d9e9df}
-.part-options{display:flex;flex-wrap:wrap;gap:9px}
-.part-option{min-width:112px;padding:10px 16px;border:1px solid #d3e4d9;border-radius:12px;background:#fff;color:#42665e;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:.18s}
-.part-option:hover{border-color:#43b9a9;color:#116b60;transform:translateY(-1px)}
-.part-option[aria-pressed="true"]{background:#123f3a;color:#fff;border-color:#123f3a;box-shadow:0 5px 12px rgba(18,63,58,.16)}
-body.accessible .choice-card,body.accessible .volume-choice{background:#111;color:#fff;border:2px solid #fff}
-body.accessible .choice-icon{background:#333;color:#fff}
-body.accessible .choice-copy small{color:#ddd}
-body.accessible .choice-card[aria-pressed="true"],body.accessible .volume-choice[aria-pressed="true"]{background:#fff;color:#111;border-color:#ffeb3b}
-@media(max-width:760px){.volume-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
-@media(max-width:560px){.filter-panel{padding:18px}.choice-row{grid-template-columns:1fr}.volume-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.part-option{flex:1;min-width:calc(50% - 6px)}}
+.segmented{display:inline-flex;align-items:center;gap:5px;padding:5px;border:1px solid #e0eae4;border-radius:15px;background:#eaf2ed;max-width:100%}
+.segment-option{display:flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:0 21px;border:1px solid transparent;border-radius:11px;background:transparent;color:#60786f;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:background .18s,color .18s,box-shadow .18s}
+.segment-option:hover{color:#124e45}
+.segment-option[aria-pressed="true"]{background:#fff;color:#123f3a;border-color:#e0eae4;box-shadow:0 3px 10px rgba(14,57,49,.08)}
+.segment-mark{display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:#dceee5;color:#167c6d;font-size:11px;font-weight:900}
+.segment-option[aria-pressed="true"] .segment-mark{background:#123f3a;color:#fff}
+.volume-grid{display:flex;flex-wrap:wrap;gap:9px}
+.volume-choice{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-width:76px;min-height:66px;padding:10px 13px;border:1px solid #dce8e1;border-radius:13px;background:#fff;color:#527068;font-family:inherit;cursor:pointer;transition:transform .18s,border-color .18s,background .18s,box-shadow .18s}
+.volume-choice:hover{transform:translateY(-2px);border-color:#8bcfc1}
+.volume-choice .vol-caption{font-size:9px;letter-spacing:1px;font-weight:850;color:#8ba097;text-transform:uppercase}
+.volume-choice .vol-number{font-size:20px;line-height:1.1;font-weight:850;letter-spacing:-.7px}
+.volume-choice[aria-pressed="true"]{border-color:#1c8e7e;background:#123f3a;color:#fff;box-shadow:0 6px 15px rgba(18,63,58,.16)}
+.volume-choice[aria-pressed="true"] .vol-caption{color:#9eddd0}
+.format-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:720px}
+.format-option{display:flex;align-items:center;gap:14px;min-height:82px;padding:15px 17px;border:1px solid #dce8e1;border-radius:16px;background:#fff;color:#284e46;text-align:left;font-family:inherit;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s}
+.format-option:hover{transform:translateY(-2px);border-color:#8bcfc1;box-shadow:0 7px 17px rgba(14,57,49,.06)}
+.format-option[aria-pressed="true"]{border:1.5px solid #238f80;background:#f0f8f3;box-shadow:0 0 0 3px rgba(67,199,182,.1)}
+.format-symbol{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:12px;background:#e6f2eb;color:#167c6d;font-size:19px}
+.format-copy{display:flex;flex-direction:column;gap:3px}
+.format-copy strong{font-size:14px}
+.format-copy small{font-size:11px;color:#7a8e86}
+.format-check{margin-left:auto;color:transparent;font-size:16px;font-weight:900}
+.format-option[aria-pressed="true"] .format-check{color:#168d7d}
+.part-field{margin-top:22px;padding-top:20px;border-top:1px solid #dce8e1}
+.part-options{display:flex;flex-wrap:wrap;gap:8px}
+.part-option{min-width:104px;padding:10px 15px;border:1px solid #dce8e1;border-radius:11px;background:#fff;color:#527068;font-family:inherit;font-size:13px;font-weight:750;cursor:pointer;transition:.18s}
+.part-option:hover{border-color:#78cbbb;color:#116b60}
+.part-option[aria-pressed="true"]{background:#123f3a;color:#fff;border-color:#123f3a}
+body.accessible .filter-panel{background:#111;border:2px solid #fff}
+body.accessible .filter-heading h3,body.accessible .filter-heading p,body.accessible .field label{color:#fff}
+body.accessible .segmented{background:#252525;border-color:#fff}
+body.accessible .segment-option{color:#fff}
+body.accessible .segment-option[aria-pressed="true"]{background:#fff;color:#111}
+body.accessible .volume-choice,body.accessible .format-option,body.accessible .part-option{background:#111;color:#fff;border:2px solid #fff}
+body.accessible .volume-choice[aria-pressed="true"],body.accessible .part-option[aria-pressed="true"]{background:#fff;color:#111;border-color:#ffeb3b}
+body.accessible .format-option[aria-pressed="true"]{background:#222;border-color:#ffeb3b}
+body.accessible .format-copy small{color:#eee}
+@media(max-width:650px){.filter-panel{padding:20px}.format-options{grid-template-columns:1fr}.segment-option{padding:0 13px}.volume-choice{min-width:62px}}
 .test-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}
 .test-card{background:var(--soft);color:var(--text);border:1px solid var(--line);display:flex;flex-direction:column;gap:7px}
 .test-card h3{margin:0}
@@ -127,14 +139,14 @@ footer{text-align:center;padding:25px;color:var(--muted)}
 <div class="filter-panel">
  <div class="filter-heading"><div><div class="filter-kicker">FIND YOUR NEXT PRACTICE</div><h3>Build your practice</h3><p>Choose the materials and format that suit your study session.</p></div></div>
  <div class="filters">
-  <div class="field"><label>01 · Choose your source</label><input class="state-select" id="sourceSelect" aria-hidden="true" tabindex="-1" value="VOL"><div class="choice-row" id="sourceChoices">
-   <button class="choice-card" type="button" data-value="VOL" aria-pressed="true"><span class="choice-icon">V</span><span class="choice-copy"><strong>VOL Collection</strong><small>Volume-based practice tests</small></span><span class="choice-check">✓</span></button>
-   <button class="choice-card" type="button" data-value="Cambridge" aria-pressed="false"><span class="choice-icon">C</span><span class="choice-copy"><strong>Cambridge IELTS</strong><small>Official Cambridge practice books</small></span><span class="choice-check">✓</span></button>
+  <div class="field"><label>01 / Source</label><input class="state-select" id="sourceSelect" aria-hidden="true" tabindex="-1" value="VOL"><div class="segmented" id="sourceChoices" role="group" aria-label="Choose source">
+   <button class="segment-option" type="button" data-value="VOL" aria-pressed="true"><span class="segment-mark">V</span> VOL Collection</button>
+   <button class="segment-option" type="button" data-value="Cambridge" aria-pressed="false"><span class="segment-mark">C</span> Cambridge IELTS</button>
   </div></div>
-  <div class="field"><label>02 · Select a volume</label><input class="state-select" id="volumeSelect" aria-hidden="true" tabindex="-1" value="9"><div class="volume-grid" id="volumeChoices"></div></div>
-  <div class="field"><label>03 · Choose practice format</label><input class="state-select" id="formatSelect" aria-hidden="true" tabindex="-1" value="full"><div class="choice-row" id="formatChoices">
-   <button class="choice-card format-card" type="button" data-value="full" aria-pressed="true"><span class="choice-icon">▦</span><span class="choice-copy"><strong>Full Test</strong><small>Complete test experience</small></span><span class="choice-check">✓</span></button>
-   <button class="choice-card format-card" type="button" data-value="part" aria-pressed="false"><span class="choice-icon">◫</span><span class="choice-copy"><strong>Individual Section / Passage</strong><small>Focus on one part at a time</small></span><span class="choice-check">✓</span></button>
+  <div class="field"><label>02 / Volume</label><input class="state-select" id="volumeSelect" aria-hidden="true" tabindex="-1" value="9"><div class="volume-grid" id="volumeChoices" aria-label="Choose volume"></div></div>
+  <div class="field"><label>03 / Practice format</label><input class="state-select" id="formatSelect" aria-hidden="true" tabindex="-1" value="full"><div class="format-options" id="formatChoices" role="group" aria-label="Choose practice format">
+   <button class="format-option" type="button" data-value="full" aria-pressed="true"><span class="format-symbol">▤</span><span class="format-copy"><strong>Full Test</strong><small>Complete Listening / Reading test</small></span><span class="format-check">✓</span></button>
+   <button class="format-option" type="button" data-value="part" aria-pressed="false"><span class="format-symbol">▥</span><span class="format-copy"><strong>Choose a part</strong><small>Practise one section or passage</small></span><span class="format-check">✓</span></button>
   </div></div>
  </div>
  <div id="partWrap" class="part-field hidden"><div class="field"><label id="partLabel">Choose a section</label><div id="partOptions" class="part-options" role="group" aria-label="Choose a section"></div></div></div>
@@ -195,7 +207,7 @@ function buildVolumeChoices(){
  const grid=$("volumeChoices");grid.innerHTML="";
  for(let i=1;i<=10;i++){
   const button=document.createElement("button");button.type="button";button.className="volume-choice";button.dataset.value=String(i);
-  button.textContent=i===10?"10":String(i);button.setAttribute("aria-label",( $("sourceSelect").value==="VOL"?"VOL ":"Cambridge IELTS ")+i);
+  button.innerHTML='<span class="vol-caption">'+($("sourceSelect").value==="VOL"?"VOL":"BOOK")+'</span><span class="vol-number">'+i+'</span>';button.setAttribute("aria-label",( $("sourceSelect").value==="VOL"?"VOL ":"Cambridge IELTS ")+i);
   button.setAttribute("aria-pressed",String(i)===$("volumeSelect").value?"true":"false");
   button.addEventListener("click",()=>{$("volumeSelect").value=String(i);syncChoices("volumeChoices","volumeSelect");renderTests();});
   grid.append(button);
